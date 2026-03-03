@@ -1,14 +1,20 @@
 {
   "name": "create-litedocs",
   "version": "1.0.0",
+  "description": "CLI to create litedocs projects",
   "type": "module",
+  "main": "./dist/index.js",
   "bin": {
     "create-litedocs": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "prepare": "pnpm run build"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "picocolors": "^1.1.0",
     "prompts": "^2.4.2"
