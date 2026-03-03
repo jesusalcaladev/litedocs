@@ -1,4 +1,4 @@
-import { Plugin, ResolvedConfig } from "vite";
+import { Plugin, ResolvedConfig, loadEnv } from "vite";
 import { generateRoutes, invalidateRouteCache, invalidateFile } from "./routes";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { resolveConfig, LitedocsConfig, CONFIG_FILES } from "./config";
@@ -38,8 +38,14 @@ export function litedocsPlugin(options: LitedocsPluginOptions = {}): Plugin[] {
       name: "vite-plugin-litedocs",
       enforce: "pre",
 
-      async config(_, env) {
+      async config(userConfig, env) {
         isBuild = env.command === "build";
+
+        // Load env variables and inject into process.env so they are available in litedocs.config.js
+        const envDir = userConfig.envDir || process.cwd();
+        const envs = loadEnv(env.mode, envDir, "");
+        Object.assign(process.env, envs);
+
         // Resolve config async (loads litedocs.config.js if present)
         config = await resolveConfig(docsDir);
 
