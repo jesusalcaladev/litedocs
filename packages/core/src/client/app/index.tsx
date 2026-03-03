@@ -5,10 +5,8 @@ import { ThemeLayout } from "../theme/Layout";
 import { NotFound } from "../theme/NotFound";
 import { Loading } from "../theme/Loading";
 import { Navbar } from "../theme/Navbar";
-import { CodeBlock } from "../theme/CodeBlock";
-import { Video } from "../theme/Video";
 import { MDXProvider } from "@mdx-js/react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, Suspense, lazy } from "react";
 
 export const ConfigContext = createContext<any>(null);
 
@@ -16,8 +14,19 @@ export function useConfig() {
   return useContext(ConfigContext);
 }
 
-import { PackageManagerTabs } from "../theme/PackageManagerTabs";
 import "../theme/pkg-tabs.css";
+
+const CodeBlock = lazy(() =>
+  import("../theme/CodeBlock").then((m) => ({ default: m.CodeBlock })),
+);
+const Video = lazy(() =>
+  import("../theme/Video").then((m) => ({ default: m.Video })),
+);
+const PackageManagerTabs = lazy(() =>
+  import("../theme/PackageManagerTabs").then((m) => ({
+    default: m.PackageManagerTabs,
+  })),
+);
 declare global {
   interface ImportMeta {
     env: Record<string, any>;
@@ -26,11 +35,22 @@ declare global {
 
 import { PreloadProvider } from "./preload";
 
-/** MDX component overrides – maps <pre> to our CodeBlock */
 const mdxComponents = {
-  pre: (props: any) => <CodeBlock {...props}>{props.children}</CodeBlock>,
-  video: (props: any) => <Video {...props} />,
-  PackageManagerTabs,
+  pre: (props: any) => (
+    <Suspense fallback={<div className="code-block-skeleton" />}>
+      <CodeBlock {...props}>{props.children}</CodeBlock>
+    </Suspense>
+  ),
+  video: (props: any) => (
+    <Suspense fallback={<div className="video-skeleton" />}>
+      <Video {...props} />
+    </Suspense>
+  ),
+  PackageManagerTabs: (props: any) => (
+    <Suspense fallback={<div className="pkg-tabs-skeleton" />}>
+      <PackageManagerTabs {...props} />
+    </Suspense>
+  ),
 };
 
 /**
@@ -58,6 +78,8 @@ export interface ComponentRoute {
   headings?: { level: number; text: string; id: string }[];
   /** The locale this route belongs to, if i18n is configured */
   locale?: string;
+  /** The version this route belongs to, if versioning is configured */
+  version?: string;
 }
 
 /**
