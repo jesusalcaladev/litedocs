@@ -41,6 +41,8 @@ export interface RouteMeta {
   headings?: { level: number; text: string; id: string }[];
   /** The locale this route belongs to, if i18n is configured */
   locale?: string;
+  /** The version this route belongs to, if versioning is configured */
+  version?: string;
   /** Optional badge to display next to the sidebar item (e.g., 'New', 'Experimental') */
   badge?: string | { text: string; expires?: string };
 }
@@ -104,6 +106,18 @@ function parseDocFile(
   let parts = relativePath.split("/");
 
   let locale: string | undefined;
+  let version: string | undefined;
+
+  // Level 1: Check for version
+  if (config?.versions && parts.length > 0) {
+    const potentialVersion = parts[0];
+    if (config.versions.versions[potentialVersion]) {
+      version = potentialVersion;
+      parts = parts.slice(1);
+    }
+  }
+
+  // Level 2: Check for locale
   if (config?.i18n && parts.length > 0) {
     const potentialLocale = parts[0];
     if (config.i18n.locales[potentialLocale]) {
@@ -115,12 +129,16 @@ function parseDocFile(
   const cleanRelativePath = parts.join("/");
   const cleanRoutePath = fileToRoutePath(cleanRelativePath || "index.md");
 
-  let finalPath = basePath + (cleanRoutePath === "/" ? "" : cleanRoutePath);
-  if (locale) {
-    finalPath =
-      basePath + "/" + locale + (cleanRoutePath === "/" ? "" : cleanRoutePath);
+  let finalPath = basePath;
+  if (version) {
+    finalPath += "/" + version;
   }
-  if (!finalPath) finalPath = "/";
+  if (locale) {
+    finalPath += "/" + locale;
+  }
+  finalPath += cleanRoutePath === "/" ? "" : cleanRoutePath;
+
+  if (!finalPath || finalPath === "") finalPath = "/";
 
   const rawFileName = parts[parts.length - 1];
   const cleanFileName = stripNumberPrefix(rawFileName);
@@ -160,6 +178,7 @@ function parseDocFile(
       sidebarPosition,
       headings,
       locale,
+      version,
       badge: data.badge,
     },
     relativeDir: cleanDirName,

@@ -65,6 +65,16 @@ export interface LitedocsI18nConfig {
 }
 
 /**
+ * Configuration for documentation versioning.
+ */
+export interface LitedocsVersionsConfig {
+  /** The default version (e.g., 'v2') */
+  defaultVersion: string;
+  /** Available versions and their display names (e.g., { v1: 'Version 1.x', v2: 'Version 2.x' }) */
+  versions: Record<string, string>;
+}
+
+/**
  * The root configuration object for Litedocs.
  */
 export interface LitedocsConfig {
@@ -76,6 +86,8 @@ export interface LitedocsConfig {
   docsDir?: string;
   /** Configuration for internationalization */
   i18n?: LitedocsI18nConfig;
+  /** Configuration for documentation versioning */
+  versions?: LitedocsVersionsConfig;
 }
 
 export const CONFIG_FILES = [
@@ -127,6 +139,7 @@ export async function resolveConfig(docsDir: string): Promise<LitedocsConfig> {
             ...userThemeConfig,
           },
           i18n: userConfig.i18n,
+          versions: userConfig.versions,
           siteUrl: userConfig.siteUrl,
         };
       } catch (e) {
