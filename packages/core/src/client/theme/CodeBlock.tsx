@@ -59,13 +59,11 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
         >
           {copied ? (
             <>
-              <Check size={16} />
-              Copied
+              <Check size={20} />
             </>
           ) : (
             <>
-              <Copy size={16} />
-              Copy
+              <Copy size={20} />
             </>
           )}
         </button>
