@@ -4,13 +4,19 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { LitedocsI18nConfig } from "../../node/config";
 import { ComponentRoute } from "../app";
 
-function getBaseFilePath(filePath: string, locale: string | undefined): string {
-  if (!locale) return filePath;
-  if (filePath === locale) return "index.md";
-  if (filePath.startsWith(locale + "/")) {
-    return filePath.slice(locale.length + 1);
+function getBaseFilePath(
+  filePath: string,
+  version: string | undefined,
+  locale: string | undefined,
+): string {
+  let path = filePath;
+  if (version && (path === version || path.startsWith(version + "/"))) {
+    path = path === version ? "index.md" : path.slice(version.length + 1);
   }
-  return filePath;
+  if (locale && (path === locale || path.startsWith(locale + "/"))) {
+    path = path === locale ? "index.md" : path.slice(locale.length + 1);
+  }
+  return path;
 }
 
 export function LanguageSwitcher({
@@ -50,26 +56,33 @@ export function LanguageSwitcher({
     if (currentRoute) {
       const baseFile = getBaseFilePath(
         currentRoute.filePath,
+        currentRoute.version,
         currentRoute.locale,
       );
       const targetRoute = allRoutes.find(
         (r) =>
-          getBaseFilePath(r.filePath, r.locale) === baseFile &&
-          (r.locale || i18n.defaultLocale) === locale,
+          getBaseFilePath(r.filePath, r.version, r.locale) === baseFile &&
+          (r.locale || i18n.defaultLocale) === locale &&
+          r.version === currentRoute.version,
       );
       if (targetRoute) {
         targetPath = targetRoute.path;
       } else {
         const defaultIndexRoute = allRoutes.find(
           (r) =>
-            getBaseFilePath(r.filePath, r.locale) === "index.md" &&
-            (r.locale || i18n.defaultLocale) === locale,
+            getBaseFilePath(r.filePath, r.version, r.locale) === "index.md" &&
+            (r.locale || i18n.defaultLocale) === locale &&
+            r.version === currentRoute.version,
         );
         targetPath = defaultIndexRoute
           ? defaultIndexRoute.path
           : locale === i18n.defaultLocale
-            ? "/"
-            : `/${locale}`;
+            ? currentRoute.version
+              ? `/${currentRoute.version}`
+              : "/"
+            : currentRoute.version
+              ? `/${currentRoute.version}/${locale}`
+              : `/${locale}`;
       }
     } else {
       targetPath = locale === i18n.defaultLocale ? "/" : `/${locale}`;
