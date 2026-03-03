@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   entry: [
     "src/node/index.ts",
-    "src/node/cli.ts",
+    "src/node/cli/index.ts",
     "src/client/index.ts",
     "src/client/ssr.tsx",
   ],
