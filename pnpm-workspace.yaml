@@ -1,0 +1,7 @@
+packages:
+  - packages/*
+  - example
+  - docs
+
+onlyBuiltDependencies:
+  - sharp

@@ -1,0 +1,22 @@
+{
+  "name": "create-litedocs",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "create-litedocs": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.3.0",
+    "typescript": "^5.5.0"
+  }
+}

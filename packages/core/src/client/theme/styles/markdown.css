@@ -1,0 +1,323 @@
+/* ═══════════════════════════════════════════════════════════
+   MAIN CONTENT AREA
+   ═══════════════════════════════════════════════════════════ */
+.litedocs-content {
+  flex: 1;
+  padding: 2rem 2.5rem 2.5rem;
+  max-width: var(--ld-content-max-width);
+  min-width: 0;
+  transition:
+    max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.3s ease;
+}
+
+.litedocs-main-container.sidebar-collapsed .litedocs-content {
+  max-width: 100%;
+}
+
+/* ─── Breadcrumbs ────────────────────────────────────────── */
+.litedocs-breadcrumbs {
+  margin-bottom: 1.5rem;
+}
+
+.litedocs-breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.litedocs-breadcrumbs-item {
+  display: flex;
+  align-items: center;
+}
+
+.litedocs-breadcrumbs-link {
+  display: flex;
+  align-items: center;
+  color: var(--ld-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.litedocs-breadcrumbs-link:hover {
+  color: var(--ld-color-primary);
+}
+
+.litedocs-breadcrumbs-separator {
+  display: flex;
+  align-items: center;
+  color: var(--ld-text-dim);
+  margin: 0 0.5rem;
+  opacity: 0.5;
+}
+
+.litedocs-breadcrumbs-text {
+  color: var(--ld-text-muted);
+}
+
+.litedocs-breadcrumbs-active {
+  color: var(--ld-text-main);
+  font-weight: 500;
+}
+
+/* ─── Markdown Typography ────────────────────────────────── */
+.litedocs-page h1 {
+  font-size: 2.25rem;
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ld-text-main);
+}
+
+.litedocs-page h1 + p {
+  color: var(--ld-text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.litedocs-page h2 {
+  font-size: 1.4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: var(--ld-text-main);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ld-border-subtle);
+  scroll-margin-top: 5rem;
+  letter-spacing: -0.015em;
+}
+
+.litedocs-page h3 {
+  font-size: 1.125rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--ld-text-main);
+  scroll-margin-top: 5rem;
+}
+
+.litedocs-page p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--ld-text-muted);
+}
+
+.litedocs-page a {
+  color: var(--ld-color-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.litedocs-page a:hover {
+  color: var(--ld-color-primary-hover);
+  text-decoration: underline;
+}
+
+.litedocs-page ul,
+.litedocs-page ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  color: var(--ld-text-muted);
+}
+
+.litedocs-page li {
+  margin-bottom: 0.35rem;
+}
+
+.litedocs-page strong {
+  color: var(--ld-text-main);
+  font-weight: 600;
+}
+
+.litedocs-page blockquote {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  border-left: 3px solid var(--ld-color-primary);
+  background-color: var(--ld-color-primary-muted);
+  border-radius: 0 var(--ld-radius-md) var(--ld-radius-md) 0;
+  color: var(--ld-text-muted);
+}
+
+.litedocs-page blockquote p {
+  margin: 0;
+}
+
+.litedocs-page hr {
+  border: none;
+  border-top: 1px solid var(--ld-border-subtle);
+  margin: 2rem 0;
+}
+
+/* ─── Images ─────────────────────────────────────────────── */
+.litedocs-page img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--ld-radius-md);
+  margin: 1rem 0;
+  display: block;
+}
+
+.litedocs-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.litedocs-page th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 2px solid var(--ld-border-subtle);
+  color: var(--ld-text-main);
+  font-weight: 600;
+}
+
+.litedocs-page td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--ld-border-subtle);
+  color: var(--ld-text-muted);
+}
+
+.litedocs-page tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Inline Code ────────────────────────────────────────── */
+.litedocs-page :not(pre) > code {
+  background-color: var(--ld-surface);
+  padding: 0.15rem 0.45rem;
+  border-radius: 5px;
+  font-family: var(--ld-font-mono);
+  font-size: 0.85em;
+  color: var(--ld-color-primary-hover);
+  border: 1px solid var(--ld-border-subtle);
+}
+
+/* ─── Code Blocks ────────────────────────────────────────── */
+.code-block-wrapper {
+  margin: 1.5rem 0;
+  border-radius: var(--ld-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--ld-border-subtle);
+  background-color: var(--ld-code-bg);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.25rem;
+  background-color: var(--ld-code-header);
+  border-bottom: 1px solid var(--ld-border-subtle);
+  font-size: 0.75rem;
+}
+
+.code-block-lang {
+  color: var(--ld-text-dim);
+  font-family: var(--ld-font-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.code-block-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  background: none;
+  border: 1px solid var(--ld-border-subtle);
+  border-radius: 5px;
+  color: var(--ld-text-dim);
+  font-family: var(--ld-font-sans);
+  font-size: 0.6875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.code-block-copy:hover {
+  color: var(--ld-text-main);
+  border-color: var(--ld-border-strong);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.code-block-copy.copied {
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.code-block-copy svg {
+  width: 12px;
+  height: 12px;
+}
+
+.code-block-wrapper pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.code-block-wrapper pre > code {
+  padding: 1.25rem !important;
+  display: block !important;
+}
+
+.code-block-wrapper pre > code .line {
+  padding: 0;
+}
+
+/* Default pre (without wrapper) */
+.litedocs-page pre {
+  margin: 1.5rem 0;
+  border-radius: var(--ld-radius-md);
+  overflow-x: auto;
+  font-family: var(--ld-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  background-color: var(--ld-code-bg);
+  color: var(--ld-code-text);
+  border: 1px solid var(--ld-border-subtle);
+}
+
+.litedocs-page pre > code {
+  display: grid;
+  padding: 1rem 0;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.litedocs-page pre > code .line {
+  padding: 0 1.25rem;
+}
+
+.litedocs-page pre > code .line.highlighted {
+  background-color: var(--ld-color-primary-muted);
+  border-left: 2px solid var(--ld-color-primary);
+}
+
+/* ─── Header Anchors ─────────────────────────────────────── */
+.header-anchor {
+  margin-left: 0.5rem;
+  color: var(--ld-text-dim);
+  opacity: 0;
+  transition: opacity 0.2s;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.litedocs-page h2:hover .header-anchor,
+.litedocs-page h3:hover .header-anchor {
+  opacity: 1;
+}
+
+.header-anchor:hover {
+  color: var(--ld-color-primary);
+}

@@ -1,0 +1,38 @@
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .litedocs-on-this-page {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .litedocs-sidebar {
+    display: none;
+  }
+
+  .sidebar-toggle-floating {
+    display: none !important;
+  }
+
+  .litedocs-content {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-search {
+    display: none;
+  }
+
+  .page-nav {
+    flex-direction: column;
+  }
+}

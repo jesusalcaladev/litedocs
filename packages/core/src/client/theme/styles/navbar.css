@@ -1,0 +1,214 @@
+/* ═══════════════════════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════════════════════ */
+.litedocs-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--ld-navbar-height);
+  padding: 0; /* Padding moved to container */
+  background-color: rgba(10, 10, 15, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ld-border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem; /* Aligned exactly with main-container */
+}
+
+.navbar-logo {
+  flex: 1;
+}
+
+.navbar-logo a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ld-text-main);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.navbar-logo a:hover {
+  color: var(--ld-text-main);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.navbar-version {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ld-text-muted);
+  background-color: var(--ld-bg-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--ld-radius-md);
+  border: 1px solid var(--ld-border-subtle);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navbar-version:hover {
+  background-color: var(--ld-bg-mute);
+  color: var(--ld-text-main);
+  border-color: var(--ld-border-strong);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.navbar-links a {
+  position: relative;
+  padding: 0.4rem 0.75rem;
+  color: var(--ld-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: var(--ld-radius-md);
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: var(--ld-text-main);
+  background-color: var(--ld-color-primary-muted);
+}
+
+.navbar-links a.active {
+  color: var(--ld-color-primary);
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background-color: transparent; /* Cleaner flat base */
+  border: 1px solid transparent; /* Invisible border initially */
+  border-radius: var(--ld-radius-full);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ld-text-dim);
+  font-size: 0.8125rem;
+  min-width: 220px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navbar-search:hover {
+  background-color: var(--ld-bg-mute);
+  color: var(--ld-text-muted);
+}
+
+.navbar-search svg {
+  width: 15px;
+  height: 15px;
+  opacity: 0.7;
+}
+
+.navbar-search kbd {
+  margin-left: auto;
+  padding: 0.15rem 0.4rem;
+  font-family: var(--ld-font-sans);
+  font-weight: 500;
+  font-size: 0.65rem;
+  background-color: var(--ld-bg-mute);
+  border: 1px solid var(--ld-border-strong);
+  border-radius: var(--ld-radius-md);
+  color: var(--ld-text-dim);
+}
+
+/* ─── Github Stars Pill ────────────────────────────────── */
+.navbar-github-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--ld-radius-full);
+  border: 1px solid var(--ld-border-subtle);
+  background: var(--ld-bg-soft);
+  color: var(--ld-text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.navbar-github-stars:hover {
+  color: var(--ld-text-main);
+  background: var(--ld-bg-mute);
+  border-color: var(--ld-border-strong);
+}
+
+.navbar-github-stars svg {
+  width: 15px;
+  height: 15px;
+}
+
+.navbar-divider {
+  width: 1px;
+  height: 18px;
+  background-color: var(--ld-border-subtle);
+  margin: 0 0.25rem;
+}
+
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.navbar-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--ld-radius-full);
+  color: var(--ld-text-muted);
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
+}
+
+.navbar-icon-btn:hover {
+  color: var(--ld-text-main);
+  background-color: var(--ld-bg-mute);
+}
+
+.navbar-icon-btn svg {
+  width: 18px;
+  height: 18px;
+}

@@ -1,0 +1,68 @@
+/* ─── Reset ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ld-font-sans);
+  background-color: var(--ld-bg-main);
+  color: var(--ld-text-main);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Layout Shell ───────────────────────────────────────── */
+.litedocs-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.litedocs-main-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  /* aligns with navbar */
+}
+
+/* ─── Background Glow ────────────────────────────────────── */
+.litedocs-background-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.glow-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  top: -100px;
+}
+
+.glow-1 {
+  width: 600px;
+  height: 600px;
+  background: var(--ld-color-primary-glow);
+  left: -200px;
+}
+
+.glow-2 {
+  width: 800px;
+  height: 800px;
+  background: #3b82f6; /* A nice secondary blue for depth */
+  right: -300px;
+  top: -200px;
+}

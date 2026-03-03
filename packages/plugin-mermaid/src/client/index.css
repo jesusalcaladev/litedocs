@@ -1,0 +1,28 @@
+/* ─── Mermaid Diagrams ───────────────────────────────────── */
+.mermaid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: var(--ld-surface);
+  border: 1px solid var(--ld-border-subtle);
+  border-radius: var(--ld-radius-md);
+  overflow-x: auto;
+}
+
+.mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-error {
+  color: #ef4444;
+  font-family: var(--ld-font-mono);
+  font-size: 0.875rem;
+  padding: 1rem;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.1);
+  border-radius: var(--ld-radius-sm);
+  text-align: center;
+}

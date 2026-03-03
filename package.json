@@ -1,0 +1,10 @@
+{
+  "name": "litedocs-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -C example dev",
+    "build:core": "pnpm --filter litedocs build",
+    "build:cli": "pnpm --filter create-litedocs build",
+    "build": "pnpm -r build"
+  }
+}
