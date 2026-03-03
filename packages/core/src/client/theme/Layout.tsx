@@ -41,20 +41,29 @@ export function ThemeLayout({ config, routes, children }: ThemeLayoutProps) {
     ? currentRoute?.locale || config.i18n.defaultLocale
     : undefined;
 
-  // Filter routes for sidebar, search, and navigation to only ones in the current locale
-  const localizedRoutes = config.i18n
-    ? routes.filter(
-        (r) => (r.locale || config.i18n!.defaultLocale) === currentLocale,
-      )
-    : routes;
+  // Determine current version (fallback to default)
+  const currentVersion = config.versions
+    ? currentRoute?.version || config.versions.defaultVersion
+    : undefined;
 
-  const localIndex = localizedRoutes.findIndex(
+  // Filter routes for sidebar, search, and navigation to only ones in the current locale and version
+  const filteredRoutes = routes.filter((r) => {
+    const localeMatch = config.i18n
+      ? (r.locale || config.i18n.defaultLocale) === currentLocale
+      : true;
+    const versionMatch = config.versions
+      ? (r.version || config.versions.defaultVersion) === currentVersion
+      : true;
+    return localeMatch && versionMatch;
+  });
+
+  const localIndex = filteredRoutes.findIndex(
     (r) => r.path === location.pathname,
   );
-  const prevPage = localIndex > 0 ? localizedRoutes[localIndex - 1] : null;
+  const prevPage = localIndex > 0 ? filteredRoutes[localIndex - 1] : null;
   const nextPage =
-    localIndex >= 0 && localIndex < localizedRoutes.length - 1
-      ? localizedRoutes[localIndex + 1]
+    localIndex >= 0 && localIndex < filteredRoutes.length - 1
+      ? filteredRoutes[localIndex + 1]
       : null;
 
   const { preload } = usePreload();
@@ -73,15 +82,16 @@ export function ThemeLayout({ config, routes, children }: ThemeLayoutProps) {
       />
       <Navbar
         config={config}
-        routes={localizedRoutes}
+        routes={filteredRoutes}
         allRoutes={routes}
         currentLocale={currentLocale}
+        currentVersion={currentVersion}
       />
       <div
         className={`litedocs-main-container ${!isSidebarOpen ? "sidebar-collapsed" : ""}`}
       >
         <Sidebar
-          routes={localizedRoutes}
+          routes={filteredRoutes}
           config={config}
           onCollapse={() => setIsSidebarOpen(false)}
         />
@@ -97,7 +107,7 @@ export function ThemeLayout({ config, routes, children }: ThemeLayoutProps) {
         </button>
 
         <main className="litedocs-content">
-          <Breadcrumbs routes={localizedRoutes} config={config} />
+          <Breadcrumbs routes={filteredRoutes} config={config} />
           <div className="litedocs-page">{children}</div>
 
           {/* Prev / Next Navigation */}
