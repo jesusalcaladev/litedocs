@@ -4,10 +4,9 @@ Fase 2 – Estabilización y extensiones
 - [ ] features: Soporte para versionado de documentación (ej. docs/v1/, docs/v2/) mas componente para cambiar de version
 - [x] features: Modo oscuro nativo – Toggle con detección de preferencia del sistema y persistencia
 - [x] features: Sidebar colapsable – Permitir ocultar/mostrar la sidebar para más espacio de lectura
-- [ ] features: Badge "Powered by LiteDocs" – Para que los sitios puedan mostrar que usan el framework.
+- [x] features: Badge "Powered by LiteDocs" – Para que los sitios puedan mostrar que usan el framework.
 - [ ] features: Agregar config para cambiar el tema del resaltado de sintaxis en los snippets de codigo
 - [x] features: agregar cuando una seccion es nueva y poner como bagdes New o Experimental - (Opcional): Colocar una para quitarse automaticamente cuando pasa un tiempo
-- [ ] features: Soporte para agregar un hero section en la pagina de inicio como si fuera un anuncio tiene que ir en la parte superior de la pagina y ser removible desde la config
 - [ ] features: Múltiples layouts – Diferentes diseños para páginas de inicio, documentación, blog, etc
 - [ ] features: Componente Playground (sandbox con React live)
 - [ ] features: Ejemplos en vivo con CodeSandbox/Stackblitz – Botón para abrir un ejemplo en un entorno sandbox.

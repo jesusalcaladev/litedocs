@@ -12,6 +12,7 @@
 @import "./styles/toc.css";
 @import "./styles/footer.css";
 @import "./styles/language-switcher.css";
+@import "./styles/powered-by.css";
 
 /* Markdown Content */
 @import "./styles/markdown.css";

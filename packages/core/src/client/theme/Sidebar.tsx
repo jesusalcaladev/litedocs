@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "./Link";
 import { LitedocsConfig } from "../../node/config";
+import { PoweredBy } from "./PoweredBy";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 interface RouteItem {
@@ -144,6 +145,8 @@ export function Sidebar({
           </button>
         </div>
       )}
+
+      {config.themeConfig?.poweredBy !== false && <PoweredBy />}
     </aside>
   );
 }

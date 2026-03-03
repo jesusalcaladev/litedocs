@@ -50,6 +50,8 @@ export interface LitedocsThemeConfig {
   version?: string;
   /** The GitHub repository in the format 'owner/repo' to fetch and display star count. */
   githubRepo?: string;
+  /** Whether to show the 'Powered by LiteDocs' badge in the sidebar (default: true) */
+  poweredBy?: boolean;
 }
 
 /**
