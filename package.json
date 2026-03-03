@@ -2,6 +2,7 @@
   "name": "litedocs-monorepo",
   "private": true,
   "scripts": {
+    "preinstall": "pnpm -C packages/core build",
     "dev": "pnpm -C example dev",
     "build:core": "pnpm --filter litedocs build",
     "build:cli": "pnpm --filter create-litedocs build",
