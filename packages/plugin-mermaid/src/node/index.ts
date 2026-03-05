@@ -1,41 +1,47 @@
 import { visit } from "unist-util-visit";
 
 /**
- * A tiny rehype plugin that detects `<code className="language-mermaid">` blocks
- * and transforms them into `<Mermaid chart="{raw_code}" />` JSX elements before
- * `rehype-pretty-code` attempts to highlight them.
+ * A Remark plugin that detects mermaid code blocks and transforms them
+ * into <Mermaid /> JSX components. This runs BEFORE any rehype processing,
+ * ensuring high reliability in MDX.
  */
-export function rehypeMermaid() {
+export function remarkMermaid() {
   return (tree: any) => {
-    visit(
-      tree,
-      "element",
-      (node: any, index: number | undefined, parent: any) => {
-        if (typeof index !== "number" || !parent) return;
-        if (node.tagName === "pre" && node.children?.length === 1) {
-          const codeNode = node.children[0];
-          if (
-            codeNode.tagName === "code" &&
-            codeNode.properties?.className?.includes("language-mermaid")
-          ) {
-            const rawCode = codeNode.children[0]?.value || "";
+    visit(tree, "code", (node: any, index: number | undefined, parent: any) => {
+      if (node.lang !== "mermaid") return;
 
-            // Replace the <pre> node with our custom <Mermaid> React component
-            parent.children[index] = {
-              type: "mdxJsxFlowElement",
-              name: "Mermaid",
-              attributes: [
-                {
-                  type: "mdxJsxAttribute",
-                  name: "chart",
-                  value: rawCode,
-                },
-              ],
-              children: [],
-            };
-          }
-        }
-      },
-    );
+      const rawCode = node.value || "";
+
+      // Replace the code block with a JSX component
+      const newNode = {
+        type: "mdxJsxFlowElement",
+        name: "Mermaid",
+        attributes: [
+          {
+            type: "mdxJsxAttribute",
+            name: "chart",
+            value: rawCode,
+          },
+        ],
+        children: [],
+      };
+
+      if (parent && typeof index === "number") {
+        parent.children[index] = newNode;
+      }
+    });
+  };
+}
+
+/**
+ * The standard Litedocs Mermaid plugin.
+ */
+export default function mermaidPlugin() {
+  return {
+    name: "litedocs-plugin-mermaid",
+    remarkPlugins: [remarkMermaid],
+    components: {
+      Mermaid: "@litedocs/plugin-mermaid/client",
+    },
   };
 }

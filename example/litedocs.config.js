@@ -1,6 +1,11 @@
+import mermaidPlugin from '@litedocs/plugin-mermaid';
+
 /** @type {import('litedocs').LitedocsConfig} */
 export default {
   siteUrl: 'https://litedocs.example.dev',
+  plugins: [
+    mermaidPlugin(),
+  ],
   themeConfig: {
     title: 'LiteDocs',
     description: 'A Vite documentation framework',

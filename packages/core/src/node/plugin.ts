@@ -26,12 +26,18 @@ export interface LitedocsPluginOptions {
  * @param options - Optional configuration for the plugin
  * @returns An array of Vite plugins
  */
-export function litedocsPlugin(options: LitedocsPluginOptions = {}): Plugin[] {
+export function litedocsPlugin(
+  options: LitedocsPluginOptions = {},
+  passedConfig?: LitedocsConfig,
+): Plugin[] {
   const docsDir = path.resolve(process.cwd(), options.docsDir || "docs");
   const normalizedDocsDir = normalizePath(docsDir);
-  let config: LitedocsConfig;
+  let config: LitedocsConfig = passedConfig!;
   let viteConfig: ResolvedConfig;
   let isBuild = false;
+
+  const extraVitePlugins =
+    config?.plugins?.flatMap((p) => p.vitePlugins || []) || [];
 
   return [
     {
@@ -46,8 +52,10 @@ export function litedocsPlugin(options: LitedocsPluginOptions = {}): Plugin[] {
         const envs = loadEnv(env.mode, envDir, "");
         Object.assign(process.env, envs);
 
-        // Resolve config async (loads litedocs.config.js if present)
-        config = await resolveConfig(docsDir);
+        // Resolve config async if not already passed
+        if (!config) {
+          config = await resolveConfig(docsDir);
+        }
 
         // If customCss specified in user's config file, use it
         if (!options.customCss && config.themeConfig?.customCss) {
@@ -131,10 +139,17 @@ export function litedocsPlugin(options: LitedocsPluginOptions = {}): Plugin[] {
           return `export default ${JSON.stringify(routes, null, 2)};`;
         }
         if (id === "\0virtual:litedocs-config") {
-          return `export default ${JSON.stringify(config, null, 2)};`;
+          const clientConfig = {
+            themeConfig: config?.themeConfig,
+            i18n: config?.i18n,
+            versions: config?.versions,
+            siteUrl: config?.siteUrl,
+          };
+          return `export default ${JSON.stringify(clientConfig, null, 2)};`;
         }
         if (id === "\0virtual:litedocs-entry") {
-          return generateEntryCode(options);
+          const code = generateEntryCode(options, config);
+          return code;
         }
       },
 
@@ -171,6 +186,7 @@ export function litedocsPlugin(options: LitedocsPluginOptions = {}): Plugin[] {
         ] as any,
       },
     }),
+    ...extraVitePlugins.filter((p): p is Plugin => !!p),
   ];
 }
 
@@ -183,30 +199,49 @@ export function litedocsPlugin(options: LitedocsPluginOptions = {}): Plugin[] {
  * @param options - Plugin options containing potential custom overrides (like `homePage` or `customCss`)
  * @returns A string of JavaScript code to be evaluated by the browser
  */
-function generateEntryCode(options: LitedocsPluginOptions): string {
+function generateEntryCode(
+  options: LitedocsPluginOptions,
+  config?: LitedocsConfig,
+): string {
   const homeImport = options.homePage
-    ? `import HomePage from '${options.homePage}';`
+    ? `import HomePage from '${normalizePath(options.homePage)}';`
     : "";
   const homeOption = options.homePage ? "homePage: HomePage," : "";
   const customCssImport = options.customCss
-    ? `import '${options.customCss}';`
+    ? `import '${normalizePath(options.customCss)}';`
     : "";
 
+  const pluginComponents =
+    config?.plugins?.flatMap((p) => Object.entries(p.components || {})) || [];
+
+  const componentImports = pluginComponents
+    .map(
+      ([
+        name,
+        path,
+      ]) => `import * as _comp_${name} from '${normalizePath(path)}';
+const ${name} = _comp_${name}.default || _comp_${name}['${name}'] || _comp_${name};`,
+    )
+    .join("\n");
+  const componentMap = pluginComponents.map(([name]) => name).join(", ");
+
   return `
-import { createLitedocsApp } from 'litedocs/client';
+import { createLitedocsApp as _createApp } from 'litedocs/client';
 import 'litedocs/style.css';
 ${customCssImport}
-import routes from 'virtual:litedocs-routes';
-import config from 'virtual:litedocs-config';
+import _routes from 'virtual:litedocs-routes';
+import _config from 'virtual:litedocs-config';
 ${homeImport}
+${componentImports}
 
-createLitedocsApp({
+_createApp({
   target: '#root',
-  routes,
-  config,
+  routes: _routes,
+  config: _config,
   modules: import.meta.glob('/docs/**/*.{md,mdx}'),
   hot: import.meta.hot,
   ${homeOption}
+  components: { ${componentMap} },
 });
 `;
 }

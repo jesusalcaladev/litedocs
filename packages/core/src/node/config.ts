@@ -1,13 +1,14 @@
 import path from "path";
 import { pathToFileURL } from "url";
 import fs from "fs";
+import type { Plugin as VitePlugin } from "vite";
 
 /**
  * Represents a single social link in the configuration.
  */
 export interface LitedocsSocialLink {
   /** Identifier for the icon (e.g., 'github', 'twitter') */
-  icon: "github" | "discord" | "twitter" | "x" | string;
+  icon: "discord" | "x" | string;
   /** The URL the social link points to */
   link: string;
 }
@@ -75,6 +76,24 @@ export interface LitedocsVersionsConfig {
 }
 
 /**
+ * Defines a Litedocs plugin that can extend the build process and client-side functionality.
+ */
+export interface LitedocsPlugin {
+  /** A unique name for the plugin */
+  name: string;
+  /** Whether to run this plugin before or after default ones (optional) */
+  enforce?: "pre" | "post";
+  /** Optional remark plugins to add to the MDX pipeline */
+  remarkPlugins?: any[];
+  /** Optional rehype plugins to add to the MDX pipeline */
+  rehypePlugins?: any[];
+  /** Optional Vite plugins to inject into the build process */
+  vitePlugins?: VitePlugin[];
+  /** Optional custom React components to register in MDX. Map of Name -> Module Path. */
+  components?: Record<string, string>;
+}
+
+/**
  * The root configuration object for Litedocs.
  */
 export interface LitedocsConfig {
@@ -88,6 +107,8 @@ export interface LitedocsConfig {
   i18n?: LitedocsI18nConfig;
   /** Configuration for documentation versioning */
   versions?: LitedocsVersionsConfig;
+  /** Custom plugins for extending functionality */
+  plugins?: LitedocsPlugin[];
 }
 
 export const CONFIG_FILES = [
@@ -141,6 +162,7 @@ export async function resolveConfig(docsDir: string): Promise<LitedocsConfig> {
           i18n: userConfig.i18n,
           versions: userConfig.versions,
           siteUrl: userConfig.siteUrl,
+          plugins: userConfig.plugins || [],
         };
       } catch (e) {
         console.warn(`[litedocs] Failed to load config from ${filename}:`, e);
