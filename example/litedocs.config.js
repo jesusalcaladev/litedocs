@@ -10,10 +10,8 @@ export default {
         { text: 'Documentation', link: '/docs' },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/my/repo' },
       { icon: 'discord', link: 'https://discord.com' }
     ],
-    version: 'v2.8.9',
     githubRepo: 'jesusalcaladev/hscale-issues',
     language: true,
   },
@@ -23,5 +21,12 @@ export default {
       en: 'English',
       es: 'Español'
     }   
+  },
+  versions: {
+    defaultVersion: 'v2.2.1',
+    versions: {
+      v1: 'Version 1.x',
+      'v2.2.1': 'Version 2.2.1'
+    }
   }
 }
