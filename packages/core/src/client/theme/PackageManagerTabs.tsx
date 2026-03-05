@@ -1,8 +1,7 @@
-import React, { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Copy, Check } from "lucide-react";
 import { NPM } from "./icons/npm";
 import { Pnpm } from "./icons/pnpm";
-import { Yarn } from "./icons/yarn";
 import { Bun } from "./icons/bun";
 import { Deno } from "./icons/deno";
 
@@ -12,7 +11,7 @@ interface PackageManagerTabsProps {
   className?: string;
 }
 
-type PackageManager = "npm" | "yarn" | "pnpm" | "bun" | "deno";
+type PackageManager = "npm" | "pnpm" | "bun" | "deno";
 
 const MANAGERS: {
   id: PackageManager;
@@ -20,7 +19,6 @@ const MANAGERS: {
   icon: any;
 }[] = [
   { id: "npm", label: "npm", icon: NPM },
-  { id: "yarn", label: "yarn", icon: Yarn },
   { id: "pnpm", label: "pnpm", icon: Pnpm },
   { id: "bun", label: "bun", icon: Bun },
   { id: "deno", label: "deno", icon: Deno },
@@ -44,7 +42,6 @@ function getCommandForManager(
   if (isInstall) {
     const pkgArgs = pkg ? ` ${pkg}` : "";
     if (manager === "npm") return `npm install${pkgArgs}`;
-    if (manager === "yarn") return pkg ? `yarn add${pkgArgs}` : `yarn install`;
     if (manager === "pnpm") return pkg ? `pnpm add${pkgArgs}` : `pnpm install`;
     if (manager === "bun") return pkg ? `bun add${pkgArgs}` : `bun install`;
     if (manager === "deno")
@@ -55,7 +52,6 @@ function getCommandForManager(
   if (isCreate) {
     const pkgArgs = pkg ? ` ${pkg}` : "";
     if (manager === "npm") return `npm create${pkgArgs}`;
-    if (manager === "yarn") return `yarn create${pkgArgs}`;
     if (manager === "pnpm") return `pnpm create${pkgArgs}`;
     if (manager === "bun") return `bun create${pkgArgs}`;
     if (manager === "deno") return `deno run -A npm:create-${pkg}`; // Approximation
@@ -65,7 +61,6 @@ function getCommandForManager(
   if (isRun) {
     const pkgArgs = pkg ? ` ${pkg}` : "";
     if (manager === "npm") return `npm run${pkgArgs}`;
-    if (manager === "yarn") return `yarn run${pkgArgs}`;
     if (manager === "pnpm") return `pnpm run${pkgArgs}`;
     if (manager === "bun") return `bun run${pkgArgs}`;
     if (manager === "deno") return `deno task ${pkg}`;
@@ -140,12 +135,10 @@ export function PackageManagerTabs({
             {copied ? (
               <>
                 <Check size={12} />
-                Copied
               </>
             ) : (
               <>
                 <Copy size={12} />
-                Copy
               </>
             )}
           </button>
