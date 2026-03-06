@@ -1,22 +1,20 @@
 import { Plugin, ResolvedConfig, loadEnv } from "vite";
-import { generateRoutes, invalidateRouteCache, invalidateFile } from "./routes";
+import {
+  generateRoutes,
+  invalidateRouteCache,
+  invalidateFile,
+} from "../routes";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
-import { resolveConfig, LitedocsConfig, CONFIG_FILES } from "./config";
-import { generateStaticPages } from "./ssg";
-import { normalizePath, isDocFile } from "./utils";
+import { resolveConfig, LitedocsConfig, CONFIG_FILES } from "../config";
+import { generateStaticPages } from "../ssg";
+import { normalizePath, isDocFile } from "../utils";
 import path from "path";
 
-/**
- * Configuration options specifically for the Litedocs Vite plugin.
- */
-export interface LitedocsPluginOptions {
-  /** The root directory containing markdown files (default: 'docs') */
-  docsDir?: string;
-  /** Path to a custom home page component (relative to project root) to render at '/' */
-  homePage?: string;
-  /** Path to a custom CSS file to override theme variables. Can also be set in litedocs.config.js */
-  customCss?: string;
-}
+import { LitedocsPluginOptions } from "./types";
+import { generateEntryCode } from "./entry";
+import { injectHtmlMeta } from "./html";
+
+export * from "./types";
 
 /**
  * The core Litedocs Vite plugin.
@@ -24,6 +22,7 @@ export interface LitedocsPluginOptions {
  * injecting HTML meta tags for SEO, and triggering the SSG process on build.
  *
  * @param options - Optional configuration for the plugin
+ * @param passedConfig - Pre-resolved configuration (internal use)
  * @returns An array of Vite plugins
  */
 export function litedocsPlugin(
@@ -188,114 +187,4 @@ export function litedocsPlugin(
     }),
     ...extraVitePlugins.filter((p): p is Plugin => !!p),
   ];
-}
-
-// ─── Helpers ─────────────────────────────────────────────
-
-/**
- * Generates the raw source code for the virtual entry file (`\0virtual:litedocs-entry`).
- * This code initializes the client-side React application.
- *
- * @param options - Plugin options containing potential custom overrides (like `homePage` or `customCss`)
- * @returns A string of JavaScript code to be evaluated by the browser
- */
-function generateEntryCode(
-  options: LitedocsPluginOptions,
-  config?: LitedocsConfig,
-): string {
-  const homeImport = options.homePage
-    ? `import HomePage from '${normalizePath(options.homePage)}';`
-    : "";
-  const homeOption = options.homePage ? "homePage: HomePage," : "";
-  const customCssImport = options.customCss
-    ? `import '${normalizePath(options.customCss)}';`
-    : "";
-
-  const pluginComponents =
-    config?.plugins?.flatMap((p) => Object.entries(p.components || {})) || [];
-
-  const componentImports = pluginComponents
-    .map(
-      ([
-        name,
-        path,
-      ]) => `import * as _comp_${name} from '${normalizePath(path)}';
-const ${name} = _comp_${name}.default || _comp_${name}['${name}'] || _comp_${name};`,
-    )
-    .join("\n");
-  const componentMap = pluginComponents.map(([name]) => name).join(", ");
-
-  return `
-import { createLitedocsApp as _createApp } from 'litedocs/client';
-import 'litedocs/style.css';
-${customCssImport}
-import _routes from 'virtual:litedocs-routes';
-import _config from 'virtual:litedocs-config';
-${homeImport}
-${componentImports}
-
-_createApp({
-  target: '#root',
-  routes: _routes,
-  config: _config,
-  modules: import.meta.glob('/docs/**/*.{md,mdx}'),
-  hot: import.meta.hot,
-  ${homeOption}
-  components: { ${componentMap} },
-});
-`;
-}
-
-/**
- * Injects OpenGraph, Twitter, and generic SEO meta tags into the final HTML output.
- * Also ensures the virtual entry file is injected if it's missing (e.g., standard Vite index.html).
- *
- * @param html - The original HTML string
- * @param config - The resolved Litedocs configuration containing site metadata
- * @returns The modified HTML string with injected tags
- */
-function injectHtmlMeta(html: string, config: LitedocsConfig): string {
-  const title = config.themeConfig?.title || "Litedocs";
-  const description = config.themeConfig?.description || "";
-
-  const seoTags = [
-    `<meta name="description" content="${description}">`,
-    `<meta property="og:title" content="${title}">`,
-    `<meta property="og:description" content="${description}">`,
-    `<meta property="og:type" content="website">`,
-    `<meta name="twitter:card" content="summary">`,
-    `<meta name="twitter:title" content="${title}">`,
-    `<meta name="twitter:description" content="${description}">`,
-    `<meta name="generator" content="Litedocs">`,
-  ].join("\n    ");
-
-  const themeScript = `
-    <script>
-      (function() {
-        try {
-          var stored = localStorage.getItem("litedocs-theme");
-          var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-          if (theme === "light") {
-            document.documentElement.classList.add("theme-light");
-            document.documentElement.dataset.theme = "light";
-          } else {
-            document.documentElement.classList.remove("theme-light");
-            document.documentElement.dataset.theme = "dark";
-          }
-        } catch (e) {}
-      })();
-    </script>
-  `;
-
-  html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`);
-  html = html.replace("</head>", `    ${seoTags}\n${themeScript}  </head>`);
-
-  if (!html.includes("src/main")) {
-    html = html.replace(
-      "</body>",
-      '  <script type="module">import "virtual:litedocs-entry";</script>\n  </body>',
-    );
-  }
-
-  return html;
 }
