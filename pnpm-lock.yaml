@@ -73,8 +73,8 @@ importers:
         specifier: ^3.0.0
         version: 3.1.1(@types/react@18.3.28)(react@18.3.1)
       boltdocs:
-        specifier: 1.0.1
-        version: 1.0.1(@types/node@25.3.2)(@types/react@18.3.28)(jiti@1.21.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.59.0)(terser@5.46.0)
+        specifier: workspace:*
+        version: link:../packages/core
       lucide-react:
         specifier: ^0.575.0
         version: 0.575.0(react@18.3.1)
@@ -1584,12 +1584,6 @@ packages:
   better-path-resolve@1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
-
-  boltdocs@1.0.1:
-    resolution: {integrity: sha512-f8IGjAmqgmfcUaagDCyjq9vsoDYnBrE/hvyj05Ic6XGT8lcIZLx7lqPNJbCuKNQlh0j3FWgdoUw3Mqifk3YX/Q==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -4978,44 +4972,6 @@ snapshots:
   better-path-resolve@1.0.0:
     dependencies:
       is-windows: 1.0.2
-
-  boltdocs@1.0.1(@types/node@25.3.2)(@types/react@18.3.28)(jiti@1.21.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.59.0)(terser@5.46.0):
-    dependencies:
-      '@mdx-js/react': 3.1.1(@types/react@18.3.28)(react@18.3.1)
-      '@mdx-js/rollup': 3.1.1(rollup@4.59.0)
-      fast-glob: 3.3.3
-      github-slugger: 2.0.0
-      gray-matter: 4.0.3
-      lucide-react: 0.575.0(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-live: 4.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-router-dom: 6.30.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rehype-pretty-code: 0.14.1(shiki@3.23.0)
-      rehype-slug: 6.0.0
-      remark-frontmatter: 5.0.0
-      remark-gfm: 4.0.1
-      sharp: 0.34.5
-      shiki: 3.23.0
-      svgo: 4.0.0
-      unist-util-visit: 5.1.0
-      vite: 7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0)
-      vite-plugin-image-optimizer: 2.0.3(sharp@0.34.5)(svgo@4.0.0)(vite@7.3.1(@types/node@25.3.2)(jiti@1.21.7)(terser@5.46.0))
-    transitivePeerDependencies:
-      - '@types/node'
-      - '@types/react'
-      - jiti
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
 
   boolbase@1.0.0: {}
 

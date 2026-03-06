@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "preinstall": "pnpm -C packages/core build",
-    "dev": "pnpm -C example dev",
+    "dev": "pnpm -C docs dev",
     "build:core": "pnpm --filter boltdocs build",
     "build:cli": "pnpm --filter create-boltdocs build",
     "build": "turbo run build",
