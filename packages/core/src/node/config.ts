@@ -53,6 +53,17 @@ export interface LitedocsThemeConfig {
   githubRepo?: string;
   /** Whether to show the 'Powered by LiteDocs' badge in the sidebar (default: true) */
   poweredBy?: boolean;
+  /** Granular layout customization props */
+  layoutProps?: {
+    navbar?: any;
+    sidebar?: any;
+    toc?: any;
+    background?: any;
+    head?: any;
+    breadcrumbs?: any;
+    className?: string;
+    style?: any;
+  };
 }
 
 /**
