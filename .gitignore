@@ -3,6 +3,8 @@ node_modules/
 jspm_packages/
 bower_components/
 
+FEATURES.md
+
 # Build outputs
 dist/
 build/
