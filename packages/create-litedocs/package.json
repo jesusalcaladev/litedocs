@@ -1,8 +1,13 @@
 {
   "name": "create-litedocs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI to create litedocs projects",
   "type": "module",
+  "author": "Jesus Alcala",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "bin": {
     "create-litedocs": "./dist/index.js"
@@ -15,6 +20,7 @@
   "files": [
     "dist"
   ],
+  "packageManager": "pnpm@10.30.2",
   "dependencies": {
     "picocolors": "^1.1.0",
     "prompts": "^2.4.2"

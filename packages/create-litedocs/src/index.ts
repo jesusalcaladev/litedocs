@@ -144,11 +144,12 @@ dist
 `;
   fs.writeFileSync(path.join(projectDir, "custom.css"), customCssContent);
 
-  const configContent = `// litedocs.config.js
+  const configContent = `/**
+ * @type {import('litedocs').LitedocsConfig}
+ */
 export default {
   title: '${response.projectName}',
-  theme: {
-    padding: '1.5rem',
+  themeConfig: {
     customCss: './custom.css'
   }
 };
@@ -162,8 +163,11 @@ import litedocs from 'litedocs';
 export default defineConfig({
   plugins: [
     react(),
-    litedocs()
-  ]
+    litedocs({
+      docsDir: "./docs",
+      homePage: "./src/HomePage.tsx",
+    }),
+  ],
 });
 `;
   fs.writeFileSync(path.join(projectDir, "vite.config.ts"), viteConfigContent);
