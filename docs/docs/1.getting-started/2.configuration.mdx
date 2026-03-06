@@ -1,0 +1,208 @@
+---
+title: "Configuration Reference"
+description: "Detailed documentation of all available options in litedocs.config.js."
+---
+
+# Configuration (`litedocs.config.js`)
+
+The `litedocs.config.js` (or `.ts`, `.mjs`) file at the root of your project controls how LiteDocs functions, builds routes, and renders the UI.
+We strongly recommend adding a JSDoc type annotation to your JavaScript configuration for auto-complete and type safety:
+
+```js
+/**
+ * @type {import('litedocs').LitedocsConfig}
+ */
+export default {
+  // Your options...
+};
+```
+
+Below is the comprehensive list of all configuration options according to the `LitedocsConfig` interface.
+
+## Root Options (`LitedocsConfig`)
+
+At the top level of your configuration file, you can define the following options:
+
+### `siteUrl`
+- **Type**: \`string\`
+- **Description**: The base URL of the site, used primarily for generating absolute paths in your sitemap (if implemented) or canonical URLs.
+- **Example**: \`"https://litedocs.dev"\`
+
+### `docsDir`
+- **Type**: \`string\`
+- **Default**: \`"docs"\`
+- **Description**: The root directory containing your Markdown/MDX documentation files. Change this if you keep your docs in a folder like \`"content"\`. _Note: It is recommended to configure this via the Vite Plugin options in `vite.config.ts`._
+
+### `themeConfig`
+- **Type**: \`LitedocsThemeConfig\`
+- **Description**: Determines the appearance, navigation, and structure of the theme. _See [Theme Configuration](#theme-configuration) below._
+
+### `i18n`
+- **Type**: \`LitedocsI18nConfig\`
+- **Description**: Configuration for internationalization.
+  - \`defaultLocale\` (\`string\`): The fallback locale, e.g., \`"en"\`.
+  - \`locales\` (\`Record&lt;string, string&gt;\`): Available locales mapping, e.g., \`&#123; en: "English", es: "Español" &#125;\`.
+
+### `versions`
+- **Type**: \`LitedocsVersionsConfig\`
+- **Description**: Configuration for documentation versioning.
+  - \`defaultVersion\` (\`string\`): The fallback version, e.g., \`"v2"\`.
+  - \`versions\` (\`Record&lt;string, string&gt;\`): Available versions mapping, e.g., \`&#123; v1: "Version 1.x", v2: "Version 2.x" &#125;\`.
+
+### `plugins`
+- **Type**: \`LitedocsPlugin[]\`
+- **Description**: Array of custom Litedocs plugins to extend the build process or client-side functionality.
+  - \`name\` (\`string\`): Unique identifier for the plugin.
+  - \`enforce\` (\`"pre" | "post"\`): Optional. Run order.
+  - \`remarkPlugins\` / \`rehypePlugins\` (\`any[]\`): Extends the MDX parsing pipeline.
+  - \`vitePlugins\` (\`VitePlugin[]\`): Standard Vite plugins to inject.
+  - \`components\` (\`Record&lt;string, string&gt;\`): Map of \`Name -> Module Path\` to globally inject React components into all MDX files.
+
+---
+
+## Theme Configuration
+
+The \`themeConfig\` object controls almost all visual aspects of the default theme.
+
+### `title`
+- **Type**: \`string\`
+- **Default**: \`"Litedocs"\`
+- **Description**: The global title of the documentation site, shown in the `<title>` tag and Navbar.
+
+### `description`
+- **Type**: \`string\`
+- **Default**: \`"A Vite documentation framework"\`
+- **Description**: The global site description used for Search Engine Optimization (SEO).
+
+### `logo`
+- **Type**: \`string\`
+- **Description**: Relative URL path or endpoint to the site logo displayed in the Navbar.
+
+### `navbar`
+- **Type**: \`Array&lt;&#123; text: string; link: string &#125;&gt;\`
+- **Default**: \`[&#123; text: "Home", link: "/" &#125;, &#123; text: "Documentation", link: "/docs" &#125;]\`
+- **Description**: Items to display in the top navigation bar.
+
+### `sidebar`
+- **Type**: \`Record&lt;string, Array&lt;&#123; text: string; link: string &#125;&gt;&gt;\`
+- **Description**: Custom sidebar groups. Although LiteDocs generates the sidebar automatically based on file-routing, providing this option overrides the automatic generation for specific paths.
+
+### `socialLinks`
+- **Type**: \`Array&lt;&#123; icon: string; link: string &#125;&gt;\`
+- **Description**: Social media icons and links displayed in the Navbar.
+  - \`icon\` (\`"discord" | "x" | string\`): Identifier for the svg icon.
+  - \`link\` (\`string\`): Destination URL.
+
+### `footer`
+- **Type**: \`&#123; text?: string &#125;\`
+- **Description**: Simple configuration for the site footer content. Supports HTML strings.
+
+### `breadcrumbs`
+- **Type**: \`boolean\`
+- **Default**: \`true\`
+- **Description**: Toggle the rendering of the breadcrumb navigation in the main document layout.
+
+### `customCss`
+- **Type**: \`string\`
+- **Description**: Absolute or relative path to a custom CSS file that overrides the framework's CSS variable values (e.g. \`"./custom.css"\`).
+
+### `editLink`
+- **Type**: \`string\`
+- **Description**: URL template for an 'Edit this page on GitHub' style link at the bottom of pages. Use \`:path\` to denote the current file path.
+- **Example**: \`"https://github.com/my-org/repo/edit/main/docs/:path"\`
+
+### `communityHelp`
+- **Type**: \`string\`
+- **Description**: URL to link readers to community support, usually a Discord or GitHub issues link.
+
+### `version`
+- **Type**: \`string\`
+- **Description**: A static version string explicitly forced into the Navbar (e.g., \`"v2.8.9"\`). Distinct from the \`versions\` object used for file-routing.
+
+### `githubRepo`
+- **Type**: \`string\`
+- **Description**: Points to your GitHub repo in \`owner/repo\` format. When provided, the Navbar will automatically fetch and display your GitHub Star count.
+
+### `poweredBy`
+- **Type**: \`boolean\`
+- **Default**: \`true\`
+- **Description**: Toggle the 'Powered by LiteDocs' badge rendered at the bottom of the sidebar.
+
+### `layoutProps`
+- **Type**: \`object\`
+- **Description**: The most granular control offered over internal UI components without writing a full plugin. You can override or pass inline props to internal elements:
+  - \`navbar\`: Props injected into the \`&lt;Navbar&gt;\`
+  - \`sidebar\`: Props injected into the \`&lt;Sidebar&gt;\`
+  - \`toc\`: Props for the Table of Contents right-sidebar
+  - \`background\`: Props for the background component (e.g., gradients)
+  - \`head\`: Data for HTML \`&lt;head&gt;\` injections
+  - \`breadcrumbs\`: Props for the Breadcrumb component
+  - \`className\`: Global \`div\` className on the layout container
+  - \`style\`: Inline React styles.
+
+---
+
+## Example Complex Configuration
+
+```ts
+import { defineConfig } from 'litedocs/config';
+
+export default defineConfig({
+  siteUrl: "https://litedocs.dev",
+  themeConfig: {
+    title: "Awesome Docs",
+    description: "The official guide for Awesome App",
+    logo: "/logo.png",
+    customCss: "./custom.css",
+    githubRepo: "litedocs/litedocs",
+    editLink: "https://github.com/litedocs/litedocs/edit/main/docs/:path",
+    socialLinks: [
+      { icon: "x", link: "https://x.com/litedocs" },
+      { icon: "discord", link: "https://discord.gg/custom-link" }
+    ],
+    footer: {
+      text: "Released under the MIT License."
+    }
+  },
+  i18n: {
+    defaultLocale: "en",
+    locales: { en: "English", es: "Español" }
+  }
+});
+```
+
+---
+
+# Vite Plugin Options (`vite.config.ts`)
+
+In addition to `litedocs.config.js`, you can pass specific options directly to the `litedocs()` Vite plugin inside `vite.config.ts`.
+
+```ts
+import { defineConfig } from 'vite';
+import { litedocs } from 'litedocs';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    litedocs({
+      docsDir: "./docs",
+      homePage: "./src/HomePage.tsx",
+    })
+  ]
+});
+```
+
+### `docsDir`
+- **Type**: \`string\`
+- **Default**: \`"docs"\`
+- **Description**: The root directory containing your Markdown/MDX documentation files. 
+
+### `homePage`
+- **Type**: \`string\`
+- **Description**: Path to a custom React component (relative to project root) to render at the base route \`/\`. If not provided, LiteDocs will fall back to using \`docs/index.mdx\`.
+
+### `customCss`
+- **Type**: \`string\`
+- **Description**: Path to a custom CSS file to override theme variables. Can also be set in \`litedocs.config.js\`.
+

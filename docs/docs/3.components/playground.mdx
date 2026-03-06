@@ -1,0 +1,55 @@
+---
+title: "Interactive Playground"
+description: "Add live React playgrounds to your documentation."
+---
+
+# Playground Component
+
+A cornerstone of good developer documentation is the ability to interact with the code right in the browser. LiteDocs includes a native **Playground** component that creates a live sandbox environment for React code directly within your page.
+
+## Usage
+
+Simply use the built-in `Playground` component:
+
+```tsx
+import { Playground } from 'litedocs/components';
+
+## Try it out
+
+<Playground code={\`
+  export default function App() {
+    return (
+      <div style={{ padding: '20px', background: 'blue', color: 'white' }}>
+        Live React Output!
+      </div>
+    );
+  }
+\`} />
+```
+
+## Features
+
+- **Live Preview**: The code snippet updates the visual output in real-time as the user types.
+- **Syntax Highlighting**: Built-in, theme-aware code highlighting based on our customized system.
+- **Isolated Context**: The React tree executed inside the playground won't break your documentation site if the user writes invalid code.
+- **Reset State**: Quick button to restart the code environment to the initial state.
+
+With the Playground, you can offer instant "Try it out" environments for components, hooks, or standard SDK functions.
+
+---
+
+## Active Demonstration
+
+Below is a live environment where you can interact with **all** the built-in LiteDocs MDX components at once. Try editing the code on the left!
+
+import { useState } from 'react';
+
+<Playground code={`
+  export default function App() {
+    return (
+      <div style={{ padding: '20px', background: 'blue', color: 'white' }}>
+        Live React Output!
+      </div>
+    );
+  }
+`} />

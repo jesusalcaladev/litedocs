@@ -1,0 +1,282 @@
+---
+title: "MDX Built-in Components"
+description: "Leverage ready-to-use MDX UI components in your documentation."
+---
+
+# MDX Components
+
+Because LiteDocs leverages React and MDX, standard Markdown elements are automatically enhanced with beautifully styled React components underneath the hood. 
+
+Moreover, LiteDocs ships with several utility UI components you can drop directly into your Markdown! Below is the definitive guide to every built-in component and all their properties.
+
+## Admonitions (Callouts)
+
+Admonitions highlight important information. Using them is as simple as adding an `<Admonition>` tag or using the markdown syntax if you have remark plugins configured.
+
+**Using `<Admonition>`**
+
+<Admonition type="info" title="Hey there!">
+  This is a helpful note for the reader.
+</Admonition>
+
+<Admonition type="warning" title="Warning">
+  Pay attention to this warning block.
+</Admonition>
+
+<Admonition type="danger" title="Danger">
+  This is a destructive action notice.
+</Admonition>
+
+```tsx
+<Admonition type="info" title="Hey there!">
+  This is a helpful note for the reader.
+</Admonition>
+
+<Admonition type="warning" title="Warning">
+  Pay attention to this warning block.
+</Admonition>
+
+<Admonition type="danger" title="Danger">
+  This is a destructive action notice.
+</Admonition>
+```
+
+**Props (`AdmonitionProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `type` | `"info" \| "warning" \| "danger"` | `"info"` | The visual variant of the callout. |
+| `title` | `string` | _(Optional)_ | The title displayed at the top of the admonition. |
+
+> **Note**: You can also use explicit tags like `<Note>`, `<Tip>`, `<Warning>`, `<Danger>`, or `<InfoBox>` as shorthands.
+
+---
+
+## Button
+
+A versatile button/link component for use in MDX pages and the home page.
+
+**Example:**
+
+<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+  <Button variant="primary" size="md" href="/docs/getting-started">
+    Get Started
+  </Button>
+
+  <Button variant="secondary" size="md">
+    Click Me
+  </Button>
+  
+  <Button variant="outline" size="md">
+    Outline
+  </Button>
+</div>
+
+```tsx
+<Button variant="primary" size="md" href="/docs/getting-started">
+  Get Started
+</Button>
+
+<Button variant="secondary" size="md" onClick={() => alert('Hello!')}>
+  Click Me
+</Button>
+
+<Button variant="outline" size="md">
+  Outline
+</Button>
+```
+
+**Props (`ButtonProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `variant` | `"primary" \| "secondary" \| "outline" \| "ghost"` | `"primary"` | The visual style variant of the button. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | The sizing scale of the button. |
+| `href` | `string` | _undefined_ | If provided, the element renders as an `<a>` tag instead of a `<button>`. |
+
+_(Standard anchor and button HTML attributes are also supported)_
+
+---
+
+## Badge
+
+An inline badge / pill component used for labels, statuses, or tags.
+
+**Example:**
+
+This feature is <Badge variant="success">Stable</Badge>
+
+Coming in the next version: <Badge variant="warning">Beta</Badge>
+
+```tsx
+This feature is <Badge variant="success">Stable</Badge>
+
+Coming in the next version: <Badge variant="warning">Beta</Badge>
+```
+
+**Props (`BadgeProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `variant` | `"default" \| "primary" \| "success" \| "warning" \| "danger" \| "info"` | `"default"` | The color variant of the badge. |
+
+_(Standard span HTML attributes are also supported)_
+
+---
+
+## Cards
+
+Cards are used to display features, directories, or distinct pieces of information in a grid. They are wrapped in a `<Cards>` container.
+
+**Example:**
+
+<Cards cols={3}>
+  <Card title="Fast" icon="⚡" href="/docs/getting-started/installation">
+    Instant HMR thanks to Vite.
+  </Card>
+  <Card title="Simple" icon="📁">
+    File-system based routing.
+  </Card>
+  <Card title="Beautiful" icon="✨">
+    Built-in modern MDX components.
+  </Card>
+</Cards>
+
+```tsx
+<Cards cols={3}>
+  <Card title="Fast" icon="⚡" href="/docs/getting-started/installation">
+    Instant HMR thanks to Vite.
+  </Card>
+  <Card title="Simple" icon="📁">
+    File-system based routing.
+  </Card>
+  <Card title="Beautiful" icon="✨">
+    Built-in modern MDX components.
+  </Card>
+</Cards>
+```
+
+**`<Cards>` Props (`CardsProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `cols` | `1 \| 2 \| 3 \| 4` | `3` | Number of columns to display in the grid. |
+
+**`<Card>` Props (`CardProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `title` | `string` | _undefined_ | The main heading of the card. |
+| `icon` | `React.ReactNode \| string` | _undefined_ | Emoji or icon displayed above the title. |
+| `href` | `string` | _undefined_ | If provided, the entire card becomes a clickable link to this destination. |
+
+---
+
+## Tabs
+
+A component used to categorize content and let the user conditionally render different views, like multiple code snippets for different package managers.
+
+**Example:**
+
+<Tabs defaultIndex={0}>
+  <Tab label="npm">
+    `npm install litedocs`
+  </Tab>
+  <Tab label="pnpm">
+    `pnpm add litedocs`
+  </Tab>
+  <Tab label="yarn">
+    `yarn add litedocs`
+  </Tab>
+</Tabs>
+
+````tsx
+<Tabs defaultIndex={0}>
+  <Tab label="npm">
+    ```bash
+    npm install litedocs
+    ```
+  </Tab>
+  <Tab label="pnpm">
+    ```bash
+    pnpm add litedocs
+    ```
+  </Tab>
+  <Tab label="yarn">
+    ```bash
+    yarn add litedocs
+    ```
+  </Tab>
+</Tabs>
+````
+
+**`<Tabs>` Props (`TabsProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `defaultIndex` | `number` | `0` | The index (0-based) of the tab that is open by default. |
+
+**`<Tab>` Props (`TabProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `label` | `string` | _Required_ | The text shown in the tab bar trigger. |
+
+---
+
+## List
+
+An enhanced list component with specific icon variants, perfect for feature listings or checklists.
+
+**Example:**
+
+<div style={{ display: 'flex', gap: '4rem', flexWrap: 'wrap' }}>
+  <div>
+    **Checked Variant:**
+    <List variant="checked">
+      <li>File-system routing</li>
+      <li>MDX support</li>
+      <li>Syntax highlighting</li>
+    </List>
+  </div>
+  <div>
+    **Arrow Variant:**
+    <List variant="arrow">
+      <li>First step</li>
+      <li>Second step</li>
+      <li>Third step</li>
+    </List>
+  </div>
+</div>
+
+```tsx
+<List variant="checked">
+  <li>File-system routing</li>
+  <li>MDX support</li>
+  <li>Syntax highlighting</li>
+</List>
+
+<List variant="arrow">
+  <li>First step</li>
+  <li>Second step</li>
+  <li>Third step</li>
+</List>
+```
+
+**Props (`ListProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `variant` | `"default" \| "checked" \| "arrow"` | `"default"` | The visual icon injected before every list item. |
+
+_(Standard `<ul>` HTML attributes are also supported)_
+
+---
+
+## Custom External Components
+
+Because you have Vite and React, you can import **your own** application's components straight into MDX to showcase them.
+
+For example, say you have a `<MyButton>` component defined in `src/components/MyButton.tsx`. You can import it in your MDX like this:
+
+```tsx
+import { MyButton } from '../src/components/MyButton';
+
+Here is our primary button:
+
+<MyButton onClick={() => alert('Clicked!')}>Click Me</MyButton>
+```
+
+LiteDocs will render the button right alongside your textual documentation. This makes building Live Design Systems incredibly easy.

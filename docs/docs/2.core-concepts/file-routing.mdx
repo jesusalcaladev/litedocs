@@ -1,0 +1,36 @@
+---
+title: "File Routing"
+description: "How file-routing works in LiteDocs."
+---
+
+# File-Based Routing
+
+LiteDocs uses a file-based routing system built on top of React Router. Your application's routes are automatically inferred from the folder structure within the `docs/` directory.
+
+## Basic Routing
+
+Files are mapped automatically to URL paths based on their filename and directory.
+
+- `docs/index.mdx` → `/`
+- `docs/about.mdx` → `/about`
+- `docs/api/index.mdx` → `/api`
+- `docs/api/endpoints.mdx` → `/api/endpoints`
+
+## Route Ordering and Grouping
+
+You can control the order of the sidebar and routing explicitly using numbered prefixes.
+
+```text
+docs/
+├── 1.getting-started/
+│   ├── 1.installation.mdx    <- /getting-started/installation
+│   └── 2.cli.mdx             <- /getting-started/cli
+└── 2.core-concepts/
+    └── 1.routing.mdx         <- /core-concepts/routing
+```
+
+LiteDocs strips the number from the final URL to keep your links clean, so `1.installation.mdx` is served at `/getting-started/installation`.
+
+## Nested Sections
+
+Any folder that contains an `index.mdx` is considered a section index. Folders without an `index.mdx` simply act as grouping namespaces in the auto-generated sidebar.

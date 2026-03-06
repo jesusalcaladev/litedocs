@@ -1,0 +1,51 @@
+---
+title: "Installation"
+description: "How to scaffold a new LiteDocs project from scratch."
+---
+
+# Installation
+
+The fastest way to start a new LiteDocs project is to use our scaffolding CLI tool `create-litedocs`.
+
+### Prerequisites
+
+LiteDocs requires **Node.js 18 or newer**.
+
+## Creating a new project
+
+We recommend using `pnpm` (though `npm` and `yarn` will also work). To generate the project, run:
+
+```bash
+pnpm dlx create-litedocs@latest
+```
+
+The CLI will prompt you for the project name. Once created, navigate inside the project and install dependencies:
+
+```bash
+cd my-litedocs-project
+pnpm install
+```
+
+## Starting the development server
+
+Start the local Vite development server:
+
+```bash
+pnpm run dev
+```
+
+Navigate to `http://localhost:5173` to see your documentation site up and running.
+
+## Building for Production
+
+When you are ready to publish, run the build command:
+
+```bash
+pnpm run build
+```
+
+This will run Vite's production build pipeline generating static HTML files and optimized JS/CSS bundles in the `dist/` directory. You can preview the built site with:
+
+```bash
+pnpm run preview
+```

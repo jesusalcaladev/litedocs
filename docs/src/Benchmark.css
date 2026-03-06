@@ -1,0 +1,78 @@
+.benchmark-container {
+  background-color: var(--ld-bg-soft); /* Dark modern background */
+  border-radius: 12px;
+  border: 1px solid var(--ld-border-subtle);
+  padding: 2rem;
+  margin: 3rem auto;
+  max-width: 600px;
+  display: flex;
+  backdrop-filter: blur(var(--ld-navbar-blur));
+  -webkit-backdrop-filter: blur(var(--ld-navbar-blur));
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.litedocs-page h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+  font-weight: 700;
+  color: var(--ld-text-main);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ld-border-subtle);
+  letter-spacing: -0.015em;
+}
+
+.benchmark-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.benchmark-label {
+  width: 100px;
+  text-align: right;
+  color: var(--ld-text-muted);
+  font-size: 0.95rem;
+}
+
+.benchmark-label strong {
+  display: block;
+  color: var(--ld-text-main);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.benchmark-label small {
+  font-size: 0.8rem;
+  color: #71717a;
+}
+
+.benchmark-bar-wrapper {
+  flex-grow: 1;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.benchmark-bar {
+  height: 100%;
+  border-radius: 8px;
+  animation: growBar 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.benchmark-value {
+  width: 80px;
+  text-align: right;
+  color: var(--ld-text-primary);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes growBar {
+  to {
+    transform: scaleX(1);
+  }
+}

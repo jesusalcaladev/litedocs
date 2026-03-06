@@ -1,0 +1,43 @@
+---
+title: "Internationalization (i18n)"
+description: "Translate your docs into multiple languages effortlessly."
+---
+
+# Internationalization (i18n)
+
+Translating documentation to a global audience is very straightforward with LiteDocs. Similar to [Versioning](/core-concepts/versioning), i18n relies entirely on your folder structure.
+
+## Folder Structure
+
+Place your primary (default) documentation at the root or under an `en/` folder. All translated docs go into their two-letter ISO 639-1 language code folders (e.g., `es`, `fr`, `jp`).
+
+```text
+docs/
+├── index.mdx        <- Default (English) root
+├── setup.mdx        <- Default (English) specific path
+├── es/
+│   ├── index.mdx    <- Spanish route
+│   └── setup.mdx    <- Spanish specific path
+└── fr/
+    ├── index.mdx    <- French route
+    └── setup.mdx    <- French specific path
+```
+
+If you access `/es/setup`, the content from `docs/es/setup.mdx` is shown.
+
+## The Language Switcher
+
+When LiteDocs discovers multiple locales defined via folders, it injects a **Language Switcher** component into the Navbar. When a user changes their language preference, they will be automatically redirected to the equivalent page in their chosen language.
+
+## Combining Versioning + i18n
+
+If you need both Versioning and i18n, the convention is to wrap **Versions** inside **Languages** or vice-versa, depending on your needs. Usually it looks like this:
+
+```text
+docs/
+├── en/
+│   └── v1/
+└── es/
+    └── v1/
+```
+Or placing translations globally if you don't version them across all paths. Check our [Plugins](/plugins) api if you need advanced custom URL mapping.

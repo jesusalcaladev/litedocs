@@ -1,0 +1,149 @@
+---
+title: "Theme Customization"
+description: "How to customize the visual aesthetics of LiteDocs."
+---
+
+# Theme Customization
+
+LiteDocs gives you incredible control over the look and feel of your docs without requiring you to "eject" or completely rewrite the UI.
+
+The system uses highly structured **CSS Variables** defined in standard `@media` or `[data-theme]` selectors to allow perfect customizability and native light/dark mode support.
+
+## The Global `custom.css` file
+
+When you scaffold a new LiteDocs app, a `custom.css` file is placed in the root of the project. This file overrides our default theme definitions. For it to work, it must be linked in your Vite Plugin options or `litedocs.config.js`:
+
+```js
+// vite.config.ts
+import { defineConfig } from 'vite';
+import { litedocs } from 'litedocs';
+
+export default defineConfig({
+  plugins: [
+    litedocs({
+      customCss: './custom.css'
+    })
+  ]
+});
+```
+
+## Overriding Variables
+
+Inside your `custom.css`, you can override properties. The `theme-light` or `[data-theme="light"]` selectors handle light mode, while `:root` defaults to dark mode. 
+
+By default, LiteDocs Dark Theme uses a deep `#0a0a0f` background with white (`#ffffff`) accents, while the Light Theme uses `#ffffff` background with purple (`#7f13ec`) primary accents.
+
+### Example: Changing the Primary Color
+
+To change the primary accent color to a brand color (like a vibrant green), simply update the accent and button variables:
+
+```css
+:root {
+  /* Dark Mode Accents */
+  --ld-color-primary: #10b981;
+  --ld-color-primary-hover: #059669;
+  --ld-btn-primary-bg: #10b981;
+  --ld-btn-primary-text: #ffffff;
+  --ld-color-primary-glow: rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="light"], .theme-light {
+  /* Light Mode Accents */
+  --ld-color-primary: #059669;
+  --ld-color-primary-hover: #047857;
+  --ld-btn-primary-bg: #059669;
+  --ld-btn-primary-text: #ffffff;
+}
+```
+
+---
+
+## Comprehensive Variable Reference
+
+Below is the complete list of CSS variables you can override to fully theme your documentation site.
+
+### Base Palette & Backgrounds
+
+These control the underlying blocks of the website (Main content, Sidebar, Code blocks, etc).
+
+| Variable | Description |
+| -------- | ----------- |
+| `--ld-bg-main` | The absolute page background color |
+| `--ld-bg-soft` | A slightly different background for contrasting areas (e.g. Sidebar) |
+| `--ld-bg-mute` | Muted background for active sidebar elements or muted blocks |
+| `--ld-surface` | Background for floating surfaces like Cards and Dialogs |
+| `--ld-border-subtle` | Lightest border for dividing elements |
+| `--ld-border-strong` | Stronger border for focused elements or distinct divisions |
+
+### Text Colors
+
+| Variable | Description |
+| -------- | ----------- |
+| `--ld-text-main` | The primary document text color |
+| `--ld-text-muted` | Muted text (secondary labels, descriptions) |
+| `--ld-text-dim` | Heavily dimmed text (metadata, placeholders) |
+
+### Accents & Gradients
+
+| Variable | Description |
+| -------- | ----------- |
+| `--ld-color-primary` | Main accent color (Links, active states) |
+| `--ld-color-primary-hover` | Hover state for the main accent color |
+| `--ld-color-primary-text` | Color of text sitting *on top* of a primary background |
+| `--ld-gradient-from` | Starting color of the hero background gradient |
+| `--ld-gradient-to` | Ending color of the hero background gradient |
+| `--ld-glow-1-bg` | First ambient background glow color |
+| `--ld-glow-2-bg` | Second ambient background glow color |
+
+### Code Blocks
+
+| Variable | Description |
+| -------- | ----------- |
+| `--ld-code-bg` | Background of `pre` codeblocks |
+| `--ld-code-header` | Background of the code block title bar |
+| `--ld-code-text` | Default color of code text before syntax highlighting |
+
+### Layout & Dimensions
+
+You can change the physical size and spacing of the layout using these variables.
+
+| Variable | Default | Description |
+| -------- | ------- | ----------- |
+| `--ld-navbar-height` | `3.5rem` | Height of the top navigation bar |
+| `--ld-sidebar-width` | `14.5rem` | Width of the left documentation sidebar |
+| `--ld-toc-width` | `13rem` | Width of the right Table of Contents sidebar |
+| `--ld-content-max-width` | `820px` | Maximum width of the central markdown article |
+
+### Typography & Fonts
+
+LiteDocs uses `Inter` for Sans-Serif and `JetBrains Mono` for code blocks by default.
+
+| Variable | Description |
+| -------- | ----------- |
+| `--ld-font-sans` | The primary font stack for the entire site |
+| `--ld-font-mono` | The monospace font stack for `pre` and `code` tags |
+
+To replace the font with **Geist** for instance:
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+
+:root {
+  --ld-font-sans: "Geist", system-ui, -apple-system, sans-serif;
+}
+```
+
+### UI Component Colors
+
+There are dedicated variables to control the theme of Admonitions, Alerts, and specific MDX components (Success, Warning, Danger, Info).
+
+| Variable Prefix | Description | Example |
+| --------------- | ----------- | ------- |
+| `--ld-ui-success-*` | Theme for Success indicators | `--ld-ui-success-bg`, `--ld-ui-success-text` |
+| `--ld-ui-warning-*` | Theme for Warnings / Beta alerts | `--ld-ui-warning-bg`, `--ld-ui-warning-text` |
+| `--ld-ui-danger-*` | Theme for Danger / Error alerts | `--ld-ui-danger-bg`, `--ld-ui-danger-text` |
+| `--ld-ui-info-*` | Theme for Informational alerts | `--ld-ui-info-bg`, `--ld-ui-info-text` |
+
+## Extending Layout Components
+
+If changing CSS variables isn't enough, LiteDocs allows full Component overriding via our Custom UI API (documented soon).

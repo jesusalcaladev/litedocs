@@ -1,0 +1,31 @@
+---
+title: "Versioning"
+description: "Managing multiple API or library versions."
+---
+
+# Documentation Versioning
+
+LiteDocs allows you to easily maintain multiple versions of your documentation concurrently. A version switcher will automatically appear in your Navigation bar if you configure it correctly.
+
+## Setting Up Versions
+
+Versioning in LiteDocs is folder-based. Instead of having unstructured Markdown files in the `docs` directory, you place them under their respective version folders:
+
+```text
+docs/
+├── v1/
+│   ├── index.mdx
+│   └── setup.mdx
+└── v2/
+    ├── index.mdx
+    └── setup.mdx
+```
+
+- Content inside `docs/v1/` will be available under `/v1/*`
+- Content inside `docs/v2/` will be available under `/v2/*`
+
+## The Version Dropdown
+
+When LiteDocs detects top-level directories resembling versions (e.g. `v1`, `v2`, `v3.0`), it automatically groups them and generates a dropdown in the Navbar. This allows readers to seamlessly transition between API documentation versions without breaking their current reading path (if the path exists in both versions).
+
+_See [Internationalization (i18n)](/core-concepts/i18n) for seeing how Versioning interacts with languages._
