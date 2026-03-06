@@ -7,9 +7,9 @@
   justify-content: center;
   height: var(--ld-navbar-height);
   padding: 0; /* Padding moved to container */
-  background-color: rgba(10, 10, 15, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--ld-navbar-bg);
+  backdrop-filter: blur(var(--ld-navbar-blur));
+  -webkit-backdrop-filter: blur(var(--ld-navbar-blur));
   border-bottom: 1px solid var(--ld-border-subtle);
   position: sticky;
   top: 0;
@@ -43,6 +43,25 @@
 
 .navbar-logo a:hover {
   color: var(--ld-text-main);
+}
+
+.navbar-logo-img {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.navbar-logo-svg {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo-svg svg {
+  height: 20px;
+  width: auto;
+  fill: currentColor;
+  display: block;
 }
 
 .navbar-left {

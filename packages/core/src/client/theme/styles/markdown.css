@@ -5,6 +5,7 @@
   flex: 1;
   padding: 2rem 2.5rem 2.5rem;
   max-width: var(--ld-content-max-width);
+  margin: 0 auto;
   min-width: 0;
   transition:
     max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -320,4 +321,23 @@
 
 .header-anchor:hover {
   color: var(--ld-color-primary);
+}
+
+.litedocs-heading {
+  display: flex;
+  align-items: center;
+}
+
+.litedocs-heading .header-anchor {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  color: var(--ld-text-dim);
+  opacity: 0;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+
+.litedocs-heading:hover .header-anchor {
+  opacity: 1;
 }

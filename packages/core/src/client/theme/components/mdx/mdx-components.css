@@ -1,0 +1,405 @@
+/* ═══════════════════════════════════════════════════════════
+   MDX UI COMPONENTS
+   All variables use --ld-ui-* to avoid conflicts with
+   layout elements (sidebar, TOC, navbar).
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Button ──────────────────────────────────────────────── */
+.ld-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  border-radius: var(--ld-radius-md);
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--ld-font-sans);
+  border: 1px solid transparent;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.ld-btn:hover {
+  transform: scale(1.05);
+}
+
+.ld-btn:active {
+  transform: scale(0.95);
+}
+
+/* sizes */
+.ld-btn--sm {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.8125rem;
+  border-radius: var(--ld-radius-md);
+}
+.ld-btn--md {
+  padding: 0.7rem 1.6rem;
+  font-size: 0.9375rem;
+}
+.ld-btn--lg {
+  padding: 0.85rem 2.1rem;
+  font-size: 1.05rem;
+}
+
+/* variants */
+.ld-btn--primary {
+  background-color: var(--ld-ui-btn-primary-bg, var(--ld-btn-primary-bg));
+  color: var(--ld-ui-btn-primary-text, var(--ld-btn-primary-text)) !important;
+}
+.ld-btn--primary:hover {
+  opacity: 0.92;
+  color: var(--ld-ui-btn-primary-text, var(--ld-btn-primary-text)) !important;
+}
+
+.ld-btn--secondary {
+  background-color: var(--ld-ui-btn-secondary-bg, var(--ld-btn-secondary-bg));
+  color: var(
+    --ld-ui-btn-secondary-text,
+    var(--ld-btn-secondary-text)
+  ) !important;
+  border-color: var(--ld-border-subtle);
+}
+.ld-btn--secondary:hover {
+  background-color: var(--ld-bg-mute);
+  border-color: var(--ld-border-strong);
+  color: var(
+    --ld-ui-btn-secondary-text,
+    var(--ld-btn-secondary-text)
+  ) !important;
+}
+
+.ld-btn--outline {
+  background: transparent;
+  color: var(--ld-text-main) !important;
+  border-color: var(--ld-border-strong);
+}
+.ld-btn--outline:hover {
+  background-color: var(--ld-bg-soft);
+  border-color: var(--ld-color-primary);
+}
+
+.ld-btn--ghost {
+  background: transparent;
+  color: var(--ld-text-muted) !important;
+}
+.ld-btn--ghost:hover {
+  background-color: var(--ld-bg-soft);
+  color: var(--ld-text-main) !important;
+}
+
+/* ─── Badge ───────────────────────────────────────────────── */
+.ld-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--ld-radius-full);
+  line-height: 1.4;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.ld-badge--default {
+  background: var(--ld-bg-mute);
+  color: var(--ld-text-main);
+  border: 1px solid var(--ld-border-subtle);
+}
+.ld-badge--primary {
+  background: var(--ld-color-primary-muted);
+  color: var(--ld-color-primary);
+  border: 1px solid rgba(127, 19, 236, 0.2);
+}
+.ld-badge--success {
+  background: var(--ld-ui-success-bg);
+  color: var(--ld-ui-success-text);
+  border: 1px solid var(--ld-ui-success-border);
+}
+.ld-badge--warning {
+  background: var(--ld-ui-warning-bg);
+  color: var(--ld-ui-warning-text);
+  border: 1px solid var(--ld-ui-warning-border);
+}
+.ld-badge--danger {
+  background: var(--ld-ui-danger-bg);
+  color: var(--ld-ui-danger-text);
+  border: 1px solid var(--ld-ui-danger-border);
+}
+.ld-badge--info {
+  background: var(--ld-ui-info-bg);
+  color: var(--ld-ui-info-text);
+  border: 1px solid var(--ld-ui-info-border);
+}
+
+/* ─── Cards ───────────────────────────────────────────────── */
+.ld-cards {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.ld-cards--1 {
+  grid-template-columns: 1fr;
+}
+.ld-cards--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.ld-cards--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.ld-cards--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 768px) {
+  .ld-cards--2,
+  .ld-cards--3,
+  .ld-cards--4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ld-card {
+  position: relative;
+  padding: 1.35rem 1.5rem;
+  border-radius: var(--ld-radius-lg);
+  border: 1px solid var(--ld-border-subtle);
+  background: var(--ld-bg-soft);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
+  backdrop-filter: blur(var(--ld-navbar-blur));
+  -webkit-backdrop-filter: blur(var(--ld-navbar-blur));
+  color: inherit;
+  overflow: hidden;
+}
+
+/* Subtle inner glow on top edge */
+.ld-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--ld-border-strong),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ld-card:hover {
+  border-color: var(--ld-color-primary);
+  transform: translateY(-3px);
+}
+.ld-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--ld-color-primary),
+    transparent
+  );
+}
+
+.ld-card--link {
+  cursor: pointer;
+}
+.ld-card--link:hover {
+  text-decoration: none !important;
+}
+
+.ld-card__icon {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.85rem;
+}
+.ld-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  color: var(--ld-text-main);
+  letter-spacing: -0.01em;
+}
+.ld-card__body {
+  font-size: 0.85rem;
+  color: var(--ld-text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+.ld-card__body p {
+  margin: 0;
+}
+
+/* ─── Tabs ────────────────────────────────────────────────── */
+.ld-tabs {
+  margin: 1.5rem 0;
+  border: 1px solid var(--ld-border-subtle);
+  border-radius: var(--ld-radius-lg);
+  overflow: hidden;
+  background: var(--ld-bg-soft);
+}
+
+.ld-tabs__bar {
+  display: flex;
+  gap: 0;
+  background-color: var(--ld-bg-mute);
+  border-bottom: 1px solid var(--ld-border-subtle);
+  overflow-x: auto;
+}
+
+.ld-tabs__trigger {
+  position: relative;
+  padding: 0.65rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--ld-text-dim);
+  font-family: var(--ld-font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.ld-tabs__trigger:hover {
+  color: var(--ld-text-main);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+.ld-tabs__trigger--active {
+  color: var(--ld-color-primary);
+  border-bottom-color: var(--ld-color-primary);
+  background-color: transparent;
+}
+
+.ld-tabs__content {
+  padding: 1.25rem;
+}
+
+.ld-tab-panel {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--ld-text-muted);
+}
+
+/* ─── Admonition ──────────────────────────────────────────── */
+.ld-admonition {
+  margin: 1.5rem 0;
+  border-radius: var(--ld-radius-lg);
+  border: 1px solid;
+  overflow: hidden;
+}
+
+.ld-admonition__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ld-admonition__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ld-admonition__body {
+  padding: 0.6rem 1.1rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--ld-text-muted);
+}
+.ld-admonition__body p {
+  margin: 0 0 0.5rem;
+}
+.ld-admonition__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Admonition — Note (blue) */
+.ld-admonition--note {
+  border-color: var(--ld-ui-note-border);
+  background-color: var(--ld-ui-note-bg);
+}
+.ld-admonition--note .ld-admonition__header {
+  color: var(--ld-ui-note-text);
+}
+
+/* Admonition — Tip (green) */
+.ld-admonition--tip {
+  border-color: var(--ld-ui-tip-border);
+  background-color: var(--ld-ui-tip-bg);
+}
+.ld-admonition--tip .ld-admonition__header {
+  color: var(--ld-ui-tip-text);
+}
+
+/* Admonition — Info (blue) */
+.ld-admonition--info {
+  border-color: var(--ld-ui-info-border);
+  background-color: var(--ld-ui-info-bg);
+}
+.ld-admonition--info .ld-admonition__header {
+  color: var(--ld-ui-info-text);
+}
+
+/* Admonition — Warning (amber) */
+.ld-admonition--warning {
+  border-color: var(--ld-ui-warning-border);
+  background-color: var(--ld-ui-warning-bg);
+}
+.ld-admonition--warning .ld-admonition__header {
+  color: var(--ld-ui-warning-text);
+}
+
+/* Admonition — Danger (red) */
+.ld-admonition--danger {
+  border-color: var(--ld-ui-danger-border);
+  background-color: var(--ld-ui-danger-bg);
+}
+.ld-admonition--danger .ld-admonition__header {
+  color: var(--ld-ui-danger-text);
+}
+
+/* ─── List ────────────────────────────────────────────────── */
+.ld-list {
+  margin: 1rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+.ld-list--checked,
+.ld-list--arrow {
+  padding-left: 0;
+}
+
+.ld-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+  color: var(--ld-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.ld-list__icon {
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.ld-list--checked .ld-list__icon {
+  color: var(--ld-ui-success-text);
+}
+.ld-list--arrow .ld-list__icon {
+  color: var(--ld-color-primary);
+}

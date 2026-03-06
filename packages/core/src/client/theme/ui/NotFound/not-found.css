@@ -19,7 +19,11 @@
   font-size: 6rem;
   font-weight: 900;
   line-height: 1;
-  background: linear-gradient(135deg, var(--ld-color-primary), #a855f7);
+  background: linear-gradient(
+    135deg,
+    var(--ld-gradient-from),
+    var(--ld-gradient-to)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -38,19 +42,23 @@
   margin-bottom: 1.5rem;
 }
 
-.not-found-link {
-  display: inline-block;
+a.not-found-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.6rem 1.5rem;
-  background-color: var(--ld-color-primary);
-  color: var(--ld-color-primary-text);
+  background-color: var(--ld-btn-primary-bg);
+  color: var(--ld-btn-primary-text) !important;
   border-radius: var(--ld-radius-md);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s;
 }
 
-.not-found-link:hover {
-  background-color: var(--ld-color-primary-hover);
+a.not-found-link:hover {
+  background-color: var(--ld-btn-primary-bg);
+  opacity: 0.9;
   transform: translateY(-1px);
   box-shadow: 0 4px 16px var(--ld-color-primary-glow);
+  color: var(--ld-btn-primary-text) !important;
 }

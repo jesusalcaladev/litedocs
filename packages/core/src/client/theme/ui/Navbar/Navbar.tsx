@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "../Link";
 import { Book, ChevronDown } from "lucide-react";
-import { LitedocsConfig } from "../../../node/config";
-import { ComponentRoute } from "../../app";
+import { LitedocsConfig } from "../../../../node/config";
+import { ComponentRoute } from "../../../app";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { VersionSwitcher } from "../VersionSwitcher";
 import { ThemeToggle } from "../ThemeToggle";
-import { getStarsRepo } from "../../utils";
-import { Discord } from "../icons/discord";
-import { XformerlyTwitter } from "../icons/twitter";
+import { getStarsRepo } from "../../../utils";
+import { Discord } from "../../icons/discord";
+import { XformerlyTwitter } from "../../icons/twitter";
 import { GithubStars } from "./GithubStars";
 
 const SearchDialog = React.lazy(() =>
@@ -102,7 +102,7 @@ export function Navbar({
             </div>
           ) : null}
 
-          <nav className="navbar-links">
+          <nav className="navbar-links" aria-label="Top Navigation">
             {navItems.map((item, i) => (
               <Link key={i} to={item.link}>
                 {item.text}

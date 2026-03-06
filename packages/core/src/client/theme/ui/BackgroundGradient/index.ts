@@ -1,0 +1,1 @@
+export { BackgroundGradient } from "./BackgroundGradient";

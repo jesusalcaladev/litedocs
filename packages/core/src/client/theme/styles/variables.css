@@ -20,21 +20,64 @@
   --ld-text-muted: #4b5563;
   --ld-text-dim: #6b7280;
 
-  --ld-color-primary: #010101;
-  --ld-color-primary-hover: #010101;
+  --ld-color-primary: #7f13ec;
+  --ld-color-primary-hover: #6d0fd0;
   --ld-color-primary-muted: rgba(127, 19, 236, 0.1);
   --ld-color-primary-glow: rgba(127, 19, 236, 0.25);
-  --ld-color-primary-text: #010101;
+  --ld-color-primary-text: #ffffff;
+
+  /* ─ Buttons ─ */
+  --ld-btn-primary-bg: #7f13ec;
+  --ld-btn-primary-text: #ffffff;
+  --ld-btn-secondary-bg: #ffffff;
+  --ld-btn-secondary-text: #111827;
+
+  /* ─ Gradients ─ */
+  --ld-gradient-from: var(--ld-color-primary);
+  --ld-gradient-to: #a855f7;
 
   --ld-code-bg: #f3f4f6;
   --ld-code-header: #e5e7eb;
   --ld-code-text: #1f2937;
+
+  /* ─ Customization ─ */
+  --ld-navbar-bg: rgba(255, 255, 255, 0.82);
+  --ld-navbar-blur: 12px;
+  --ld-sidebar-bg: transparent;
+  --ld-sidebar-blur: 0px;
+  --ld-glow-1-bg: var(--ld-color-primary-glow);
+  --ld-glow-2-bg: rgba(59, 130, 246, 0.15);
+
+  /* ─ UI Components (overridable independently from layout) ─ */
+  --ld-ui-btn-primary-bg: var(--ld-btn-primary-bg);
+  --ld-ui-btn-primary-text: var(--ld-btn-primary-text);
+  --ld-ui-btn-secondary-bg: var(--ld-btn-secondary-bg);
+  --ld-ui-btn-secondary-text: var(--ld-btn-secondary-text);
+
+  --ld-ui-success-bg: rgba(34, 197, 94, 0.1);
+  --ld-ui-success-text: #16a34a;
+  --ld-ui-success-border: rgba(34, 197, 94, 0.25);
+  --ld-ui-warning-bg: rgba(245, 158, 11, 0.1);
+  --ld-ui-warning-text: #d97706;
+  --ld-ui-warning-border: rgba(245, 158, 11, 0.25);
+  --ld-ui-danger-bg: rgba(239, 68, 68, 0.1);
+  --ld-ui-danger-text: #dc2626;
+  --ld-ui-danger-border: rgba(239, 68, 68, 0.25);
+  --ld-ui-info-bg: rgba(59, 130, 246, 0.1);
+  --ld-ui-info-text: #2563eb;
+  --ld-ui-info-border: rgba(59, 130, 246, 0.25);
+  --ld-ui-note-bg: rgba(59, 130, 246, 0.06);
+  --ld-ui-note-text: #2563eb;
+  --ld-ui-note-border: rgba(59, 130, 246, 0.3);
+  --ld-ui-tip-bg: rgba(34, 197, 94, 0.06);
+  --ld-ui-tip-text: #16a34a;
+  --ld-ui-tip-border: rgba(34, 197, 94, 0.3);
 }
 
 :root {
   /* ─ Base palette ─ */
   --ld-bg-main: #0a0a0f;
-  --ld-bg-soft: #0f0f18;
+  --ld-bg-soft: rgba(10, 10, 15, 0.2);
   --ld-bg-mute: #141420;
   --ld-surface: #1a1a2e;
   --ld-border-subtle: rgba(255, 255, 255, 0.06);
@@ -46,17 +89,60 @@
   --ld-text-dim: #6b6b85;
 
   /* ─ Accent ─ */
-  --ld-color-primary: #ffff;
-  --ld-color-primary-hover: #f8f8f8;
-  --ld-color-primary-muted: rgba(255, 255, 255, 0.05);
-  --ld-color-primary-glow: rgba(125, 11, 163, 0.245);
-  --ld-color-primary-text: #010101;
-  --ld-color-accent: #ffff; /* Yellow accent for TOC */
+  --ld-color-primary: #ffffff;
+  --ld-color-primary-hover: #f3f3f3;
+  --ld-color-primary-muted: rgba(255, 255, 255, 0.1);
+  --ld-color-primary-glow: rgba(255, 255, 255, 0.25);
+  --ld-color-primary-text: #0a0a0f;
+  --ld-color-accent: #ffffff; /* White accent for TOC */
+
+  /* ─ Buttons ─ */
+  --ld-btn-primary-bg: #ffffff;
+  --ld-btn-primary-text: #0a0a0f;
+  --ld-btn-secondary-bg: #1a1a2e;
+  --ld-btn-secondary-text: #e4e4ed;
+
+  /* ─ Gradients ─ */
+  --ld-gradient-from: #ffffff;
+  --ld-gradient-to: rgba(255, 255, 255, 0.7);
 
   /* ─ Code ─ */
   --ld-code-bg: #0d0d14;
   --ld-code-header: #111119;
   --ld-code-text: #d4d4d4;
+
+  /* ─ Customization ─ */
+  --ld-navbar-bg: rgba(10, 10, 15, 0.2);
+  --ld-navbar-blur: 12px;
+  --ld-sidebar-bg: transparent;
+  --ld-sidebar-blur: 0px;
+  --ld-glow-1-bg: var(--ld-color-primary-glow);
+  --ld-glow-2-bg: rgba(59, 130, 246, 0.15);
+
+  /* ─ UI Components (dark) ─ */
+  --ld-ui-btn-primary-bg: var(--ld-btn-primary-bg);
+  --ld-ui-btn-primary-text: var(--ld-btn-primary-text);
+  --ld-ui-btn-secondary-bg: var(--ld-btn-secondary-bg);
+  --ld-ui-btn-secondary-text: var(--ld-btn-secondary-text);
+
+  --ld-ui-success-bg: rgba(34, 197, 94, 0.1);
+  --ld-ui-success-text: #22c55e;
+  --ld-ui-success-border: rgba(34, 197, 94, 0.25);
+  --ld-ui-warning-bg: rgba(245, 158, 11, 0.1);
+  --ld-ui-warning-text: #f59e0b;
+  --ld-ui-warning-border: rgba(245, 158, 11, 0.25);
+  --ld-ui-danger-bg: rgba(239, 68, 68, 0.1);
+  --ld-ui-danger-text: #ef4444;
+  --ld-ui-danger-border: rgba(239, 68, 68, 0.25);
+  --ld-ui-info-bg: rgba(59, 130, 246, 0.1);
+  --ld-ui-info-text: #3b82f6;
+  --ld-ui-info-border: rgba(59, 130, 246, 0.25);
+  --ld-ui-note-bg: rgba(59, 130, 246, 0.06);
+  --ld-ui-note-text: #3b82f6;
+  --ld-ui-note-border: rgba(59, 130, 246, 0.3);
+  --ld-ui-tip-bg: rgba(34, 197, 94, 0.06);
+  --ld-ui-tip-text: #22c55e;
+  --ld-ui-tip-border: rgba(34, 197, 94, 0.3);
 
   /* ─ Typography ─ */
   --ld-font-sans: "Inter", system-ui, -apple-system, sans-serif;

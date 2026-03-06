@@ -15,6 +15,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 /* ─── Layout Shell ───────────────────────────────────────── */
 .litedocs-layout {
   display: flex;
@@ -55,14 +63,14 @@ body {
 .glow-1 {
   width: 600px;
   height: 600px;
-  background: var(--ld-color-primary-glow);
+  background: var(--ld-glow-1-bg);
   left: -200px;
 }
 
 .glow-2 {
   width: 800px;
   height: 800px;
-  background: #3b82f6; /* A nice secondary blue for depth */
+  background: var(--ld-glow-2-bg);
   right: -300px;
   top: -200px;
 }
