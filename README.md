@@ -1,4 +1,4 @@
-# LiteDocs
+# BoltDocs
 
 > A minimal, fast, and highly customizable documentation framework powered by React and Vite.
 

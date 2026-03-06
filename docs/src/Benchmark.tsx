@@ -3,7 +3,7 @@ import "./Benchmark.css";
 
 const BENCHMARK_DATA = [
   {
-    name: "LiteDocs",
+    name: "Boltdocs",
     version: "latest",
     time: 38.14,
     color: "var(--ld-color-primary)", // Pink

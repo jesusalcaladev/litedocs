@@ -35,7 +35,6 @@ This project is a monorepo using [pnpm workspaces](https://pnpm.io/workspaces) a
 
 - `packages/core`: The core framework logic containing the theme, plugins, and Vite integration.
 - `packages/create-boltdocs`: The CLI to bootstrap new projects.
-- `example/`: Example documentation site used for active development and testing.
 
 ## Making a Pull Request
 
