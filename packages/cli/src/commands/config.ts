@@ -1,5 +1,5 @@
 import path from "path";
-import { resolveConfig } from "../../config";
+import { resolveConfig } from "../../../core/src/node/config";
 
 export async function configAction(root?: string) {
   const rootDir = root ? path.resolve(root) : process.cwd();
