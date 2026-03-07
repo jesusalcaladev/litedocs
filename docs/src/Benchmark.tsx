@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./Benchmark.css";
+import { Rocket } from "lucide-react";
 
 const BENCHMARK_DATA = [
   {
@@ -23,14 +24,28 @@ const BENCHMARK_DATA = [
 ];
 
 export function Benchmark() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const maxTime = Math.max(...BENCHMARK_DATA.map((d) => d.time));
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const { clientX, clientY } = e;
+    const { left, top } = containerRef.current.getBoundingClientRect();
+    containerRef.current.style.setProperty("--mouse-x", `${clientX - left}px`);
+    containerRef.current.style.setProperty("--mouse-y", `${clientY - top}px`);
+  };
+
   return (
-    <div className="benchmark-container">
-      <h2 className="benchmark-title">Benchmark</h2>
+    <div
+      className="benchmark-container"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+    >
+      <h2 className="benchmark-title">
+        <Rocket />
+        Benchmark
+      </h2>
       {BENCHMARK_DATA.map((item, index) => {
-        // Calculate the width percentage relative to the max time.
-        // We set a minimum width of 5% so very small bars are still visible.
         const widthPercent = Math.max((item.time / maxTime) * 100, 5);
 
         return (
@@ -46,13 +61,12 @@ export function Benchmark() {
                 style={{
                   width: `${widthPercent}%`,
                   backgroundColor: item.color,
-                  // Stagger the animation slightly for each row
                   animationDelay: `${index * 0.15}s`,
                 }}
               />
             </div>
 
-            <div className="benchmark-value">{item.time.toFixed(2)} s</div>
+            <div className="benchmark-value">{item.time.toFixed(2)}s</div>
           </div>
         );
       })}
