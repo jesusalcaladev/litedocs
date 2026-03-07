@@ -64,6 +64,13 @@ export interface BoltdocsThemeConfig {
     className?: string;
     style?: any;
   };
+  /**
+   * The syntax highlighting theme for code blocks.
+   * Supports any Shiki theme name (e.g., 'github-dark', 'one-dark-pro', 'aurora-x').
+   * Can also be an object for multiple themes (e.g., { light: 'github-light', dark: 'github-dark' }).
+   * Default: 'one-dark-pro'
+   */
+  codeTheme?: string | Record<string, string>;
 }
 
 /**

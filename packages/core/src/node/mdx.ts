@@ -29,7 +29,7 @@ export function boltdocsMdxPlugin(config?: BoltdocsConfig): Plugin {
       [
         rehypePrettyCode,
         {
-          theme: "one-dark-pro",
+          theme: config?.themeConfig?.codeTheme || "one-dark-pro",
           keepBackground: false,
         },
       ],
