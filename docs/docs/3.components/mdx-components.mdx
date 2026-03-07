@@ -59,8 +59,7 @@ A versatile button/link component for use in MDX pages and the home page.
 
 **Example:**
 
-<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-  <Button variant="primary" size="md" href="/docs/getting-started">
+  <Button variant="primary" size="md">
     Get Started
   </Button>
 
@@ -71,14 +70,13 @@ A versatile button/link component for use in MDX pages and the home page.
   <Button variant="outline" size="md">
     Outline
   </Button>
-</div>
 
 ```tsx
-<Button variant="primary" size="md" href="/docs/getting-started">
+<Button variant="primary" size="md">
   Get Started
 </Button>
 
-<Button variant="secondary" size="md" onClick={() => alert('Hello!')}>
+<Button variant="secondary" size="md" >
   Click Me
 </Button>
 
