@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.2.0...v1.3.0) (2026-03-07)
+
+
+### Bug Fixes
+
+* autocroll & active last items ([af68b50](https://github.com/jesusalcaladev/boltdocs/commit/af68b509c5c05af7a01afb3463bc9e7520b12680))
+
+
+### Features
+
+* add boltdocs.config.js for benchmark site configuration ([10a50a4](https://github.com/jesusalcaladev/boltdocs/commit/10a50a42084b4065a5f57e57c32a46e271722e58))
+* added button collapse sidebar & remove style home.css ([508c056](https://github.com/jesusalcaladev/boltdocs/commit/508c0561d13939c99ea018baab5b8c345f8f67dd))
+
 # [1.2.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.1.0...v1.2.0) (2026-03-07)
 
 
