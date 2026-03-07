@@ -288,7 +288,7 @@
 
 .boltdocs-page pre > code {
   display: grid;
-  padding: 1rem 0;
+  padding: 1rem 1rem;
   background-color: transparent;
   border: none;
   color: inherit;
