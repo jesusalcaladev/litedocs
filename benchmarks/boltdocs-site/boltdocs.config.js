@@ -1,7 +1,7 @@
-// boltdocs.config.js
+/**
+ * @type {import('boltdocs').BoltdocsConfig}
+ */
 export default {
   title: 'benchmark-site',
-  theme: {
-    padding: '1.5rem',
-  }
+
 };
