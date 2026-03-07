@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.1.0...v1.2.0) (2026-03-07)
+
+
+### Features
+
+* added support Batch Reading, Memory-Mapped LRU, Sharded Storage & Background Writes ([888d497](https://github.com/jesusalcaladev/boltdocs/commit/888d497ca766c97f0d27d7023a3fed2689ad30b2))
+
 # [1.1.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.0.0...v1.1.0) (2026-03-07)
 
 
