@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.0.0...v1.1.0) (2026-03-07)
+
+
+### Features
+
+* support cache ([7d5b43f](https://github.com/jesusalcaladev/boltdocs/commit/7d5b43ff184a18e14fdc4da710112643a2ac00b3))
+
 # 1.0.0 (2026-03-07)
 
 
