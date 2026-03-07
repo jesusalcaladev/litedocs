@@ -70,7 +70,6 @@ export function OnThisPage({
 
       if (visibleEntries.length > 0) {
         // If we have visible entries, find the one closest to the top of the viewport
-        // But with a priority for ones that just entered from the top
         const closest = visibleEntries.reduce((prev, curr) => {
           return Math.abs(curr.boundingClientRect.top - 100) <
             Math.abs(prev.boundingClientRect.top - 100)
@@ -98,14 +97,58 @@ export function OnThisPage({
     // Initial observation
     observeHeadings();
 
-    // Re-observe if content changes (e.g. after some delay to ensure rendering)
+    // Re-observe if content changes
     const timeoutId = setTimeout(observeHeadings, 1000);
+
+    // Scroll listener to detect bottom of page
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.pageYOffset;
+      const bodyHeight = document.documentElement.scrollHeight;
+
+      // If we're within 50px of the bottom, activate the last heading
+      if (scrollPosition >= bodyHeight - 50) {
+        setActiveId(headings[headings.length - 1].id);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       observerRef.current?.disconnect();
       clearTimeout(timeoutId);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [headings, location.pathname]);
+
+  // Autoscroll TOC list when activeId changes
+  useEffect(() => {
+    if (!activeId || !listRef.current) return;
+
+    const activeLink = listRef.current.querySelector(
+      `a[href="#${activeId}"]`,
+    ) as HTMLElement;
+
+    if (activeLink) {
+      const container = listRef.current.closest(
+        ".boltdocs-on-this-page",
+      ) as HTMLElement;
+      if (!container) return;
+
+      const linkRect = activeLink.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      const isVisible =
+        linkRect.top >= containerRect.top &&
+        linkRect.bottom <= containerRect.bottom;
+
+      if (!isVisible) {
+        activeLink.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    }
+  }, [activeId]);
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
