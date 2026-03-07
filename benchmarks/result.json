@@ -1,16 +1,18 @@
 {
   "benchmarks": {
-    "boltdocs": {
-      "timeMs": 38682.1252,
-      "timeSec": 38.68
+    "nextra": {
+      "timeSec": 368.92
     },
-    "nextra+cache": {
-      "timeMs": 265678.55569999997,
-      "timeSec": 265.68
+    "boltdocs_cold": {
+      "timeSec": 37.34
+    },
+    "boltdocs_warm": {
+      "timeSec": 18.05
     }
   },
-  "comparison": {
-    "faster": "boltdocs",
-    "ratio": 6.87
+  "improvements": {
+    "cold_vs_nextra": 9.88,
+    "warm_vs_cold": 2.07,
+    "warm_vs_nextra": 20.44
   }
 }

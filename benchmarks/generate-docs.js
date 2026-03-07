@@ -58,7 +58,10 @@ Testing ${NUM_PAGES} pages.
   console.log(`✅ Generated ${NUM_PAGES} pages in ${targetDir}`);
 }
 
-const root = process.cwd();
+// Use import.meta.url to get the script's directory, ensuring consistency
+const __dirname = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1'); 
+const root = path.resolve(__dirname); // This will be the 'benchmarks' folder
+
 const nextraDocs = path.join(root, 'nextra-site', 'pages');
 const boltdocsDocs = path.join(root, 'boltdocs-site', 'docs');
 
