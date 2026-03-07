@@ -1,5 +1,5 @@
 export type { BoltdocsConfig, BoltdocsThemeConfig } from "../node/config";
-export type { ComponentRoute, CreateBoltdocsAppOptions } from "./app";
+export type { ComponentRoute, CreateBoltdocsAppOptions } from "./types";
 export { createBoltdocsApp } from "./app";
 export { ThemeLayout } from "./theme/ui/Layout";
 export { Navbar } from "./theme/ui/Navbar";

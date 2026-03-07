@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "../Link";
 import { Search } from "lucide-react";
-import { ComponentRoute } from "../../../app";
+import { ComponentRoute } from "../../../types";
 
 interface SearchResult {
   title: string;

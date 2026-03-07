@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "../Link";
 import { Book, ChevronDown } from "lucide-react";
 import { BoltdocsConfig } from "../../../../node/config";
-import { ComponentRoute } from "../../../app";
+import { ComponentRoute } from "../../../types";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { VersionSwitcher } from "../VersionSwitcher";
 import { ThemeToggle } from "../ThemeToggle";

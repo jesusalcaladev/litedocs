@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Globe, ChevronDown } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BoltdocsI18nConfig } from "../../../../node/config";
-import { ComponentRoute } from "../../../app";
+import { ComponentRoute } from "../../../types";
 
 function getBaseFilePath(
   filePath: string,

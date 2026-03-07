@@ -265,12 +265,16 @@
 }
 
 .code-block-wrapper pre > code {
-  padding: 1.25rem !important;
+  padding: 1.25rem 0 !important;
   display: block !important;
 }
 
 .code-block-wrapper pre > code .line {
-  padding: 0;
+  padding: 0 1.25rem;
+}
+
+.code-block-wrapper pre > code .line {
+  padding: 0 1.25rem;
 }
 
 /* Default pre (without wrapper) */

@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "../Link";
 import { Home, ChevronRight } from "lucide-react";
-import { ComponentRoute } from "../../../app";
+import { ComponentRoute } from "../../../types";
 import { BoltdocsConfig } from "../../../../node/config";
 
 export interface BreadcrumbsProps {

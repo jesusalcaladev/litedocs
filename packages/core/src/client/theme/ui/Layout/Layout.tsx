@@ -4,7 +4,7 @@ import { Link } from "../Link";
 import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
 import { usePreload } from "../../../app/preload";
 import { BoltdocsConfig } from "../../../../node/config";
-import { ComponentRoute } from "../../../app";
+import { ComponentRoute } from "../../../types";
 export { Navbar } from "../Navbar";
 export { Sidebar } from "../Sidebar";
 export { OnThisPage } from "../OnThisPage";

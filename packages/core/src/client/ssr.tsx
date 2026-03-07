@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import { AppShell, ComponentRoute } from "./app";
+import { AppShell } from "./app";
+import { ComponentRoute } from "./types";
 
 /**
  * Options for rendering the Boltdocs application on the server (SSG).

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useCallback } from "react";
-import { ComponentRoute } from "./index";
+import { ComponentRoute } from "../types";
 
 interface PreloadContextType {
   preload: (path: string) => void;
