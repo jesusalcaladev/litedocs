@@ -107,4 +107,8 @@ export async function generateStaticPages(options: SSGOptions): Promise<void> {
   console.log(
     `[boltdocs] Generated ${routes.length} static pages + sitemap.xml`,
   );
+
+  // Ensure all cache operations (like index persistence) are finished
+  const { flushCache } = await import("../cache");
+  await flushCache();
 }

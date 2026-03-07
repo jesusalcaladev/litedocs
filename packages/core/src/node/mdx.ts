@@ -4,16 +4,27 @@ import remarkFrontmatter from "remark-frontmatter";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { Plugin } from "vite";
+import crypto from "crypto";
 
 import type { BoltdocsConfig } from "./config";
+import { TransformCache } from "./cache";
+
+/**
+ * Persistent cache for MDX transformations.
+ * Saves results to `.boltdocs/transform-mdx.json.gz`.
+ */
+const mdxCache = new TransformCache("mdx");
+let mdxCacheLoaded = false;
 
 /**
  * Configures the MDX compiler for Vite using `@mdx-js/rollup`.
  * Includes standard remark and rehype plugins for GitHub Flavored Markdown (GFM),
  * frontmatter extraction, auto-linking headers, and syntax highlighting via `rehype-pretty-code`.
  *
+ * Also wraps the plugin with a persistent cache to avoid re-compiling unchanged MDX files.
+ *
  * @param config - The Boltdocs configuration containing custom plugins
- * @returns A Vite plugin configured for MDX parsing
+ * @returns A Vite plugin configured for MDX parsing with caching
  */
 export function boltdocsMdxPlugin(config?: BoltdocsConfig): Plugin {
   const extraRemarkPlugins =
@@ -21,7 +32,7 @@ export function boltdocsMdxPlugin(config?: BoltdocsConfig): Plugin {
   const extraRehypePlugins =
     config?.plugins?.flatMap((p) => p.rehypePlugins || []) || [];
 
-  return mdxPlugin({
+  const baseMdxPlugin = mdxPlugin({
     remarkPlugins: [remarkGfm, remarkFrontmatter, ...extraRemarkPlugins],
     rehypePlugins: [
       rehypeSlug,
@@ -34,8 +45,80 @@ export function boltdocsMdxPlugin(config?: BoltdocsConfig): Plugin {
         },
       ],
     ],
-    // Provide React as default for JSX
     jsxRuntime: "automatic",
     providerImportSource: "@mdx-js/react",
   }) as Plugin;
+
+  return {
+    ...baseMdxPlugin,
+    name: "vite-plugin-boltdocs-mdx",
+
+    async buildStart() {
+      hits = 0;
+      total = 0;
+      if (!mdxCacheLoaded) {
+        mdxCache.load();
+        mdxCacheLoaded = true;
+      }
+      if (baseMdxPlugin.buildStart) {
+        await (baseMdxPlugin.buildStart as any).call(this);
+      }
+    },
+
+    async transform(code, id, options) {
+      if (!id.endsWith(".md") && !id.endsWith(".mdx")) {
+        return (baseMdxPlugin.transform as any)?.call(this, code, id, options);
+      }
+
+      total++;
+      // Create a cache key based on path, content, and config (simplified)
+      const contentHash = crypto.createHash("md5").update(code).digest("hex");
+      const cacheKey = `${id}:${contentHash}`;
+
+      const cached = mdxCache.get(cacheKey);
+      if (cached) {
+        hits++;
+        return { code: cached, map: null };
+      }
+
+      const result = await (baseMdxPlugin.transform as any).call(
+        this,
+        code,
+        id,
+        options,
+      );
+
+      if (result && typeof result === "object" && result.code) {
+        mdxCache.set(cacheKey, result.code);
+      } else if (typeof result === "string") {
+        mdxCache.set(cacheKey, result);
+      }
+
+      return result;
+    },
+
+    async buildEnd() {
+      if (total > 0) {
+        console.log(
+          `[boltdocs] MDX cache: ${hits}/${total} hits (${Math.round((hits / total) * 100)}%)`,
+        );
+      }
+      mdxCache.save();
+      await mdxCache.flush(); // Use instance flush or global flushCache
+      if (baseMdxPlugin.buildEnd) {
+        await (baseMdxPlugin.buildEnd as any).call(this);
+      }
+    },
+  };
 }
+
+/**
+ * Returns the current MDX cache statistics.
+ * @returns An object with total and hit counts
+ */
+export function getMdxCacheStats() {
+  return { hits, total };
+}
+
+let hits = 0;
+let total = 0;

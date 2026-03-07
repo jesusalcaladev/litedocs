@@ -1,43 +1,124 @@
+import fs from "fs";
+import path from "path";
+import crypto from "crypto";
+import zlib from "zlib";
+import { promisify } from "util";
 import { getFileMtime } from "./utils";
 
+const writeFile = promisify(fs.writeFile);
+const readFile = promisify(fs.readFile);
+const mkdir = promisify(fs.mkdir);
+const rename = promisify(fs.rename);
+const unlink = promisify(fs.unlink);
+
 /**
- * Per-file cache entry. Stores parsed data + the mtime at parse time.
+ * Configuration constants for the caching system.
  */
-interface FileCacheEntry<T> {
-  data: T;
-  mtime: number;
+const CACHE_DIR = ".boltdocs";
+const ASSETS_DIR = "assets";
+const SHARDS_DIR = "shards";
+
+/**
+ * Simple background task queue to prevent blocking the main thread during IO.
+ */
+class BackgroundQueue {
+  private queue: Promise<any> = Promise.resolve();
+  private pendingCount = 0;
+
+  add(task: () => Promise<any>) {
+    this.pendingCount++;
+    this.queue = this.queue.then(task).finally(() => {
+      this.pendingCount--;
+    });
+  }
+
+  async flush() {
+    await this.queue;
+  }
+
+  get pending() {
+    return this.pendingCount;
+  }
 }
 
+const backgroundQueue = new BackgroundQueue();
+
 /**
- * Generic file-based cache with per-file granularity.
- * Only re-parses files whose mtime has changed.
+ * Generic file-based cache with per-file granularity and asynchronous persistence.
  */
 export class FileCache<T> {
-  private entries = new Map<string, FileCacheEntry<T>>();
+  private entries = new Map<string, { data: T; mtime: number }>();
+  private readonly cachePath: string | null = null;
+  private readonly compress: boolean;
 
-  /**
-   * Retrieves parsed data for a file from the cache.
-   * Compares the current filesystem mtime with the cached mtime.
-   *
-   * @param filePath - The absolute path of the file
-   * @returns The cached data if valid, or `null` if the file has changed or doesn't exist
-   */
-  get(filePath: string): T | null {
-    const entry = this.entries.get(filePath);
-    if (!entry) return null;
-
-    const currentMtime = getFileMtime(filePath);
-    if (currentMtime !== entry.mtime) return null;
-
-    return entry.data;
+  constructor(
+    options: { name?: string; root?: string; compress?: boolean } = {},
+  ) {
+    this.compress = options.compress !== false;
+    if (options.name) {
+      const root = options.root || process.cwd();
+      const ext = this.compress ? "json.gz" : "json";
+      this.cachePath = path.resolve(root, CACHE_DIR, `${options.name}.${ext}`);
+    }
   }
 
   /**
-   * Stores parsed data for a file in the cache, recording its current mtime.
-   *
-   * @param filePath - The absolute path to the file
-   * @param data - The parsed data to store
+   * Loads the cache. Synchronous for startup simplicity but uses fast I/O.
    */
+  load(): void {
+    if (process.env.BOLTDOCS_NO_CACHE === "1") return;
+    if (!this.cachePath || !fs.existsSync(this.cachePath)) return;
+
+    try {
+      let raw = fs.readFileSync(this.cachePath);
+      if (this.cachePath.endsWith(".gz")) {
+        raw = zlib.gunzipSync(raw);
+      }
+      const data = JSON.parse(raw.toString("utf-8"));
+      this.entries = new Map(Object.entries(data));
+    } catch (e) {
+      console.warn(`[boltdocs] Failed to load cache: ${this.cachePath}`);
+    }
+  }
+
+  /**
+   * Saves the cache in the background.
+   */
+  save(): void {
+    if (process.env.BOLTDOCS_NO_CACHE === "1") return;
+    if (!this.cachePath) return;
+
+    const data = Object.fromEntries(this.entries);
+    const content = JSON.stringify(data);
+    const target = this.cachePath;
+    const useCompress = this.compress;
+
+    backgroundQueue.add(async () => {
+      try {
+        await mkdir(path.dirname(target), { recursive: true });
+        let buffer = Buffer.from(content);
+        if (useCompress) {
+          buffer = zlib.gzipSync(buffer);
+        }
+        const tempPath = `${target}.${crypto.randomBytes(4).toString("hex")}.tmp`;
+        await writeFile(tempPath, buffer);
+        await rename(tempPath, target);
+      } catch (e) {
+        console.error(
+          `[boltdocs] Failed to save cache background: ${target}`,
+          e,
+        );
+      }
+    });
+  }
+
+  get(filePath: string): T | null {
+    const entry = this.entries.get(filePath);
+    if (!entry) return null;
+    if (getFileMtime(filePath) !== entry.mtime) return null;
+    return entry.data;
+  }
+
   set(filePath: string, data: T): void {
     this.entries.set(filePath, {
       data,
@@ -45,40 +126,20 @@ export class FileCache<T> {
     });
   }
 
-  /**
-   * Checks if a specific file's cache is still valid (based on its mtime).
-   *
-   * @param filePath - The absolute path to the file
-   * @returns `true` if the cache is valid, `false` otherwise
-   */
   isValid(filePath: string): boolean {
-    return this.get(filePath) !== null;
+    const entry = this.entries.get(filePath);
+    if (!entry) return false;
+    return getFileMtime(filePath) === entry.mtime;
   }
 
-  /**
-   * Manually removes a specific file from the cache.
-   * Useful when forcefully invalidating a single updated file.
-   *
-   * @param filePath - The absolute path to the file
-   */
   invalidate(filePath: string): void {
     this.entries.delete(filePath);
   }
 
-  /**
-   * Clears the entire cache, forcing all files to be re-parsed on the next request.
-   * Useful when global dependencies (like config) change.
-   */
   invalidateAll(): void {
     this.entries.clear();
   }
 
-  /**
-   * Removes cached entries for files that no longer exist on the filesystem.
-   * Prevents memory leaks from deleted files.
-   *
-   * @param currentFiles - A Set of absolute file paths currently discovered on the disk
-   */
   pruneStale(currentFiles: Set<string>): void {
     for (const key of this.entries.keys()) {
       if (!currentFiles.has(key)) {
@@ -87,8 +148,180 @@ export class FileCache<T> {
     }
   }
 
-  /** Number of cached entries */
   get size(): number {
     return this.entries.size;
   }
+
+  async flush() {
+    await backgroundQueue.flush();
+  }
+}
+
+/**
+ * Sharded Cache: Optimized for large-scale data (like MDX transformations).
+ * Uses a memory index and individual files for each entry to avoid massive JSON parsing.
+ */
+export class TransformCache {
+  private index = new Map<string, string>(); // key -> hash
+  private memoryCache = new Map<string, string>();
+  private readonly baseDir: string;
+  private readonly shardsDir: string;
+  private readonly indexPath: string;
+
+  constructor(name: string, root: string = process.cwd()) {
+    this.baseDir = path.resolve(root, CACHE_DIR, `transform-${name}`);
+    this.shardsDir = path.resolve(this.baseDir, SHARDS_DIR);
+    this.indexPath = path.resolve(this.baseDir, "index.json");
+  }
+
+  /**
+   * Loads the index into memory.
+   */
+  load(): void {
+    if (process.env.BOLTDOCS_NO_CACHE === "1") return;
+    if (!fs.existsSync(this.indexPath)) return;
+
+    try {
+      const data = fs.readFileSync(this.indexPath, "utf-8");
+      this.index = new Map(Object.entries(JSON.parse(data)));
+    } catch (e) {
+      // Index might be corrupt, ignore
+    }
+  }
+
+  /**
+   * Persists the index in background.
+   */
+  save(): void {
+    if (process.env.BOLTDOCS_NO_CACHE === "1") return;
+    const data = JSON.stringify(Object.fromEntries(this.index));
+    const target = this.indexPath;
+
+    backgroundQueue.add(async () => {
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, data);
+    });
+  }
+
+  /**
+   * Retrieves a cached transformation. Fast lookup via index, lazy loading from disk.
+   */
+  get(key: string): string | null {
+    // 1. Check memory first
+    if (this.memoryCache.has(key)) return this.memoryCache.get(key)!;
+
+    // 2. Check index
+    const hash = this.index.get(key);
+    if (!hash) return null;
+
+    // 3. Load from shard (synchronous read for Vite's transform hook compatibility)
+    const shardPath = path.resolve(this.shardsDir, `${hash}.gz`);
+    if (!fs.existsSync(shardPath)) return null;
+
+    try {
+      const compressed = fs.readFileSync(shardPath);
+      const decompressed = zlib.gunzipSync(compressed).toString("utf-8");
+      this.memoryCache.set(key, decompressed);
+      return decompressed;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Stores a transformation result.
+   */
+  set(key: string, result: string): void {
+    const hash = crypto.createHash("md5").update(result).digest("hex");
+    this.index.set(key, hash);
+    this.memoryCache.set(key, result);
+
+    const shardPath = path.resolve(this.shardsDir, `${hash}.gz`);
+
+    // Background write shard
+    backgroundQueue.add(async () => {
+      if (fs.existsSync(shardPath)) return; // Already exists
+      await mkdir(this.shardsDir, { recursive: true });
+
+      const compressed = zlib.gzipSync(Buffer.from(result));
+      const tempPath = `${shardPath}.${crypto.randomBytes(4).toString("hex")}.tmp`;
+      await writeFile(tempPath, compressed);
+      await rename(tempPath, shardPath);
+    });
+  }
+
+  get size() {
+    return this.index.size;
+  }
+
+  async flush() {
+    await backgroundQueue.flush();
+  }
+}
+
+/**
+ * Specialized cache for processed assets (e.g., optimized images).
+ */
+export class AssetCache {
+  private readonly assetsDir: string;
+
+  constructor(root: string = process.cwd()) {
+    this.assetsDir = path.resolve(root, CACHE_DIR, ASSETS_DIR);
+  }
+
+  private getFileHash(filePath: string): string {
+    return crypto
+      .createHash("md5")
+      .update(fs.readFileSync(filePath))
+      .digest("hex");
+  }
+
+  get(sourcePath: string, cacheKey: string): string | null {
+    if (!fs.existsSync(sourcePath)) return null;
+    const sourceHash = this.getFileHash(sourcePath);
+    const cachedPath = this.getCachedPath(
+      sourcePath,
+      `${cacheKey}-${sourceHash}`,
+    );
+    return fs.existsSync(cachedPath) ? cachedPath : null;
+  }
+
+  set(sourcePath: string, cacheKey: string, content: Buffer | string): void {
+    const sourceHash = this.getFileHash(sourcePath);
+    const cachedPath = this.getCachedPath(
+      sourcePath,
+      `${cacheKey}-${sourceHash}`,
+    );
+
+    backgroundQueue.add(async () => {
+      await mkdir(this.assetsDir, { recursive: true });
+      const tempPath = `${cachedPath}.${crypto.randomBytes(4).toString("hex")}.tmp`;
+      await writeFile(tempPath, content);
+      await rename(tempPath, cachedPath);
+    });
+  }
+
+  private getCachedPath(sourcePath: string, cacheKey: string): string {
+    const ext = path.extname(sourcePath);
+    const name = path.basename(sourcePath, ext);
+    const safeKey = cacheKey.replace(/[^a-z0-9]/gi, "-").toLowerCase();
+    return path.join(this.assetsDir, `${name}.${safeKey}${ext}`);
+  }
+
+  clear(): void {
+    if (fs.existsSync(this.assetsDir)) {
+      fs.rmSync(this.assetsDir, { recursive: true, force: true });
+    }
+  }
+
+  async flush() {
+    await backgroundQueue.flush();
+  }
+}
+
+/**
+ * Flushes all pending background cache operations.
+ */
+export async function flushCache() {
+  await backgroundQueue.flush();
 }

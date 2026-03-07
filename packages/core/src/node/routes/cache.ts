@@ -1,7 +1,11 @@
 import { FileCache } from "../cache";
 import { ParsedDocFile } from "./types";
 
-const docCache = new FileCache<ParsedDocFile>();
+/**
+ * Persistent cache for parsed documentation files.
+ * Saves data to `.boltdocs/routes.json`.
+ */
+const docCache = new FileCache<ParsedDocFile>({ name: "routes" });
 
 /**
  * Invalidate all cached routes.

@@ -166,6 +166,24 @@ export function boltdocsPlugin(
           : path.resolve(process.cwd(), "dist");
 
         await generateStaticPages({ docsDir, outDir, config });
+
+        // Log cache stats at the end of the build
+        const { hits: mdxHits, total: mdxTotal } = (
+          await import("../mdx")
+        ).getMdxCacheStats();
+
+        console.log("\n--- [boltdocs] Cache Report ---");
+        if (mdxTotal > 0) {
+          console.log(
+            `MDX Transforms: ${mdxHits}/${mdxTotal} hits (${Math.round(
+              (mdxHits / mdxTotal) * 100,
+            )}%)`,
+          );
+        }
+        console.log("-------------------------------\n");
+
+        const { flushCache } = await import("../cache");
+        await flushCache();
       },
     },
     ViteImageOptimizer({

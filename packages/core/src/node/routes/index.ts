@@ -27,6 +27,9 @@ export async function generateRoutes(
   config?: BoltdocsConfig,
   basePath: string = "/docs",
 ): Promise<RouteMeta[]> {
+  // Load persistent cache on first call
+  docCache.load();
+
   const files = await fastGlob(["**/*.md", "**/*.mdx"], {
     cwd: docsDir,
     absolute: true,
@@ -41,16 +44,29 @@ export async function generateRoutes(
   }
 
   // Parse files in parallel using Promise.all for increased efficiency
+  let cacheHits = 0;
   const parsed: ParsedDocFile[] = await Promise.all(
     files.map(async (file) => {
       const cached = docCache.get(file);
-      if (cached) return cached;
+      if (cached) {
+        cacheHits++;
+        return cached;
+      }
 
       const result = parseDocFile(file, docsDir, basePath, config);
       docCache.set(file, result);
       return result;
     }),
   );
+
+  if (files.length > 0) {
+    console.log(
+      `[boltdocs] Routes generated: ${files.length} files (${cacheHits} from cache, ${files.length - cacheHits} parsed)`,
+    );
+  }
+
+  // Save cache after batch processing
+  docCache.save();
 
   // Collect group metadata from directory names and index files
   const groupMeta = new Map<string, { title: string; position?: number }>();
@@ -126,7 +142,6 @@ export async function generateRoutes(
         } else if (pathAfterVersion === "/" + defaultLocale) {
           pathAfterVersion = "/";
         }
-
         const targetPath =
           prefix +
           "/" +
