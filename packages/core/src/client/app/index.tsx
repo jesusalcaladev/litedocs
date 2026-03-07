@@ -40,27 +40,6 @@ const PackageManagerTabs = lazy(() =>
     default: m.PackageManagerTabs,
   })),
 );
-const Playground = lazy(() =>
-  import("../theme/components/Playground").then((m) => ({
-    default: m.Playground,
-  })),
-);
-
-import {
-  Button,
-  Badge,
-  Card,
-  Cards,
-  Tabs,
-  Tab,
-  Admonition,
-  Note,
-  Tip,
-  Warning,
-  Danger,
-  InfoBox,
-  List,
-} from "../theme/components/mdx";
 declare global {
   interface ImportMeta {
     env: Record<string, any>;
@@ -115,24 +94,6 @@ const mdxComponents = {
       <PackageManagerTabs {...props} />
     </Suspense>
   ),
-  Playground: (props: any) => (
-    <Suspense fallback={<div className="playground-skeleton" />}>
-      <Playground {...props} />
-    </Suspense>
-  ),
-  Button,
-  Badge,
-  Card,
-  Cards,
-  Tabs,
-  Tab,
-  Admonition,
-  Note,
-  Tip,
-  Warning,
-  Danger,
-  InfoBox,
-  List,
 };
 
 export function AppShell({
