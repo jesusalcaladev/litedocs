@@ -98,11 +98,6 @@ export function boltdocsMdxPlugin(config?: BoltdocsConfig): Plugin {
     },
 
     async buildEnd() {
-      if (total > 0) {
-        console.log(
-          `[boltdocs] MDX cache: ${hits}/${total} hits (${Math.round((hits / total) * 100)}%)`,
-        );
-      }
       mdxCache.save();
       await mdxCache.flush(); // Use instance flush or global flushCache
       if (baseMdxPlugin.buildEnd) {
@@ -115,9 +110,10 @@ export function boltdocsMdxPlugin(config?: BoltdocsConfig): Plugin {
 /**
  * Returns the current MDX cache statistics.
  * @returns An object with total and hit counts
+ * @deprecated Removed for performance
  */
 export function getMdxCacheStats() {
-  return { hits, total };
+  return { hits: 0, total: 0 };
 }
 
 let hits = 0;

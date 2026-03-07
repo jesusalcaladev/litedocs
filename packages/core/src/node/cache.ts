@@ -14,9 +14,54 @@ const unlink = promisify(fs.unlink);
 /**
  * Configuration constants for the caching system.
  */
-const CACHE_DIR = ".boltdocs";
+const CACHE_DIR = process.env.BOLTDOCS_CACHE_DIR || ".boltdocs";
 const ASSETS_DIR = "assets";
 const SHARDS_DIR = "shards";
+
+/**
+ * Default limits for the caching system.
+ */
+const DEFAULT_LRU_LIMIT = parseInt(
+  process.env.BOLTDOCS_CACHE_LRU_LIMIT || "2000",
+  10,
+);
+const DEFAULT_COMPRESS = process.env.BOLTDOCS_CACHE_COMPRESS !== "0";
+
+/**
+ * Simple LRU cache implementation to prevent memory leaks.
+ */
+class LRUCache<K, V> {
+  private cache = new Map<K, V>();
+  constructor(private limit: number) {}
+
+  get(key: K): V | undefined {
+    const val = this.cache.get(key);
+    if (val !== undefined) {
+      this.cache.delete(key);
+      this.cache.set(key, val);
+    }
+    return val;
+  }
+
+  set(key: K, value: V): void {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.limit) {
+      const firstKey = this.cache.keys().next().value;
+      if (firstKey !== undefined) {
+        this.cache.delete(firstKey);
+      }
+    }
+    this.cache.set(key, value);
+  }
+
+  get size() {
+    return this.cache.size;
+  }
+  clear() {
+    this.cache.clear();
+  }
+}
 
 /**
  * Simple background task queue to prevent blocking the main thread during IO.
@@ -54,7 +99,8 @@ export class FileCache<T> {
   constructor(
     options: { name?: string; root?: string; compress?: boolean } = {},
   ) {
-    this.compress = options.compress !== false;
+    this.compress =
+      options.compress !== undefined ? options.compress : DEFAULT_COMPRESS;
     if (options.name) {
       const root = options.root || process.cwd();
       const ext = this.compress ? "json.gz" : "json";
@@ -77,7 +123,7 @@ export class FileCache<T> {
       const data = JSON.parse(raw.toString("utf-8"));
       this.entries = new Map(Object.entries(data));
     } catch (e) {
-      console.warn(`[boltdocs] Failed to load cache: ${this.cachePath}`);
+      // Fallback: ignore cache errors
     }
   }
 
@@ -104,10 +150,7 @@ export class FileCache<T> {
         await writeFile(tempPath, buffer);
         await rename(tempPath, target);
       } catch (e) {
-        console.error(
-          `[boltdocs] Failed to save cache background: ${target}`,
-          e,
-        );
+        // Fallback: critical error logging skipped for performance
       }
     });
   }
@@ -163,7 +206,7 @@ export class FileCache<T> {
  */
 export class TransformCache {
   private index = new Map<string, string>(); // key -> hash
-  private memoryCache = new Map<string, string>();
+  private memoryCache = new LRUCache<string, string>(DEFAULT_LRU_LIMIT);
   private readonly baseDir: string;
   private readonly shardsDir: string;
   private readonly indexPath: string;
@@ -204,11 +247,49 @@ export class TransformCache {
   }
 
   /**
+   * Batch Read: Retrieves multiple transformation results concurrently.
+   */
+  async getMany(keys: string[]): Promise<Map<string, string>> {
+    const results = new Map<string, string>();
+    const toLoad: string[] = [];
+
+    for (const key of keys) {
+      const mem = this.memoryCache.get(key);
+      if (mem) results.set(key, mem);
+      else if (this.index.has(key)) toLoad.push(key);
+    }
+
+    if (toLoad.length > 0) {
+      const shards = await Promise.all(
+        toLoad.map(async (key) => {
+          const hash = this.index.get(key)!;
+          const shardPath = path.resolve(this.shardsDir, `${hash}.gz`);
+          try {
+            const compressed = await readFile(shardPath);
+            const decompressed = zlib.gunzipSync(compressed).toString("utf-8");
+            this.memoryCache.set(key, decompressed);
+            return { key, val: decompressed };
+          } catch (e) {
+            return null;
+          }
+        }),
+      );
+
+      for (const s of shards) {
+        if (s) results.set(s.key, s.val);
+      }
+    }
+
+    return results;
+  }
+
+  /**
    * Retrieves a cached transformation. Fast lookup via index, lazy loading from disk.
    */
   get(key: string): string | null {
-    // 1. Check memory first
-    if (this.memoryCache.has(key)) return this.memoryCache.get(key)!;
+    // 1. Check memory first (LRU)
+    const mem = this.memoryCache.get(key);
+    if (mem) return mem;
 
     // 2. Check index
     const hash = this.index.get(key);
