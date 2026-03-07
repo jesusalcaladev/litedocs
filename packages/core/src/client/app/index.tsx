@@ -364,11 +364,10 @@ export function createBoltdocsApp(options: CreateBoltdocsAppOptions) {
     </React.StrictMode>
   );
 
-  // In production (built app), the HTML is pre-rendered by SSG, so we hydrate.
-  // In development, the root is empty, so we createRoot.
-  if (import.meta.env.PROD && container.innerHTML.trim() !== "") {
-    ReactDOM.hydrateRoot(container as HTMLElement, app);
-  } else {
-    ReactDOM.createRoot(container as HTMLElement).render(app);
-  }
+  // SSG pre-renders a shell with mock components for SEO crawlers.
+  // We always use createRoot because the SSG output doesn't match the
+  // real client-side component tree (components are lazy/dynamic).
+  // Clear any SSG placeholder content before mounting.
+  container.innerHTML = "";
+  ReactDOM.createRoot(container as HTMLElement).render(app);
 }
