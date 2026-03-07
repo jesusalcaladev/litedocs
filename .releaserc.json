@@ -11,6 +11,13 @@
       }
     ],
     [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "packages/core",
+        "npmPublish": true
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         "assets": ["package.json", "CHANGELOG.md", "packages/**/package.json"],
