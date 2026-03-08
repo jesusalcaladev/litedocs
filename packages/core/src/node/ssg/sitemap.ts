@@ -1,4 +1,5 @@
 import { BoltdocsConfig } from "../config";
+import { escapeXml } from "../utils";
 
 /**
  * Generates a standard XML sitemap for search engine crawlers.
@@ -43,7 +44,7 @@ export function generateSitemap(
 ${entries
   .map(
     (e) => `  <url>
-    <loc>${baseUrl}${e.url}</loc>
+    <loc>${escapeXml(baseUrl)}${escapeXml(e.url)}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${e.changefreq}</changefreq>
     <priority>${e.priority}</priority>

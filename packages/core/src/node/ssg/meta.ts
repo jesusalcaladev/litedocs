@@ -1,3 +1,5 @@
+import { escapeHtml } from "../utils";
+
 /**
  * Replaces placeholder or default meta tags in the HTML template with page-specific values.
  *
@@ -9,26 +11,23 @@ export function replaceMetaTags(
   html: string,
   meta: { title: string; description: string },
 ): string {
+  const title = escapeHtml(meta.title);
+  const description = escapeHtml(meta.description);
+
   return html
-    .replace(/<title>.*?<\/title>/, `<title>${meta.title}</title>`)
+    .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
     .replace(
       /(<meta name="description" content=")[^"]*(")/,
-      `$1${meta.description}$2`,
+      `$1${description}$2`,
     )
-    .replace(
-      /(<meta property="og:title" content=")[^"]*(")/,
-      `$1${meta.title}$2`,
-    )
+    .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${title}$2`)
     .replace(
       /(<meta property="og:description" content=")[^"]*(")/,
-      `$1${meta.description}$2`,
+      `$1${description}$2`,
     )
-    .replace(
-      /(<meta name="twitter:title" content=")[^"]*(")/,
-      `$1${meta.title}$2`,
-    )
+    .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${title}$2`)
     .replace(
       /(<meta name="twitter:description" content=")[^"]*(")/,
-      `$1${meta.description}$2`,
+      `$1${description}$2`,
     );
 }

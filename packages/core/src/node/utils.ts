@@ -86,8 +86,19 @@ export function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
     .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+/**
+ * Alias for escapeHtml to be used in XML contexts (like sitemaps).
+ *
+ * @param str - The raw string to escape
+ * @returns The escaped string
+ */
+export function escapeXml(str: string): string {
+  return escapeHtml(str);
 }
 
 /**
