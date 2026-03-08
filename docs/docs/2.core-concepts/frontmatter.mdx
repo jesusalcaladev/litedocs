@@ -1,0 +1,68 @@
+---
+title: "Frontmatter Reference"
+description: "A complete reference of frontmatter fields available in LiteDocs."
+badge: New
+---
+
+# Frontmatter Reference
+
+LiteDocs uses frontmatter to allow you to customize the metadata and sidebar appearance of your pages. Frontmatter is a block of YAML at the very top of your `.md` or `.mdx` files, delimited by `---`.
+
+```markdown
+---
+title: "My Custom Title"
+badge: "New"
+---
+```
+
+## Available Fields
+
+### `title`
+- **Type**: `string`
+- **Description**: Overrides the title of the page. By default, LiteDocs infers the title from the filename (stripping numeric prefixes and extensions).
+
+### `description`
+- **Type**: `string`
+- **Description**: Used for SEO meta tags. This is highly recommended for better search engine indexing.
+
+### `sidebarPosition`
+- **Type**: `number`
+- **Description**: Controls the sorting order of the page within its section in the sidebar. Lower numbers appear first. 
+
+> [!TIP]
+> You can also use numeric prefixes in filenames (e.g., `1.getting-started.mdx`) to control ordering automatically.
+
+### `badge`
+- **Type**: `new` | `experimental` | `updated`
+- **Description**: Adds a small decorative badge next to the page link in the sidebar. Useful for highlighting "New", "Stable", or "Deprecated" content.
+
+---
+
+## Section Metadata (in `index.mdx`)
+
+When used in an `index.mdx` file, these fields control the behavior of the entire section/folder.
+
+### `groupTitle`
+- **Type**: `string`
+- **Description**: Overrides the name of the section in the sidebar. By default, the folder name is used.
+
+### `groupPosition`
+- **Type**: `number`
+- **Description**: Controls the sorting order of the entire section relative to other sections in the sidebar.
+
+---
+
+## Example Usage
+
+```markdown
+---
+title: "Advanced Configuration"
+description: "Learn how to deep-dive into LiteDocs settings."
+badge: New
+sidebarPosition: 10
+---
+
+# Advanced Configuration
+
+Content goes here...
+```
