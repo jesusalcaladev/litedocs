@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/jesusalcaladev/boltdocs/compare/v1.3.0...v1.3.1) (2026-03-08)
+
+
+### Bug Fixes
+
+* path traversal vulnerability in route parser ([65af6f5](https://github.com/jesusalcaladev/boltdocs/commit/65af6f55421e2ce1636a8356c420976125169a89))
+
 # [1.3.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.2.0...v1.3.0) (2026-03-07)
 
 
