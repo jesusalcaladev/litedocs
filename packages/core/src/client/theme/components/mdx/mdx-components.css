@@ -276,6 +276,9 @@
 
 .ld-tabs__trigger {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.65rem 1.25rem;
   background: none;
   border: none;
@@ -287,6 +290,11 @@
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+}
+
+.ld-tabs__trigger svg {
+  width: 1rem;
+  height: 1rem;
 }
 .ld-tabs__trigger:hover {
   color: var(--ld-text-main);

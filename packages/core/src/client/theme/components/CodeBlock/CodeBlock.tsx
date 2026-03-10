@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { Copy, Check } from "lucide-react";
+import { copyToClipboard } from "../../../utils";
 
 interface CodeBlockProps {
   children?: React.ReactNode;
@@ -28,46 +29,20 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
 
   const handleCopy = useCallback(async () => {
     const code = preRef.current?.textContent || "";
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback
-      const textarea = document.createElement("textarea");
-      textarea.value = code;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+    copyToClipboard(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }, []);
 
   return (
     <div className="code-block-wrapper">
-      <div className="code-block-header">
-        <span className="code-block-lang">{language || "code"}</span>
-        <button
-          className={`code-block-copy ${copied ? "copied" : ""}`}
-          onClick={handleCopy}
-          type="button"
-          aria-label="Copy code"
-        >
-          {copied ? (
-            <>
-              <Check size={20} />
-            </>
-          ) : (
-            <>
-              <Copy size={20} />
-            </>
-          )}
-        </button>
-      </div>
+      <button
+        className={`code-block-copy ${copied ? "copied" : ""}`}
+        onClick={handleCopy}
+        aria-label="Copy code"
+      >
+        {copied ? <Check size={16} /> : <Copy size={16} />}
+      </button>
       <pre ref={preRef} {...props}>
         {children}
       </pre>
