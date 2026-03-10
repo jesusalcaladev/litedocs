@@ -7,13 +7,13 @@ const BENCHMARK_DATA = [
     name: "Boltdocs",
     version: "warm",
     time: 13.78,
-    color: "var(--ld-color-primary)",
+    color: "var(--ld-warning-color)",
   },
   {
     name: "Boltdocs",
     version: "cold",
     time: 25.69,
-    color: "var(--ld-color-primary)",
+    color: "var(--ld-cold-color)",
   },
   {
     name: "Nextra",

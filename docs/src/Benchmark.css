@@ -1,3 +1,8 @@
+:root {
+  --ld-warning-color: #ff9800;
+  --ld-cold-color: #00d4ff;
+}
+
 .benchmark-container {
   position: relative;
   background-color: var(--ld-bg-soft);
