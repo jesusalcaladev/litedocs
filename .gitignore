@@ -42,6 +42,7 @@ desktop.ini
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+coverage/
 
 # Lock
 package-lock.json
