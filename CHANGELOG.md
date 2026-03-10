@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.3.3...v1.4.0) (2026-03-10)
+
+
+### Features
+
+* new promts of templates ([fa5dc86](https://github.com/jesusalcaladev/boltdocs/commit/fa5dc8670877afa441781bb7017ec16ea74b850b))
+
 ## [1.3.3](https://github.com/jesusalcaladev/boltdocs/compare/v1.3.2...v1.3.3) (2026-03-10)
 
 
