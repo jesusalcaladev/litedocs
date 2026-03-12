@@ -3,10 +3,12 @@ import { ComponentRoute } from "../types";
 
 interface PreloadContextType {
   preload: (path: string) => void;
+  routes: ComponentRoute[];
 }
 
 const PreloadContext = createContext<PreloadContextType>({
   preload: () => {},
+  routes: [],
 });
 
 export function usePreload() {
@@ -49,7 +51,7 @@ export function PreloadProvider({
   );
 
   return (
-    <PreloadContext.Provider value={{ preload }}>
+    <PreloadContext.Provider value={{ preload, routes }}>
       {children}
     </PreloadContext.Provider>
   );
