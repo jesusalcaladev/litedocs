@@ -11,10 +11,16 @@ LiteDocs uses a file-based routing system built on top of React Router. Your app
 
 Files are mapped automatically to URL paths based on their filename and directory.
 
-- `docs/index.mdx` → `/`
-- `docs/about.mdx` → `/about`
-- `docs/api/index.mdx` → `/api`
-- `docs/api/endpoints.mdx` → `/api/endpoints`
+import { FileTree, } from "boltdocs/client";
+
+<FileTree>
+ - docs/
+   - index.mdx
+   - about.mdx
+   - api/
+     - index.mdx
+     - endpoints.mdx
+</FileTree>
 
 ## Route Ordering and Grouping
 

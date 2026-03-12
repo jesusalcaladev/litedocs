@@ -3,7 +3,7 @@ title: "MDX Built-in Components"
 description: "Leverage ready-to-use MDX UI components in your documentation."
 ---
 
-import { Admonition, Note, Tip, Warning, Danger, InfoBox, Button, Badge, Card, Cards, Tabs, Tab, List } from 'boltdocs/client'
+import { Admonition, Note, Tip, Warning, Danger, InfoBox, Button, Badge, Card, Cards, Tabs, Tab, List, FileTree } from 'boltdocs/client'
 
 # MDX Components
 
@@ -180,8 +180,8 @@ A component used to categorize content and let the user conditionally render dif
   <Tab label="pnpm">
     pnpm add boltdocs
   </Tab>
-  <Tab label="yarn">
-    yarn add boltdocs
+  <Tab label="bun">
+    bun add boltdocs
   </Tab>
 </Tabs>
 
@@ -193,8 +193,8 @@ A component used to categorize content and let the user conditionally render dif
   <Tab label="pnpm">
     pnpm add boltdocs
   </Tab>
-  <Tab label="yarn">
-    yarn add boltdocs
+  <Tab label="bun">
+    bun add boltdocs
   </Tab>
 </Tabs>
 ````
@@ -256,6 +256,41 @@ An enhanced list component with specific icon variants, perfect for feature list
 | `variant` | `"default" \| "checked" \| "arrow"` | `"default"` | The visual icon injected before every list item. |
 
 _(Standard `<ul>` HTML attributes are also supported)_
+
+---
+
+## FileTree
+
+A component to display folder and file structures using standard Markdown lists. It automatically assigns the correct icons based on the file extension or folder syntax.
+
+**Example:**
+
+<FileTree>
+- astro.config.mjs
+- package.json
+- src/
+  - components/
+    - Header.astro
+    - Title.astro
+  - pages/
+</FileTree>
+
+```tsx
+<FileTree>
+- astro.config.mjs
+- package.json
+- src/
+  - components/
+    - Header.astro
+    - Title.astro
+  - pages/
+</FileTree>
+```
+
+**Props (`FileTreeProps`)**
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `children` | `React.ReactNode` | _Required_ | The markdown list representing the file tree. |
 
 ---
 
