@@ -1,0 +1,64 @@
+.boltdocs-link-preview {
+  position: fixed;
+  z-index: 1000;
+  width: 320px;
+  padding: 1rem;
+  background-color: var(--ld-navbar-bg);
+  backdrop-filter: blur(var(--ld-navbar-blur));
+  -webkit-backdrop-filter: blur(var(--ld-navbar-blur));
+  border: 1px solid var(--ld-border-subtle);
+  border-radius: var(--ld-radius-md);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--ld-font-sans);
+}
+
+.boltdocs-link-preview.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.boltdocs-link-preview-title {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ld-text-main);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.boltdocs-link-preview-summary {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--ld-text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .boltdocs-link-preview {
+  background-color: var(--ld-navbar-bg);
+  border-color: var(--ld-border-subtle);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .boltdocs-link-preview-title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .boltdocs-link-preview-summary {
+  color: #94a3b8;
+}

@@ -97,24 +97,43 @@ function useLocalizedTo(to: RouterLinkProps["to"]) {
   return finalPath === basePath ? basePath : finalPath;
 }
 
+import { LinkPreview } from "./LinkPreview";
+
 export interface LinkProps extends Omit<RouterLinkProps, "prefetch"> {
   /** Should prefetch the page on hover? Options: 'hover' | 'none'. Default 'hover' */
   boltdocsPrefetch?: "hover" | "none";
+  /** Should show a preview tooltip on hover? Default true */
+  boltdocsPreview?: boolean;
 }
 
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (props, ref) => {
     const {
       boltdocsPrefetch = "hover",
+      boltdocsPreview = true,
       onMouseEnter,
+      onMouseLeave,
       onFocus,
+      onBlur,
       onClick,
       to,
       ...rest
     } = props;
     const localizedTo = useLocalizedTo(to);
-    const { preload } = usePreload();
+    const { preload, routes } = usePreload();
+    const config = useConfig();
     const navigate = useNavigate();
+
+    const shouldShowPreview =
+      boltdocsPreview && config?.themeConfig?.linkPreview !== false;
+
+    const [preview, setPreview] = React.useState<{
+      visible: boolean;
+      x: number;
+      y: number;
+      title: string;
+      summary?: string;
+    }>({ visible: false, x: 0, y: 0, title: "" });
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
       onMouseEnter?.(e);
@@ -125,6 +144,37 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       ) {
         preload(localizedTo);
       }
+
+      if (
+        shouldShowPreview &&
+        typeof localizedTo === "string" &&
+        localizedTo.startsWith("/")
+      ) {
+        const cleanPath = localizedTo.split("#")[0].split("?")[0];
+        const route = routes.find(
+          (r) => r.path === cleanPath || (cleanPath === "/" && r.path === ""),
+        );
+        if (route) {
+          setPreview({
+            visible: true,
+            x: e.clientX,
+            y: e.clientY,
+            title: route.title,
+            summary: route.description,
+          });
+        }
+      }
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (preview.visible) {
+        setPreview((prev) => ({ ...prev, x: e.clientX, y: e.clientY }));
+      }
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      onMouseLeave?.(e);
+      setPreview((prev) => ({ ...prev, visible: false }));
     };
 
     const handleFocus = (e: React.FocusEvent<HTMLAnchorElement>) => {
@@ -138,9 +188,15 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       }
     };
 
+    const handleBlur = (e: React.FocusEvent<HTMLAnchorElement>) => {
+      onBlur?.(e);
+      setPreview((prev) => ({ ...prev, visible: false }));
+    };
+
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       // Allow user onClick to handle defaults or custom logic
       onClick?.(e);
+      setPreview((prev) => ({ ...prev, visible: false }));
 
       // If default prevented or not a simple left click, don't handle
       if (
@@ -164,14 +220,28 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     };
 
     return (
-      <RouterLink
-        ref={ref}
-        to={localizedTo}
-        onMouseEnter={handleMouseEnter}
-        onFocus={handleFocus}
-        onClick={handleClick}
-        {...rest}
-      />
+      <>
+        <RouterLink
+          ref={ref}
+          to={localizedTo}
+          onMouseEnter={handleMouseEnter}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onClick={handleClick}
+          {...rest}
+        />
+        {shouldShowPreview && (
+          <LinkPreview
+            isVisible={preview.visible}
+            title={preview.title}
+            summary={preview.summary}
+            x={preview.x}
+            y={preview.y}
+          />
+        )}
+      </>
     );
   },
 );
@@ -180,22 +250,39 @@ Link.displayName = "Link";
 export interface NavLinkProps extends Omit<RouterNavLinkProps, "prefetch"> {
   /** Should prefetch the page on hover? Options: 'hover' | 'none'. Default 'hover' */
   boltdocsPrefetch?: "hover" | "none";
+  /** Should show a preview tooltip on hover? Default true */
+  boltdocsPreview?: boolean;
 }
 
 export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
   (props, ref) => {
     const {
       boltdocsPrefetch = "hover",
+      boltdocsPreview = true,
       onMouseEnter,
+      onMouseLeave,
       onFocus,
+      onBlur,
       onClick,
       to,
       ...rest
     } = props;
 
     const localizedTo = useLocalizedTo(to);
-    const { preload } = usePreload();
+    const { preload, routes } = usePreload();
+    const config = useConfig();
     const navigate = useNavigate();
+
+    const shouldShowPreview =
+      boltdocsPreview && config?.themeConfig?.linkPreview !== false;
+
+    const [preview, setPreview] = React.useState<{
+      visible: boolean;
+      x: number;
+      y: number;
+      title: string;
+      summary?: string;
+    }>({ visible: false, x: 0, y: 0, title: "" });
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
       onMouseEnter?.(e);
@@ -206,6 +293,37 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
       ) {
         preload(localizedTo);
       }
+
+      if (
+        shouldShowPreview &&
+        typeof localizedTo === "string" &&
+        localizedTo.startsWith("/")
+      ) {
+        const cleanPath = localizedTo.split("#")[0].split("?")[0];
+        const route = routes.find(
+          (r) => r.path === cleanPath || (cleanPath === "/" && r.path === ""),
+        );
+        if (route) {
+          setPreview({
+            visible: true,
+            x: e.clientX,
+            y: e.clientY,
+            title: route.title,
+            summary: route.description,
+          });
+        }
+      }
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (preview.visible) {
+        setPreview((prev) => ({ ...prev, x: e.clientX, y: e.clientY }));
+      }
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      onMouseLeave?.(e);
+      setPreview((prev) => ({ ...prev, visible: false }));
     };
 
     const handleFocus = (e: React.FocusEvent<HTMLAnchorElement>) => {
@@ -219,8 +337,14 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
       }
     };
 
+    const handleBlur = (e: React.FocusEvent<HTMLAnchorElement>) => {
+      onBlur?.(e);
+      setPreview((prev) => ({ ...prev, visible: false }));
+    };
+
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       onClick?.(e);
+      setPreview((prev) => ({ ...prev, visible: false }));
       if (
         e.defaultPrevented ||
         e.button !== 0 ||
@@ -240,14 +364,28 @@ export const NavLink = React.forwardRef<HTMLAnchorElement, NavLinkProps>(
     };
 
     return (
-      <RouterNavLink
-        ref={ref}
-        to={localizedTo}
-        onMouseEnter={handleMouseEnter}
-        onFocus={handleFocus}
-        onClick={handleClick}
-        {...rest}
-      />
+      <>
+        <RouterNavLink
+          ref={ref}
+          to={localizedTo}
+          onMouseEnter={handleMouseEnter}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onClick={handleClick}
+          {...rest}
+        />
+        {shouldShowPreview && (
+          <LinkPreview
+            isVisible={preview.visible}
+            title={preview.title}
+            summary={preview.summary}
+            x={preview.x}
+            y={preview.y}
+          />
+        )}
+      </>
     );
   },
 );
