@@ -53,6 +53,8 @@ export interface BoltdocsThemeConfig {
   githubRepo?: string;
   /** Whether to show the 'Powered by LiteDocs' badge in the sidebar (default: true) */
   poweredBy?: boolean;
+  /** Whether to show a preview tooltip on internal links hover (default: true) */
+  linkPreview?: boolean;
   /** Granular layout customization props */
   layoutProps?: {
     navbar?: any;
