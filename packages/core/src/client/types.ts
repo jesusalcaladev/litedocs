@@ -23,6 +23,8 @@ export interface ComponentRoute {
   groupPosition?: number;
   /** Extracted markdown headings for search indexing */
   headings?: { level: number; text: string; id: string }[];
+  /** The page summary or description */
+  description?: string;
   /** The locale this route belongs to, if i18n is configured */
   locale?: string;
   /** The version this route belongs to, if versioning is configured */
