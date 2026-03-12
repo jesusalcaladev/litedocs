@@ -122,9 +122,22 @@ export function parseDocFile(
   }
 
   const sanitizedTitle = data.title ? escapeHtml(data.title) : inferredTitle;
-  const sanitizedDescription = data.description
+  let sanitizedDescription = data.description
     ? escapeHtml(data.description)
     : "";
+
+  // If no description is provided, extract a summary from the content
+  if (!sanitizedDescription && content) {
+    const summary = content
+      .replace(/^#+.*$/gm, "") // Remove headers
+      .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1") // Simplify links
+      .replace(/[_*`]/g, "") // Remove formatting
+      .replace(/\n+/g, " ") // Normalize whitespace
+      .trim()
+      .slice(0, 160);
+    sanitizedDescription = escapeHtml(summary);
+  }
+
   const sanitizedBadge = data.badge ? escapeHtml(data.badge) : undefined;
 
   return {
