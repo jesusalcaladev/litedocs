@@ -129,4 +129,20 @@ describe("parseDocFile", () => {
       "Security breach: File is outside of docs directory or contains null bytes: C:\\outside\\file.md",
     );
   });
+
+  it("should extract automatic summary from content if description is missing", () => {
+    const filePath = "C:\\docs\\summary-test.md";
+
+    (utils.parseFrontmatter as any).mockReturnValue({
+      data: { title: "Summary Test" },
+      content:
+        "# Title\n\nThis is a [test](link) content with *some* formatting and **bold** text. `Code` is also here.\n\nIt should be extracted as a summary.",
+    });
+
+    const result = parseDocFile(filePath, docsDir, basePath);
+
+    expect(result.route.description).toBe(
+      "This is a test content with some formatting and bold text. Code is also here. It should be extracted as a summary.",
+    );
+  });
 });
