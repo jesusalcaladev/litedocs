@@ -1,4 +1,4 @@
-import React from "react";
+import type { SVGProps } from "react";
 
 const Pnpm = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -54,16 +54,16 @@ const Pnpm = (props: SVGProps<SVGSVGElement>) => (
         <use xlinkHref="#pnpm_dark__dqv5133G8" fill="#f9ad00" />
       </g>
       <g>
-        <use xlinkHref="#pnpm_dark__b1Lv79ypvm" fill="currentColor" />
+        <use xlinkHref="#pnpm_dark__b1Lv79ypvm" fill="#ffffff" />
       </g>
       <g>
-        <use xlinkHref="#pnpm_dark__hy1IZWwLX" fill="currentColor" />
+        <use xlinkHref="#pnpm_dark__hy1IZWwLX" fill="#ffffff" />
       </g>
       <g>
-        <use xlinkHref="#pnpm_dark__akQfjxQes" fill="currentColor" />
+        <use xlinkHref="#pnpm_dark__akQfjxQes" fill="#ffffff" />
       </g>
       <g>
-        <use xlinkHref="#pnpm_dark__bdSrwE5pk" fill="currentColor" />
+        <use xlinkHref="#pnpm_dark__bdSrwE5pk" fill="#ffffff" />
       </g>
     </g>
   </svg>

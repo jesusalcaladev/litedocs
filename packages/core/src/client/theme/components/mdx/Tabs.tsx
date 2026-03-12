@@ -4,7 +4,6 @@ import { NPM } from "../../icons/npm";
 import { Pnpm } from "../../icons/pnpm";
 import { Bun } from "../../icons/bun";
 import { Deno } from "../../icons/deno";
-import { Yarn } from "../../icons/yarn";
 
 /* ─── Tab (individual panel) ──────────────────────────────── */
 export interface TabProps {
@@ -43,9 +42,8 @@ export interface TabsProps {
 
 const getIconForLabel = (label: string) => {
   const l = label.toLowerCase();
-  if (l.includes("npm")) return <NPM />;
   if (l.includes("pnpm")) return <Pnpm />;
-  if (l.includes("yarn")) return <Yarn />;
+  if (l.includes("npm")) return <NPM />;
   if (l.includes("bun")) return <Bun />;
   if (l.includes("deno")) return <Deno />;
   return null;
@@ -58,7 +56,6 @@ const getIconForLabel = (label: string) => {
  * <Tabs>
  *   <Tab label="npm">npm install boltdocs</Tab>
  *   <Tab label="pnpm">pnpm add boltdocs</Tab>
- *   <Tab label="yarn">yarn add boltdocs</Tab>
  * </Tabs>
  * ```
  */
