@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "../Link";
 import * as Icons from "lucide-react";
@@ -16,15 +16,40 @@ interface TabsProps {
 
 export function Tabs({ tabs, routes }: TabsProps) {
   const location = useLocation();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [indicatorStyle, setIndicatorStyle] = useState<React.CSSProperties>({
+    opacity: 0,
+    transform: "translateX(0) scaleX(0)",
+    width: 0,
+  });
+
   const currentRoute = routes.find((r) => r.path === location.pathname);
   const currentTabId = currentRoute?.tab?.toLowerCase();
+
+  // Find the active index - default to 0 if no tab detected
+  const activeIndex = tabs.findIndex((tab) =>
+    currentTabId ? currentTabId === tab.id.toLowerCase() : false
+  );
+  
+  const finalActiveIndex = activeIndex === -1 ? 0 : activeIndex;
+
+  useEffect(() => {
+    const activeTab = tabRefs.current[finalActiveIndex];
+    if (activeTab) {
+      setIndicatorStyle({
+        opacity: 1,
+        width: activeTab.offsetWidth,
+        transform: `translateX(${activeTab.offsetLeft}px)`,
+      });
+    }
+  }, [finalActiveIndex, tabs, location.pathname]);
 
   if (!tabs || tabs.length === 0) return null;
 
   const renderTabIcon = (iconName?: string) => {
     if (!iconName) return null;
 
-    // 1. Raw SVG
     if (iconName.trim().startsWith("<svg")) {
       return (
         <span
@@ -34,33 +59,31 @@ export function Tabs({ tabs, routes }: TabsProps) {
       );
     }
 
-    // 2. Lucide Icon
     const LucideIcon = (Icons as any)[iconName];
     if (LucideIcon) {
       return <LucideIcon size={16} className="tab-icon lucide-icon" />;
     }
 
-    // 3. Fallback to image URL
     return <img src={iconName} alt="" className="tab-icon img-icon" />;
   };
 
   return (
     <div className="boltdocs-tabs-container">
-      <div className="boltdocs-tabs">
+      <div className="boltdocs-tabs" ref={containerRef}>
         {tabs.map((tab, index) => {
-          // If no tab is detected (e.g. root home page), default to the first tab (usually "Guides")
-          const isActive = currentTabId 
-            ? currentTabId === tab.id.toLowerCase()
-            : index === 0;
-          
-          // Find the first route for this tab to link to it
-          const firstRoute = routes.find(r => r.tab && r.tab.toLowerCase() === tab.id.toLowerCase());
+          const isActive = index === finalActiveIndex;
+          const firstRoute = routes.find(
+            (r) => r.tab && r.tab.toLowerCase() === tab.id.toLowerCase()
+          );
           const linkTo = firstRoute ? firstRoute.path : "#";
 
           return (
             <Link
               key={tab.id}
               to={linkTo}
+              ref={(el) => {
+                tabRefs.current[index] = el;
+              }}
               className={`boltdocs-tab-item ${isActive ? "active" : ""}`}
             >
               {renderTabIcon(tab.icon)}
@@ -68,6 +91,8 @@ export function Tabs({ tabs, routes }: TabsProps) {
             </Link>
           );
         })}
+        {/* Sliding Indicator */}
+        <div className="boltdocs-tab-indicator" style={indicatorStyle} />
       </div>
     </div>
   );

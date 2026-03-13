@@ -76,6 +76,67 @@ You can also use the `Table` component as a wrapper for standard HTML table elem
 </Table>
 ```
 
+## Sorting
+
+Enable sorting by passing the `sortable` prop. Users can click on headers to sort the data.
+
+<Table
+  sortable
+  headers={["Name", "Role", "Join Date"]}
+  data={[
+    ["Alice", "Developer", "2023-01-15"],
+    ["Bob", "Designer", "2022-11-20"],
+    ["Charlie", "Product Manager", "2023-03-05"],
+    ["Diana", "Engineer", "2023-02-10"]
+  ]}
+/>
+
+```tsx
+<Table
+  sortable
+  headers={["Name", "Role", "Join Date"]}
+  data={[
+    ["Alice", "Developer", "2023-01-15"],
+    ["Bob", "Designer", "2022-11-20"],
+    ["Charlie", "Product Manager", "2023-03-05"]
+  ]}
+/>
+```
+
+## Pagination
+
+For large datasets, use the `paginated` prop. You can also customize the number of items per page with `pageSize`.
+
+<Table
+  paginated
+  pageSize={3}
+  headers={["ID", "Title", "Status"]}
+  data={[
+    ["101", "Initial Setup", "Completed"],
+    ["102", "Design Phase", "In Progress"],
+    ["103", "Core Logic", "Pending"],
+    ["104", "UI Components", "Pending"],
+    ["105", "User Testing", "Not Started"],
+    ["106", "Deployment", "Not Started"]
+  ]}
+/>
+
+```tsx
+<Table
+  paginated
+  pageSize={3}
+  headers={["ID", "Title", "Status"]}
+  data={[
+    ["101", "Initial Setup", "Completed"],
+    ["102", "Design Phase", "In Progress"],
+    ["103", "Core Logic", "Pending"],
+    ["104", "UI Components", "Pending"],
+    ["105", "User Testing", "Not Started"],
+    ["106", "Deployment", "Not Started"]
+  ]}
+/>
+```
+
 ## Props (`TableProps`)
 
 <Table
@@ -84,6 +145,9 @@ You can also use the `Table` component as a wrapper for standard HTML table elem
     ["headers", "string[]", "_undefined_", "An array of strings for the table header."],
     ["data", "(string | ReactNode)[][]", "_undefined_", "A 2D array representing the table rows."],
     ["children", "ReactNode", "_undefined_", "Standard HTML table content (thead, tbody, etc)."],
+    ["sortable", "boolean", "false", "Enables sorting when clicking on header columns."],
+    ["paginated", "boolean", "false", "Enables pagination controls at the bottom."],
+    ["pageSize", "number", "10", "Number of rows per page when paginated is true."],
     ["className", "string", "''", "Additional CSS classes for the table container."]
   ]}
 />

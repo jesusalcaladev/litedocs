@@ -250,10 +250,22 @@
 
 /* Tabs Styles */
 .boltdocs-tabs-container {
-  border-bottom: 1px solid var(--ld-border-subtle);
+  position: relative;
   background: var(--ld-navbar-bg);
   padding: 0;
-  height: 46px; /* 102px total = 56px navbar + 46px tabs */
+  height: 46px;
+}
+
+/* Border pseudo-element to allow indicator overlap */
+.boltdocs-tabs-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ld-border-subtle);
+  z-index: 10;
 }
 
 .boltdocs-tabs {
@@ -264,6 +276,8 @@
   overflow-x: auto;
   scrollbar-width: none;
   padding: 0 1.5rem;
+  position: relative;
+  height: 100%;
 }
 
 .boltdocs-tabs::-webkit-scrollbar {
@@ -272,7 +286,7 @@
 
 .boltdocs-tab-item {
   padding: 0.85rem 0;
-  padding-bottom: calc(0.85rem + 1px); /* avoid clipping the indicator */
+  padding-bottom: calc(0.85rem + 1px);
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--ld-text-muted);
@@ -284,6 +298,7 @@
   align-items: center;
   gap: 0.6rem;
   opacity: 0.7;
+  z-index: 20;
 }
 
 .boltdocs-tab-item:hover {
@@ -317,23 +332,16 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-.boltdocs-tab-item::after {
-  content: "";
+.boltdocs-tab-indicator {
   position: absolute;
-  bottom: 0px;
+  bottom: 0px; /* Aligned with the border pseudo-element */
   left: 0;
-  right: 0;
   height: 3px;
-  background: var(--ld-primary);
+  background: var(--ld-color-primary);
   border-radius: 2px 2px 0 0;
-  box-shadow: 0 0 12px rgba(var(--ld-primary-rgb), 0.6);
-  opacity: 0;
-  transform: scaleX(0);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 10;
-}
-
-.boltdocs-tab-item.active::after {
-  opacity: 1;
-  transform: scaleX(1);
+  box-shadow: 0 -2px 15px var(--ld-color-primary-glow);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  z-index: 100; /* Higher than border pseudo-element */
+  pointer-events: none;
+  transform-origin: left;
 }
