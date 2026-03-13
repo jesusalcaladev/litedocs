@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.5.0...v1.6.0) (2026-03-13)
+
+
+### Bug Fixes
+
+* export FileTree component ([6822155](https://github.com/jesusalcaladev/boltdocs/commit/68221553a5aeecc4399e2ca494a1542d7792df2d))
+* remove yarn support & icons support ([d042c5d](https://github.com/jesusalcaladev/boltdocs/commit/d042c5d669bc7fe58f09b95de1e44e7a8d6b871e))
+
+
+### Features
+
+* added new component FileTree ([634c8d2](https://github.com/jesusalcaladev/boltdocs/commit/634c8d2e76899b4a081951364a4873b387d0cf69))
+
 # [1.5.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.4.1...v1.5.0) (2026-03-12)
 
 
