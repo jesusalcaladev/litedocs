@@ -16,3 +16,6 @@ export type { AdmonitionProps } from "./Admonition";
 
 export { List } from "./List";
 export type { ListProps } from "./List";
+
+export { FileTree } from "./FileTree";
+export type { FileTreeProps } from "./FileTree";
