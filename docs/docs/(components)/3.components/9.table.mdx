@@ -1,0 +1,89 @@
+---
+title: "Table"
+description: "A consistent, themed table component for documentation."
+icon: Table
+---
+
+import { Table } from 'boltdocs/client'
+
+# Table
+
+The `Table` component provides a consistent, beautifully styled way to display tabular data in your documentation. It is used throughout LiteDocs to document component properties.
+
+## Basic Usage
+
+You can use the `Table` component by providing `headers` and `data` props.
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["variant", "primary | secondary", "primary", "The visual style variant."],
+    ["size", "sm | md | lg", "md", "The sizing scale of the component."]
+  ]}
+/>
+
+```tsx
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["variant", "primary | secondary", "primary", "The visual style variant."],
+    ["size", "sm | md | lg", "md", "The sizing scale of the component."]
+  ]}
+/>
+```
+
+## Advanced Usage
+
+You can also use the `Table` component as a wrapper for standard HTML table elements if you need more flexibility.
+
+<Table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Standard Markdown</td>
+      <td>Supported</td>
+    </tr>
+    <tr>
+      <td>Custom React Components</td>
+      <td>Supported</td>
+    </tr>
+  </tbody>
+</Table>
+
+```tsx
+<Table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Standard Markdown</td>
+      <td>Supported</td>
+    </tr>
+    <tr>
+      <td>Custom React Components</td>
+      <td>Supported</td>
+    </tr>
+  </tbody>
+</Table>
+```
+
+## Props (`TableProps`)
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["headers", "string[]", "_undefined_", "An array of strings for the table header."],
+    ["data", "(string | ReactNode)[][]", "_undefined_", "A 2D array representing the table rows."],
+    ["children", "ReactNode", "_undefined_", "Standard HTML table content (thead, tbody, etc)."],
+    ["className", "string", "''", "Additional CSS classes for the table container."]
+  ]}
+/>

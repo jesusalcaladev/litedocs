@@ -1,0 +1,21 @@
+---
+title: "Custom Components"
+description: "Import your own React components into MDX."
+icon: Puzzle
+---
+
+# Custom External Components
+
+Because you have Vite and React, you can import **your own** application's components straight into MDX to showcase them.
+
+For example, say you have a `<MyButton>` component defined in `src/components/MyButton.tsx`. You can import it in your MDX like this:
+
+```tsx
+import { MyButton } from '../src/components/MyButton';
+
+Here is our primary button:
+
+<MyButton onClick={() => alert('Clicked!')}>Click Me</MyButton>
+```
+
+LiteDocs will render the button right alongside your textual documentation. This makes building Live Design Systems incredibly easy.

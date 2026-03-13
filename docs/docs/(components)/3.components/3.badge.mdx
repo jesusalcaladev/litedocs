@@ -1,0 +1,34 @@
+---
+title: "Badge"
+description: "Inline labels and status indicators."
+icon: Tag
+---
+
+import { Badge, Table } from 'boltdocs/client'
+
+# Badge
+
+An inline badge / pill component used for labels, statuses, or tags.
+
+**Example:**
+
+This feature is <Badge variant="success">Stable</Badge>
+
+Coming in the next version: <Badge variant="warning">Beta</Badge>
+
+```tsx
+This feature is <Badge variant="success">Stable</Badge>
+
+Coming in the next version: <Badge variant="warning">Beta</Badge>
+```
+
+**Props (`BadgeProps`)**
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["variant", "\"default\" | \"primary\" | \"success\" | \"warning\" | \"danger\" | \"info\"", "\"default\"", "The color variant of the badge."]
+  ]}
+/>
+
+_(Standard span HTML attributes are also supported)_

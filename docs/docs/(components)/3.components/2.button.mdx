@@ -1,0 +1,54 @@
+---
+title: "Button"
+description: "A versatile button component for internal and external links."
+icon: MousePointer2
+---
+
+import { Button, Table } from 'boltdocs/client'
+
+# Button
+
+A versatile button/link component for use in MDX pages and the home page.
+
+**Example:**
+
+<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+  <Button variant="primary" size="md">
+    Get Started
+  </Button>
+
+  <Button variant="secondary" size="md">
+    Click Me
+  </Button>
+  
+  <Button variant="outline" size="md">
+    Outline
+  </Button>
+</div>
+
+```tsx
+<Button variant="primary" size="md">
+  Get Started
+</Button>
+
+<Button variant="secondary" size="md" >
+  Click Me
+</Button>
+
+<Button variant="outline" size="md">
+  Outline
+</Button>
+```
+
+**Props (`ButtonProps`)**
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["variant", "\"primary\" | \"secondary\" | \"outline\" | \"ghost\"", "\"primary\"", "The visual style variant of the button."],
+    ["size", "\"sm\" | \"md\" | \"lg\"", "\"md\"", "The sizing scale of the button."],
+    ["href", "string", "_undefined_", "If provided, the element renders as an <a> tag instead of a <button>."]
+  ]}
+/>
+
+_(Standard anchor and button HTML attributes are also supported)_

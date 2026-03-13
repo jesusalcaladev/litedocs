@@ -1,0 +1,59 @@
+---
+title: "Cards"
+description: "Display information in a clean grid layout."
+icon: LayoutGrid
+---
+
+import { Card, Cards, Table } from 'boltdocs/client'
+
+# Cards
+
+Cards are used to display features, directories, or distinct pieces of information in a grid. They are wrapped in a `<Cards>` container.
+
+**Example:**
+
+<Cards cols={3}>
+  <Card title="Fast" icon="⚡" href="/docs/getting-started/installation">
+    Instant HMR thanks to Vite.
+  </Card>
+  <Card title="Simple" icon="📁">
+    File-system based routing.
+  </Card>
+  <Card title="Beautiful" icon="✨">
+    Built-in modern MDX components.
+  </Card>
+</Cards>
+
+```tsx
+<Cards cols={3}>
+  <Card title="Fast" icon="⚡" href="/docs/getting-started/installation">
+    Instant HMR thanks to Vite.
+  </Card>
+  <Card title="Simple" icon="📁">
+    File-system based routing.
+  </Card>
+  <Card title="Beautiful" icon="✨">
+    Built-in modern MDX components.
+  </Card>
+</Cards>
+```
+
+**`<Cards>` Props (`CardsProps`)**
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["cols", "1 | 2 | 3 | 4", "3", "Number of columns to display in the grid."]
+  ]}
+/>
+
+**`<Card>` Props (`CardProps`)**
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["title", "string", "_undefined_", "The main heading of the card."],
+    ["icon", "ReactNode | string", "_undefined_", "Emoji or icon displayed above the title."],
+    ["href", "string", "_undefined_", "If provided, the entire card becomes a clickable link."]
+  ]}
+/>

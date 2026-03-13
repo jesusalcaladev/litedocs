@@ -1,0 +1,57 @@
+---
+title: "List"
+description: "Enhanced lists with custom icons."
+icon: ListChecks
+---
+
+import { List, Table } from 'boltdocs/client'
+
+# List
+
+An enhanced list component with specific icon variants, perfect for feature listings or checklists.
+
+**Example:**
+
+<div style={{ display: 'flex', gap: '4rem', flexWrap: 'wrap' }}>
+  <div>
+    **Checked Variant:**
+    <List variant="checked">
+      <li>File-system routing</li>
+      <li>MDX support</li>
+      <li>Syntax highlighting</li>
+    </List>
+  </div>
+  <div>
+    **Arrow Variant:**
+    <List variant="arrow">
+      <li>First step</li>
+      <li>Second step</li>
+      <li>Third step</li>
+    </List>
+  </div>
+</div>
+
+```tsx
+<List variant="checked">
+  <li>File-system routing</li>
+  <li>MDX support</li>
+  <li>Syntax highlighting</li>
+</List>
+
+<List variant="arrow">
+  <li>First step</li>
+  <li>Second step</li>
+  <li>Third step</li>
+</List>
+```
+
+**Props (`ListProps`)**
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["variant", "\"default\" | \"checked\" | \"arrow\"", "\"default\"", "The visual icon injected before every list item."]
+  ]}
+/>
+
+_(Standard `<ul>` HTML attributes are also supported)_

@@ -1,0 +1,44 @@
+---
+title: "File Tree"
+description: "Display folder and file structures visually."
+icon: FolderTree
+---
+
+import { FileTree, Table } from 'boltdocs/client'
+
+# FileTree
+
+A component to display folder and file structures using standard Markdown lists. It automatically assigns the correct icons based on the file extension or folder syntax.
+
+**Example:**
+
+<FileTree>
+- astro.config.mjs
+- package.json
+- src/
+  - components/
+    - Header.astro
+    - Title.astro
+  - pages/
+</FileTree>
+
+```tsx
+<FileTree>
+- astro.config.mjs
+- package.json
+- src/
+  - components/
+    - Header.astro
+    - Title.astro
+  - pages/
+</FileTree>
+```
+
+**Props (`FileTreeProps`)**
+
+<Table
+  headers={["Prop", "Type", "Default", "Description"]}
+  data={[
+    ["children", "ReactNode", "_Required_", "The markdown list representing the file tree."]
+  ]}
+/>
