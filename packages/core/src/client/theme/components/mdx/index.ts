@@ -19,3 +19,6 @@ export type { ListProps } from "./List";
 
 export { FileTree } from "./FileTree";
 export type { FileTreeProps } from "./FileTree";
+
+export { Table } from "./Table";
+export type { TableProps } from "./Table";

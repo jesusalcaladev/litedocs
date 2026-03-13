@@ -29,6 +29,7 @@ export {
   InfoBox,
   List,
   FileTree,
+  Table,
 } from "./theme/components/mdx";
 export type {
   ButtonProps,
@@ -40,4 +41,5 @@ export type {
   AdmonitionProps,
   ListProps,
   FileTreeProps,
+  TableProps,
 } from "./theme/components/mdx";

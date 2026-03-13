@@ -46,7 +46,7 @@
   --ld-sidebar-bg: transparent;
   --ld-sidebar-blur: 0px;
   --ld-glow-1-bg: var(--ld-color-primary-glow);
-  --ld-glow-2-bg: rgba(59, 130, 246, 0.15);
+  --ld-glow-2-bg: rgba(215, 59, 246, 0.15);
 
   /* ─ UI Components (overridable independently from layout) ─ */
   --ld-ui-btn-primary-bg: var(--ld-btn-primary-bg);
@@ -78,8 +78,8 @@
   /* ─ Base palette ─ */
   --ld-bg-main: #000;
   --ld-bg-soft: #12121272;
-  --ld-bg-mute: #141420;
-  --ld-surface: #1a1a2e;
+  --ld-bg-mute: #090909;
+  --ld-surface: #1a1a1a;
   --ld-border-subtle: rgba(255, 255, 255, 0.06);
   --ld-border-strong: rgba(255, 255, 255, 0.12);
 

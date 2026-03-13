@@ -8,13 +8,17 @@ export default {
     navbar:[
       {
         href: "/",
-        text: "Home"
+        text: "Home",
+        position: 'right',
+
       },
       {
         text: "Docs",
+        position: 'right',
         href: "/docs/overview/introduction",
       },
     ],
+    customCss: './src/custom.css',
     editLink: "https://github.com/jesusalcaladev/boltdocs/edit/main/docs/docs/:path",
     githubRepo: "jesusalcaladev/boltdocs",
     description: "Documentation for Boltdocs - The best documentation generator for React",
