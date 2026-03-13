@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.6.0...v1.7.0) (2026-03-13)
+
+
+### Features
+
+* Implement the initial core litedocs framework, including UI components, routing, and static site generation. ([117624e](https://github.com/jesusalcaladev/boltdocs/commit/117624e146fd415d414cb67500a83ca2619f4236))
+* new component Table ([454fd11](https://github.com/jesusalcaladev/boltdocs/commit/454fd11fbf08f4a3252849657d74ffb27c9f9030))
+
 # [1.6.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.5.0...v1.6.0) (2026-03-13)
 
 
