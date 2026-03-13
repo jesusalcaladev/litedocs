@@ -28,6 +28,7 @@ export {
   Danger,
   InfoBox,
   List,
+  FileTree,
 } from "./theme/components/mdx";
 export type {
   ButtonProps,
@@ -38,4 +39,5 @@ export type {
   TabProps,
   AdmonitionProps,
   ListProps,
+  FileTreeProps,
 } from "./theme/components/mdx";
