@@ -539,3 +539,52 @@
 .ld-file-tree__icon--spacer {
   width: 14px;
 }
+
+/* ─── Table ───────────────────────────────────────────────── */
+.ld-table-container {
+  margin: 1.5rem 0;
+  border: 1px solid var(--ld-border-subtle);
+  border-radius: var(--ld-radius-lg);
+  overflow: hidden;
+  background: var(--ld-bg-soft);
+  overflow-x: auto;
+}
+
+.ld-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.ld-table thead {
+  background: var(--ld-bg-mute);
+  border-bottom: 1px solid var(--ld-border-subtle);
+}
+
+.ld-table th {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--ld-text-main);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ld-table td {
+  padding: 0.875rem 1rem;
+  color: var(--ld-text-muted);
+  border-bottom: 1px solid var(--ld-border-subtle);
+}
+
+.ld-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ld-table code {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
