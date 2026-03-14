@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/jesusalcaladev/boltdocs/compare/v1.7.0...v1.7.1) (2026-03-14)
+
+
+### Bug Fixes
+
+* dynamic indicator and a new props Table component. ([3182567](https://github.com/jesusalcaladev/boltdocs/commit/3182567282fe912b81d03c149121b8e1341780ae))
+
 # [1.7.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.6.0...v1.7.0) (2026-03-13)
 
 
