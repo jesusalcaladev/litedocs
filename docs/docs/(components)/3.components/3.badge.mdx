@@ -4,7 +4,7 @@ description: "Inline labels and status indicators."
 icon: Tag
 ---
 
-import { Badge, Table } from 'boltdocs/client'
+import { Badge, Table, Field } from 'boltdocs/client'
 
 # Badge
 
@@ -24,11 +24,8 @@ Coming in the next version: <Badge variant="warning">Beta</Badge>
 
 **Props (`BadgeProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["variant", "\"default\" | \"primary\" | \"success\" | \"warning\" | \"danger\" | \"info\"", "\"default\"", "The color variant of the badge."]
-  ]}
-/>
+<Field name="variant" type='"default" | "primary" | "success" | "warning" | "danger" | "info"' defaultValue='"default"'>
+  The color variant of the badge.
+</Field>
 
 _(Standard span HTML attributes are also supported)_

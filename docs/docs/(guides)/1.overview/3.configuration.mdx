@@ -4,6 +4,8 @@ description: "Understand the configuration options for Boltdocs."
 icon: Settings
 ---
 
+import { Field } from 'boltdocs/client'
+
 # Configuration (`boltdocs.config.js`)
 
 The `boltdocs.config.js` (or `.ts`, `.mjs`) file at the root of your project controls how LiteDocs functions, builds routes, and renders the UI.
@@ -25,39 +27,47 @@ Below is the comprehensive list of all configuration options according to the `B
 At the top level of your configuration file, you can define the following options:
 
 ### `siteUrl`
-- **Type**: \`string\`
-- **Description**: The base URL of the site, used primarily for generating absolute paths in your sitemap (if implemented) or canonical URLs.
-- **Example**: \`"https://boltdocs.dev"\`
+<Field name="siteUrl" type="string">
+The base URL of the site, used primarily for generating absolute paths in your sitemap (if implemented) or canonical URLs.
+
+Example: `"https://boltdocs.dev"`
+</Field>
 
 ### `docsDir`
-- **Type**: \`string\`
-- **Default**: \`"docs"\`
-- **Description**: The root directory containing your Markdown/MDX documentation files. Change this if you keep your docs in a folder like \`"content"\`. _Note: It is recommended to configure this via the Vite Plugin options in `vite.config.ts`._
+<Field name="docsDir" type="string" defaultValue='"docs"'>
+The root directory containing your Markdown/MDX documentation files. Change this if you keep your docs in a folder like `"content"`. 
+
+_Note: It is recommended to configure this via the Vite Plugin options in `vite.config.ts`._
+</Field>
 
 ### `themeConfig`
-- **Type**: \`BoltdocsThemeConfig\`
-- **Description**: Determines the appearance, navigation, and structure of the theme. _See [Theme Configuration](#theme-configuration) below._
+<Field name="themeConfig" type="BoltdocsThemeConfig" required>
+Determines the appearance, navigation, and structure of the theme. _See [Theme Configuration](#theme-configuration) below._
+</Field>
 
 ### `i18n`
-- **Type**: \`BoltdocsI18nConfig\`
-- **Description**: Configuration for internationalization.
-  - \`defaultLocale\` (\`string\`): The fallback locale, e.g., \`"en"\`.
-  - \`locales\` (\`Record&lt;string, string&gt;\`): Available locales mapping, e.g., \`&#123; en: "English", es: "Español" &#125;\`.
+<Field name="i18n" type="BoltdocsI18nConfig">
+  Configuration for internationalization.
+  - `defaultLocale` (`string`): The fallback locale, e.g., `"en"`.
+  - `locales` (`Record<string, string>`): Available locales mapping, e.g., `{ en: "English", es: "Español" }`.
+</Field>
 
 ### `versions`
-- **Type**: \`BoltdocsVersionsConfig\`
-- **Description**: Configuration for documentation versioning.
-  - \`defaultVersion\` (\`string\`): The fallback version, e.g., \`"v2"\`.
-  - \`versions\` (\`Record&lt;string, string&gt;\`): Available versions mapping, e.g., \`&#123; v1: "Version 1.x", v2: "Version 2.x" &#125;\`.
+<Field name="versions" type="BoltdocsVersionsConfig">
+  Configuration for documentation versioning.
+  - `defaultVersion` (`string`): The fallback version, e.g., `"v2"`.
+  - `versions` (`Record<string, string>`): Available versions mapping, e.g., `{ v1: "Version 1.x", v2: "Version 2.x" }`.
+</Field>
 
 ### `plugins`
-- **Type**: \`BoltdocsPlugin[]\`
-- **Description**: Array of custom Boltdocs plugins to extend the build process or client-side functionality.
-  - \`name\` (\`string\`): Unique identifier for the plugin.
-  - \`enforce\` (\`"pre" | "post"\`): Optional. Run order.
-  - \`remarkPlugins\` / \`rehypePlugins\` (\`any[]\`): Extends the MDX parsing pipeline.
-  - \`vitePlugins\` (\`VitePlugin[]\`): Standard Vite plugins to inject.
-  - \`components\` (\`Record&lt;string, string&gt;\`): Map of \`Name -> Module Path\` to globally inject React components into all MDX files.
+<Field name="plugins" type="BoltdocsPlugin[]">
+  Array of custom Boltdocs plugins to extend the build process or client-side functionality.
+  - `name` (`string`): Unique identifier for the plugin.
+  - `enforce` (`"pre" | "post"`): Optional. Run order.
+  - `remarkPlugins` / `rehypePlugins` (`any[]`): Extends the MDX parsing pipeline.
+  - `vitePlugins` (`VitePlugin[]`): Standard Vite plugins to inject.
+  - `components` (`Record<string, string>`): Map of `Name -> Module Path` to globally inject React components into all MDX files.
+</Field>
 
 ---
 
@@ -66,88 +76,99 @@ At the top level of your configuration file, you can define the following option
 The \`themeConfig\` object controls almost all visual aspects of the default theme.
 
 ### `title`
-- **Type**: \`string\`
-- **Default**: \`"Boltdocs"\`
-- **Description**: The global title of the documentation site, shown in the `<title>` tag and Navbar.
+<Field name="title" type="string" defaultValue='"Boltdocs"'>
+  The global title of the documentation site, shown in the `<title>` tag and Navbar.
+</Field>
 
 ### `description`
-- **Type**: \`string\`
-- **Default**: \`"A Vite documentation framework"\`
-- **Description**: The global site description used for Search Engine Optimization (SEO).
+<Field name="description" type="string" defaultValue='"A Vite documentation framework"'>
+  The global site description used for Search Engine Optimization (SEO).
+</Field>
 
 ### `logo`
-- **Type**: \`string\`
-- **Description**: Relative URL path or endpoint to the site logo displayed in the Navbar.
+<Field name="logo" type="string">
+  Relative URL path or endpoint to the site logo displayed in the Navbar.
+</Field>
 
 ### `navbar`
-- **Type**: \`NavbarItem[]\`
-- **Default**: \`[&#123; text: "Home", link: "/" &#125;, &#123; text: "Documentation", link: "/docs" &#125;]\`
-- **Description**: Items to display in the top navigation bar. Each item can have the following properties:
-  - \`text\` / \`label\` (\`string\`): The display text for the link.
-  - \`link\` / \`to\` / \`href\` (\`string\`): The destination URL. External links (starting with \`http\`) automatically include an external link icon and open in a new tab.
-  - \`position\` (\`"left" | "right"\`): Where to align the item. Default is \`"left"\`.
+<Field name="navbar" type="NavbarItem[]" defaultValue='[{ text: "Home", link: "/" }, { text: "Documentation", link: "/docs" }]'>
+  Items to display in the top navigation bar. Each item can have the following properties:
+  - `text` / `label` (`string`): The display text for the link.
+  - `link` / `to` / `href` (`string`): The destination URL. External links (starting with `http`) automatically include an external link icon and open in a new tab.
+  - `position` (`"left" | "right"`): Where to align the item. Default is `"left"`.
+</Field>
 
 ### `sidebar`
-- **Type**: \`Record&lt;string, Array&lt;&#123; text: string; link: string &#125;&gt;&gt;\`
-- **Description**: Custom sidebar groups. Although LiteDocs generates the sidebar automatically based on file-routing, providing this option overrides the automatic generation for specific paths.
+<Field name="sidebar" type="Record<string, Array<{ text: string; link: string }>>">
+  Custom sidebar groups. Although LiteDocs generates the sidebar automatically based on file-routing, providing this option overrides the automatic generation for specific paths.
+</Field>
 
 ### `socialLinks`
-- **Type**: \`Array&lt;&#123; icon: string; link: string &#125;&gt;\`
-- **Description**: Social media icons and links displayed in the Navbar.
-  - \`icon\` (\`"discord" | "x" | string\`): Identifier for the svg icon.
-  - \`link\` (\`string\`): Destination URL.
+<Field name="socialLinks" type="Array<{ icon: string; link: string }>">
+  Social media icons and links displayed in the Navbar.
+  - `icon` (`"discord" | "x" | string`): Identifier for the svg icon.
+  - `link` (`string`): Destination URL.
+</Field>
 
 ### `footer`
-- **Type**: \`&#123; text?: string &#125;\`
-- **Description**: Simple configuration for the site footer content. Supports HTML strings.
+<Field name="footer" type="{ text?: string }">
+  Simple configuration for the site footer content. Supports HTML strings.
+</Field>
 
 ### `breadcrumbs`
-- **Type**: \`boolean\`
-- **Default**: \`true\`
-- **Description**: Toggle the rendering of the breadcrumb navigation in the main document layout.
+<Field name="breadcrumbs" type="boolean" defaultValue="true">
+  Toggle the rendering of the breadcrumb navigation in the main document layout.
+</Field>
 
 ### `customCss`
-- **Type**: \`string\`
-- **Description**: Absolute or relative path to a custom CSS file that overrides the framework's CSS variable values (e.g. \`"./custom.css"\`).
+<Field name="customCss" type="string">
+  Absolute or relative path to a custom CSS file that overrides the framework's CSS variable values (e.g. `"./custom.css"`).
+</Field>
 
 ### `editLink`
-- **Type**: \`string\`
-- **Description**: URL template for an 'Edit this page on GitHub' style link at the bottom of pages. Use \`:path\` to denote the current file path.
-- **Example**: \`"https://github.com/my-org/repo/edit/main/docs/:path"\`
+<Field name="editLink" type="string">
+  URL template for an 'Edit this page on GitHub' style link at the bottom of pages. Use `:path` to denote the current file path.
+
+  Example: `"https://github.com/my-org/repo/edit/main/docs/:path"`
+</Field>
 
 ### `communityHelp`
-- **Type**: \`string\`
-- **Description**: URL to link readers to community support, usually a Discord or GitHub issues link.
+<Field name="communityHelp" type="string">
+  URL to link readers to community support, usually a Discord or GitHub issues link.
+</Field>
 
 ### `version`
-- **Type**: \`string\`
-- **Description**: A static version string explicitly forced into the Navbar (e.g., \`"v2.8.9"\`). Distinct from the \`versions\` object used for file-routing.
+<Field name="version" type="string">
+  A static version string explicitly forced into the Navbar (e.g., `"v2.8.9"`). Distinct from the `versions` object used for file-routing.
+</Field>
 
 ### `githubRepo`
-- **Type**: \`string\`
-- **Description**: Points to your GitHub repo in \`owner/repo\` format. When provided, the Navbar will automatically fetch and display your GitHub Star count.
+<Field name="githubRepo" type="string">
+  Points to your GitHub repo in `owner/repo` format. When provided, the Navbar will automatically fetch and display your GitHub Star count.
+</Field>
 
 ### `poweredBy`
-- **Type**: \`boolean\`
-- **Default**: \`true\`
-- **Description**: Toggle the 'Powered by LiteDocs' badge rendered at the bottom of the sidebar.
+<Field name="poweredBy" type="boolean" defaultValue="true">
+  Toggle the 'Powered by LiteDocs' badge rendered at the bottom of the sidebar.
+</Field>
 
 ### `codeTheme`
-- **Type**: \`string | Record&lt;string, string&gt;\`
-- **Default**: \`"one-dark-pro"\`
-- **Description**: The syntax highlighting theme for code blocks. Supports any Shiki theme (e.g., \`"github-dark"\`, \`"nord"\`, \`"vsc-dark-plus"\`). You can also provide an object for dual-theme support, for example: \`&#123; light: "github-light", dark: "github-dark" &#125;\`.
+<Field name="codeTheme" type="string | Record<string, string>" defaultValue='"one-dark-pro"'>
+  The syntax highlighting theme for code blocks. Supports any Shiki theme (e.g., `"github-dark"`, `"nord"`, `"vsc-dark-plus"`). You can also provide an object for dual-theme support, for example: `{ light: "github-light", dark: "github-dark" }`.
+</Field>
 
 ### `layoutProps`
-- **Type**: \`object\`
-- **Description**: The most granular control offered over internal UI components without writing a full plugin. You can override or pass inline props to internal elements:
-  - \`navbar\`: Props injected into the \`&lt;Navbar&gt;\`
-  - \`sidebar\`: Props injected into the \`&lt;Sidebar&gt;\`
-  - \`toc\`: Props for the Table of Contents right-sidebar
-  - \`background\`: Props for the background component (e.g., gradients)
-  - \`head\`: Data for HTML \`&lt;head&gt;\` injections
-  - \`breadcrumbs\`: Props for the Breadcrumb component
-  - \`className\`: Global \`div\` className on the layout container
-  - \`style\`: Inline React styles.
+<Field name="layoutProps" type="object">
+  The most granular control offered over internal UI components without writing a full plugin. You can override or pass inline props to internal elements:
+  - `navbar`: Props injected into the `<Navbar>`
+  - `sidebar`: Props injected into the `<Sidebar>`
+  - `toc`: Props for the Table of Contents right-sidebar
+  - `background`: Props for the background component (e.g., gradients)
+  - `head`: Data for HTML `<head>` injections
+  - `breadcrumbs`: Props for the Breadcrumb component
+  - `className`: Global `div` className on the layout container
+  - `style`: Inline React styles.
+</Field>
 
 ---
 
@@ -207,15 +228,16 @@ export default defineConfig({
 ```
 
 ### `docsDir`
-- **Type**: \`string\`
-- **Default**: \`"docs"\`
-- **Description**: The root directory containing your Markdown/MDX documentation files. 
+<Field name="docsDir" type="string" defaultValue='"docs"'>
+  The root directory containing your Markdown/MDX documentation files. 
+</Field>
 
 ### `homePage`
-- **Type**: \`string\`
-- **Description**: Path to a custom React component (relative to project root) to render at the base route \`/\`. If not provided, LiteDocs will fall back to using \`docs/index.mdx\`.
+<Field name="homePage" type="string">
+  Path to a custom React component (relative to project root) to render at the base route `/`. If not provided, LiteDocs will fall back to using `docs/index.mdx`.
+</Field>
 
 ### `customCss`
-- **Type**: \`string\`
-- **Description**: Path to a custom CSS file to override theme variables. Can also be set in \`boltdocs.config.js\`.
-
+<Field name="customCss" type="string">
+  Path to a custom CSS file to override theme variables. Can also be set in `boltdocs.config.js`.
+</Field>

@@ -4,7 +4,7 @@ description: "A versatile button component for internal and external links."
 icon: MousePointer2
 ---
 
-import { Button, Table } from 'boltdocs/client'
+import { Button, Table, Field } from 'boltdocs/client'
 
 # Button
 
@@ -42,13 +42,16 @@ A versatile button/link component for use in MDX pages and the home page.
 
 **Props (`ButtonProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["variant", "\"primary\" | \"secondary\" | \"outline\" | \"ghost\"", "\"primary\"", "The visual style variant of the button."],
-    ["size", "\"sm\" | \"md\" | \"lg\"", "\"md\"", "The sizing scale of the button."],
-    ["href", "string", "_undefined_", "If provided, the element renders as an <a> tag instead of a <button>."]
-  ]}
-/>
+<Field name="variant" type='"primary" | "secondary" | "outline" | "ghost"' defaultValue='"primary"'>
+  The visual style variant of the button.
+</Field>
+
+<Field name="size" type='"sm" | "md" | "lg"' defaultValue='"md"'>
+  The sizing scale of the button.
+</Field>
+
+<Field name="href" type="string">
+  If provided, the element renders as an `<a>` tag instead of a `<button>`.
+</Field>
 
 _(Standard anchor and button HTML attributes are also supported)_

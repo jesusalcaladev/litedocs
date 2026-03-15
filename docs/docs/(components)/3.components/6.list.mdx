@@ -4,7 +4,7 @@ description: "Enhanced lists with custom icons."
 icon: ListChecks
 ---
 
-import { List, Table } from 'boltdocs/client'
+import { List, Table, Field } from 'boltdocs/client'
 
 # List
 
@@ -47,11 +47,8 @@ An enhanced list component with specific icon variants, perfect for feature list
 
 **Props (`ListProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["variant", "\"default\" | \"checked\" | \"arrow\"", "\"default\"", "The visual icon injected before every list item."]
-  ]}
-/>
+<Field name="variant" type='"default" | "checked" | "arrow"' defaultValue='"default"'>
+  The visual icon injected before every list item.
+</Field>
 
 _(Standard `<ul>` HTML attributes are also supported)_

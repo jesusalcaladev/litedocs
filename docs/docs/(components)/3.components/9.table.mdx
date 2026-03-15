@@ -139,15 +139,30 @@ For large datasets, use the `paginated` prop. You can also customize the number 
 
 ## Props (`TableProps`)
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["headers", "string[]", "_undefined_", "An array of strings for the table header."],
-    ["data", "(string | ReactNode)[][]", "_undefined_", "A 2D array representing the table rows."],
-    ["children", "ReactNode", "_undefined_", "Standard HTML table content (thead, tbody, etc)."],
-    ["sortable", "boolean", "false", "Enables sorting when clicking on header columns."],
-    ["paginated", "boolean", "false", "Enables pagination controls at the bottom."],
-    ["pageSize", "number", "10", "Number of rows per page when paginated is true."],
-    ["className", "string", "''", "Additional CSS classes for the table container."]
-  ]}
-/>
+<Field name="headers" type="string[]">
+  An array of strings for the table header columns.
+</Field>
+
+<Field name="data" type="(string | ReactNode)[][]">
+  A 2D array representing the table rows. Each element can be a string or a React node.
+</Field>
+
+<Field name="children" type="ReactNode">
+  Optional. Standard HTML table content (`thead`, `tbody`, etc) if you want to define the structure manually.
+</Field>
+
+<Field name="sortable" type="boolean" defaultValue="false">
+  Enables sorting functionality. Users can click on headers to sort the rows.
+</Field>
+
+<Field name="paginated" type="boolean" defaultValue="false">
+  Enables pagination controls at the bottom of the table.
+</Field>
+
+<Field name="pageSize" type="number" defaultValue="10">
+  Determines how many rows are displayed per page when `paginated` is `true`.
+</Field>
+
+<Field name="className" type="string">
+  Additional CSS classes for custom styling of the table container.
+</Field>

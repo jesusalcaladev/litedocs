@@ -4,7 +4,7 @@ description: "Display information in a clean grid layout."
 icon: LayoutGrid
 ---
 
-import { Card, Cards, Table } from 'boltdocs/client'
+import { Card, Cards, Table, Field } from 'boltdocs/client'
 
 # Cards
 
@@ -40,20 +40,20 @@ Cards are used to display features, directories, or distinct pieces of informati
 
 **`<Cards>` Props (`CardsProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["cols", "1 | 2 | 3 | 4", "3", "Number of columns to display in the grid."]
-  ]}
-/>
+<Field name="cols" type="1 | 2 | 3 | 4" defaultValue="3">
+  Number of columns to display in the grid.
+</Field>
 
 **`<Card>` Props (`CardProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["title", "string", "_undefined_", "The main heading of the card."],
-    ["icon", "ReactNode | string", "_undefined_", "Emoji or icon displayed above the title."],
-    ["href", "string", "_undefined_", "If provided, the entire card becomes a clickable link."]
-  ]}
-/>
+<Field name="title" type="string">
+  The main heading of the card.
+</Field>
+
+<Field name="icon" type="ReactNode | string">
+  Emoji or icon displayed above the title.
+</Field>
+
+<Field name="href" type="string">
+  If provided, the entire card becomes a clickable link.
+</Field>

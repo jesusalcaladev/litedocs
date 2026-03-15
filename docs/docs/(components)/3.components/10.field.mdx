@@ -1,0 +1,78 @@
+---
+title: "Field"
+description: "A premium component for documenting API properties and fields."
+icon: LayoutList
+---
+import { Field } from 'boltdocs/client'
+
+# Field
+
+The `<Field />` component is designed to provide a structured, aesthetic, and highly readable way to document API properties, configuration options, or any structured data field.
+
+## Usage
+
+You can use the `<Field />` component in your MDX files to replace generic bulleted lists.
+
+```mdx
+<Field 
+  name="siteUrl" 
+  type="string" 
+  required
+  defaultValue='"https://litedocs.dev"'
+>
+  The base URL of the site, used primarily for generating absolute paths in your sitemap or canonical URLs.
+</Field>
+```
+
+## Properties
+
+<Field name="name" type="string" required>
+  The name of the property or field. This will be displayed prominently using a monospaced font.
+</Field>
+
+<Field name="type" type="string">
+  The data type of the field (e.g., `string`, `number`, `boolean`, or a custom interface). It appears as a subtle badge next to the name.
+</Field>
+
+<Field name="defaultValue" type="string">
+  The default value for the field if it's not provided by the user. It is displayed in a dedicated "Default" section in the header.
+</Field>
+
+<Field name="required" type="boolean" defaultValue="false">
+  If set to `true`, a "required" badge will be displayed next to the property name.
+</Field>
+
+<Field name="id" type="string">
+  An optional anchor ID for linking directly to this field.
+</Field>
+
+<Field name="className" type="string">
+  Optional CSS class name for further customization.
+</Field>
+
+## Examples
+
+### Complete Example
+
+<Field 
+  name="themeConfig" 
+  type="BoltdocsThemeConfig" 
+  required
+>
+  Determines the appearance, navigation, and structure of the theme. This is the heart of your Boltdocs configuration.
+</Field>
+
+### Simple Example
+
+<Field name="title" type="string">
+  The title of your documentation site.
+</Field>
+
+## Why use Field?
+
+While standard Markdown lists are easy to write, they often lack the visual hierarchy needed for complex API documentation. The `<Field />` component provides:
+
+1. **Visual Clarity**: Clearly separates the property name, type, and description.
+2. **Metadata at a Glance**: Default values and "required" status are immediately visible.
+3. **Professional Aesthetic**: Gives your documentation a "Developer Portal" feel out of the box.
+4. **Consistency**: Ensures all property definitions follow the same structure across your site.

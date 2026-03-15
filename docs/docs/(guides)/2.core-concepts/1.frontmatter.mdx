@@ -4,6 +4,8 @@ description: "How to use frontmatter to define page metadata."
 icon: FileCode
 ---
 
+import { Field } from 'boltdocs/client'
+
 # Frontmatter Reference
 
 LiteDocs uses frontmatter to allow you to customize the metadata and sidebar appearance of your pages. Frontmatter is a block of YAML at the very top of your `.md` or `.mdx` files, delimited by `---`.
@@ -18,31 +20,37 @@ badge: "New"
 ## Available Fields
 
 ### `title`
-- **Type**: `string`
-- **Description**: Overrides the title of the page. By default, LiteDocs infers the title from the filename (stripping numeric prefixes and extensions).
+<Field name="title" type="string">
+  Overrides the title of the page. By default, LiteDocs infers the title from the filename (stripping numeric prefixes and extensions).
+</Field>
 
 ### `description`
-- **Type**: `string`
-- **Description**: Used for SEO meta tags and [Link Previews](/docs/core-concepts/link-previews). This is highly recommended for better search engine indexing and providing context in tooltips.
+<Field name="description" type="string">
+  Used for SEO meta tags and [Link Previews](/docs/core-concepts/link-previews). This is highly recommended for better search engine indexing and providing context in tooltips.
+</Field>
 
 ### `permalink`
-- **Type**: `string`
-- **Description**: Overrides the generated URL path for the page. Useful for migrations or preserving SEO ranking when moving files.
+<Field name="permalink" type="string">
+  Overrides the generated URL path for the page. Useful for migrations or preserving SEO ranking when moving files.
+</Field>
 
 ### `sidebarPosition`
-- **Type**: `number`
-- **Description**: Controls the sorting order of the page within its section in the sidebar. Lower numbers appear first. 
+<Field name="sidebarPosition" type="number">
+  Controls the sorting order of the page within its section in the sidebar. Lower numbers appear first.
+</Field>
 
 > [!TIP]
 > You can also use numeric prefixes in filenames (e.g., `1.getting-started.mdx`) to control ordering automatically.
 
 ### `badge`
-- **Type**: `new` | `experimental` | `updated`
-- **Description**: Adds a small decorative badge next to the page link in the sidebar. Useful for highlighting "New", "Stable", or "Deprecated" content.
+<Field name="badge" type="new | experimental | updated">
+  Adds a small decorative badge next to the page link in the sidebar. Useful for highlighting "New", "Stable", or "Deprecated" content.
+</Field>
 
 ### `icon`
-- **Type**: `string`
-- **Description**: Adds an icon next to the page title in the sidebar. Supports Lucide icon names (e.g., `Rocket`, `Book`), raw SVG strings, or image URLs.
+<Field name="icon" type="string">
+  Adds an icon next to the page title in the sidebar. Supports Lucide icon names (e.g., `Rocket`, `Book`), raw SVG strings, or image URLs.
+</Field>
 
 ---
 
@@ -51,12 +59,14 @@ badge: "New"
 When used in an `index.mdx` file, these fields control the behavior of the entire section/folder.
 
 ### `groupTitle`
-- **Type**: `string`
-- **Description**: Overrides the name of the section in the sidebar. By default, the folder name is used.
+<Field name="groupTitle" type="string">
+  Overrides the name of the section in the sidebar. By default, the folder name is used.
+</Field>
 
 ### `groupPosition`
-- **Type**: `number`
-- **Description**: Controls the sorting order of the entire section relative to other sections in the sidebar.
+<Field name="groupPosition" type="number">
+  Controls the sorting order of the entire section relative to other sections in the sidebar.
+</Field>
 
 ---
 

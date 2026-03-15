@@ -4,7 +4,7 @@ description: "Highlight important information with callouts."
 icon: Info
 ---
 
-import { Admonition, Note, Tip, Warning, Danger, InfoBox, Table } from 'boltdocs/client'
+import { Admonition, Note, Tip, Warning, Danger, InfoBox, Table, Field } from 'boltdocs/client'
 
 # Admonitions (Callouts)
 
@@ -40,12 +40,12 @@ Admonitions highlight important information. Using them is as simple as adding a
 
 **Props (`AdmonitionProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["type", "\"info\" | \"warning\" | \"danger\"", "\"info\"", "The visual variant of the callout."],
-    ["title", "string", "_(Optional)_", "The title displayed at the top of the admonition."]
-  ]}
-/>
+<Field name="type" type='"info" | "warning" | "danger"' defaultValue='"info"'>
+  The visual variant of the callout.
+</Field>
+
+<Field name="title" type="string">
+  Optional. The title displayed at the top of the admonition.
+</Field>
 
 > **Note**: You can also use explicit tags like `<Note>`, `<Tip>`, `<Warning>`, `<Danger>`, or `<InfoBox>` as shorthands.

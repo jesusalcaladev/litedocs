@@ -4,7 +4,7 @@ description: "Display folder and file structures visually."
 icon: FolderTree
 ---
 
-import { FileTree, Table } from 'boltdocs/client'
+import { FileTree, Table, Field } from 'boltdocs/client'
 
 # FileTree
 
@@ -36,9 +36,6 @@ A component to display folder and file structures using standard Markdown lists.
 
 **Props (`FileTreeProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["children", "ReactNode", "_Required_", "The markdown list representing the file tree."]
-  ]}
-/>
+<Field name="children" type="ReactNode" required>
+  The markdown list representing the file tree.
+</Field>

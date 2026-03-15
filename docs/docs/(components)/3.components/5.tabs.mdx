@@ -4,7 +4,7 @@ description: "Organize content with horizontal tabs."
 icon: PanelsTopLeft
 ---
 
-import { Tabs, Tab, Table } from 'boltdocs/client'
+import { Tabs, Tab, Table, Field } from 'boltdocs/client'
 
 # Tabs
 
@@ -40,18 +40,12 @@ A component used to categorize content and let the user conditionally render dif
 
 **`<Tabs>` Props (`TabsProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["defaultIndex", "number", "0", "The index (0-based) of the tab that is open by default."]
-  ]}
-/>
+<Field name="defaultIndex" type="number" defaultValue="0">
+  The index (0-based) of the tab that is open by default.
+</Field>
 
 **`<Tab>` Props (`TabProps`)**
 
-<Table
-  headers={["Prop", "Type", "Default", "Description"]}
-  data={[
-    ["label", "string", "_Required_", "The text shown in the tab bar trigger."]
-  ]}
-/>
+<Field name="label" type="string" required>
+  The text shown in the tab bar trigger.
+</Field>
