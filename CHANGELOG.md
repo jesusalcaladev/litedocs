@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.7.1...v1.8.0) (2026-03-15)
+
+
+### Features
+
+* new component Field ([32f562a](https://github.com/jesusalcaladev/boltdocs/commit/32f562a3b2e135f643a370e1b7451d77f4fbad75))
+
 ## [1.7.1](https://github.com/jesusalcaladev/boltdocs/compare/v1.7.0...v1.7.1) (2026-03-14)
 
 
