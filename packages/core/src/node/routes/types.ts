@@ -37,6 +37,8 @@ export interface RouteMeta {
   tab?: string;
   /** The extracted plain-text content of the page for search indexing */
   _content?: string;
+  /** The raw markdown content of the page */
+  _rawContent?: string;
 }
 
 /**

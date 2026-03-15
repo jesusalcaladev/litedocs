@@ -83,6 +83,23 @@ a {
   width: 800px;
   height: 800px;
   background: var(--ld-glow-2-bg);
-  right: -300px;
   top: -200px;
+}
+
+.boltdocs-page {
+  position: relative;
+}
+
+.boltdocs-page-header {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0;
+  pointer-events: none;
+}
+
+.boltdocs-page-header > * {
+  pointer-events: auto;
 }

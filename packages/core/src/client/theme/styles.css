@@ -13,6 +13,7 @@
 @import "./ui/Footer/footer.css";
 @import "./ui/LanguageSwitcher/language-switcher.css";
 @import "./ui/PoweredBy/powered-by.css";
+@import "./ui/CopyMarkdown/copy-markdown.css";
 
 /* Markdown Content */
 @import "./styles/markdown.css";

@@ -91,6 +91,12 @@ export interface BoltdocsThemeConfig {
    * Default: 'one-dark-pro'
    */
   codeTheme?: string | Record<string, string>;
+  /**
+   * Configuration for the 'Copy Markdown' button.
+   * Can be a boolean or an object with text and icon.
+   * Default: true
+   */
+  copyMarkdown?: boolean | { text?: string; icon?: string };
 }
 
 /**

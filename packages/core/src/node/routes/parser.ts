@@ -176,6 +176,7 @@ export function parseDocFile(
       icon,
       tab: inferredTab,
       _content: plainText,
+      _rawContent: content,
     },
     relativeDir: cleanDirName,
     isGroupIndex,

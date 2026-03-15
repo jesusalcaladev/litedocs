@@ -20,6 +20,7 @@ import { Breadcrumbs } from "../Breadcrumbs";
 import { BackgroundGradient } from "../BackgroundGradient";
 import { ProgressBar } from "../ProgressBar";
 import { ErrorBoundary } from "../ErrorBoundary";
+import { CopyMarkdown } from "../CopyMarkdown";
 import "../../styles.css";
 
 export interface ThemeLayoutProps {
@@ -146,6 +147,12 @@ export function ThemeLayout({
             <Breadcrumbs routes={filteredRoutes} config={config} />
           )}
           <div className="boltdocs-page">
+            <div className="boltdocs-page-header">
+              <CopyMarkdown 
+                content={routes[currentIndex]?._rawContent} 
+                config={config.themeConfig?.copyMarkdown}
+              />
+            </div>
             <ErrorBoundary>
               {children}
             </ErrorBoundary>
