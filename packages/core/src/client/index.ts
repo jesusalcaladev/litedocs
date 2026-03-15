@@ -30,6 +30,7 @@ export {
   List,
   FileTree,
   Table,
+  Field,
 } from "./theme/components/mdx";
 export type {
   ButtonProps,
@@ -42,4 +43,5 @@ export type {
   ListProps,
   FileTreeProps,
   TableProps,
+  FieldProps,
 } from "./theme/components/mdx";

@@ -22,3 +22,6 @@ export type { FileTreeProps } from "./FileTree";
 
 export { Table } from "./Table";
 export type { TableProps } from "./Table";
+
+export { Field } from "./Field";
+export type { FieldProps } from "./Field";
