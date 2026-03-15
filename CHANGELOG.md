@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.8.0...v1.9.0) (2026-03-15)
+
+
+### Features
+
+* support copy markdown ([e692688](https://github.com/jesusalcaladev/boltdocs/commit/e69268888d4ff41ed30f0bf03a8710a420dae220))
+
 # [1.8.0](https://github.com/jesusalcaladev/boltdocs/compare/v1.7.1...v1.8.0) (2026-03-15)
 
 
